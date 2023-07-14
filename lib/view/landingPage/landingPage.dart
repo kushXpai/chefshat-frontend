@@ -52,7 +52,7 @@ class _landingPageState extends State<landingPage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0x001D1D1F),
+      backgroundColor: CustomColors.black,
       body: SizedBox(
         height: height,
         width: width,
@@ -70,13 +70,15 @@ class _landingPageState extends State<landingPage> {
               images: row2,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 40, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 40, bottom: 20),
               child: RichText(
                 text: const TextSpan(
                   text: 'Find the perfect recipes ',
                   style: TextStyle(
                     fontFamily: 'Georgia',
-                    fontSize: 35,
+                    fontSize: 39,
+                    color: Colors.white,
                   ),
                   children: [
                     TextSpan(
@@ -93,12 +95,12 @@ class _landingPageState extends State<landingPage> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
+              padding: EdgeInsets.only(left: 30, right: 30, top: 00, bottom: 0),
               child: Text(
                 'Elevate your home cooking with our expertly curated recipies!',
                 style: TextStyle(
                   fontFamily: 'Georgia',
-                  fontSize: 13,
+                  fontSize: 14,
                   color: Colors.grey,
                 ),
                 textAlign: TextAlign.center,
@@ -113,7 +115,9 @@ class _landingPageState extends State<landingPage> {
                 width: width,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'mobileNumber');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lime,
                     shadowColor: Colors.transparent,
@@ -124,19 +128,14 @@ class _landingPageState extends State<landingPage> {
                       ),
                     ),
                   ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Get Started',
-                        style: TextStyle(
-                          fontFamily: 'Georgia',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: CustomColors.black,
-                        ),
-                      ),
-                    ],
+                  child: const Text(
+                    'Get Started',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
