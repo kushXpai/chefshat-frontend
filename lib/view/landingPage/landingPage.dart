@@ -110,7 +110,7 @@ class _landingPageState extends State<landingPage> {
             const Expanded(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 10, bottom: 0),
+                  left: 20, right: 20, top: 10, bottom: 20),
               child: SizedBox(
                 width: width,
                 height: 50,
@@ -136,39 +136,6 @@ class _landingPageState extends State<landingPage> {
                       fontSize: 20,
                       color: Colors.black,
                     ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 0, bottom: 20),
-              child: SizedBox(
-                width: width,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      // side: const BorderSide(
-                      //   color: Color(0x44F5F5F7),
-                      // ),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Already have an account? Sign In',
-                        style: TextStyle(
-                          fontFamily: 'Georgia',
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),

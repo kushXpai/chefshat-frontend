@@ -5,4 +5,5 @@ class UserFormFields {
   static int userMobileNumber = 0;
   static String userAddress = "";
   static String userEmail = "";
+  static String userProfilePhoto = "";
 }
