@@ -15,7 +15,7 @@ class otpVerification extends StatefulWidget {
 class _otpVerificationState extends State<otpVerification> {
 
   static Future<int> getUsersCountByMobileNumber(String mobileNumber) async {
-    final HttpLink httpLink = HttpLink('http://192.168.107.104:8000/graphql/');
+    final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
 import 'controller/graphQL/graphQLClient.dart';
 
 class test extends StatefulWidget {
@@ -8,11 +7,9 @@ class test extends StatefulWidget {
 
   @override
   State<test> createState() => _testState();
-
 }
 
 class _testState extends State<test> {
-
   final String getUsersQuery = r'''
     query {
       displayUser {
@@ -27,70 +24,689 @@ class _testState extends State<test> {
     }
   ''';
 
+  final String getDishesQuery = r'''
+    query{
+      displayDish{
+        id
+        dishName
+        dishImage
+        dishCalories
+        dishRating
+        course
+        dishTotalTime
+      }
+    }
+  ''';
+
+  final String getLastDishesQuery = r'''
+    query {
+      displayLastAddedDish {
+          id
+          dishName
+      }
+    }
+  ''';
+
+  final String getDishAddedLastWeek = r'''
+    query {
+      displayDishesAddedLastWeek {
+        id
+        dishName
+        dishImage
+      }
+    }
+  ''';
+
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
-    // final HttpLink httpLink = HttpLink(
-    //     'http://192.168.107.104:8000/graphql/'); // Replace with your GraphQL API URL
-    //
-    // final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
-    //   GraphQLClient(
-    //     cache: GraphQLCache(),
-    //     link: httpLink,
-    //   ),
-    // );
+    return Scaffold(
+      backgroundColor: Colors.black,
 
-    return GraphQLProvider(
-      client: client,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('User List'),
-        ),
-        body: Query(
-          options: QueryOptions(
-            document: gql(getUsersQuery),
-            variables: {'sex': 'MALE'}, // or 'FEMALE'
+      body: Stack(
+        children: [
+          Opacity(
+            opacity: 0.5,
+            child: SizedBox(
+              height: height,
+              width: width,
+              child: const Image(
+                image: AssetImage(
+                  'assets/backgroundPhotos/woodenBackground.jpg',
+                ),
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
-          builder: (QueryResult result, {fetchMore, refetch}) {
-            if (result.hasException) {
-              print(result.exception.toString());
-              return Center(
-                child: Text(
-                    'Error fetching users: ${result.exception.toString()}'),
-              );
-            }
-
-            if (result.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            final List<dynamic> users = result.data?['displayUser'] ?? [];
-
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final user = users[index];
-                return ListTile(
-                  title: Text('ID: ${user['id']}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader("What are we loving now"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 20,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildLastDishView(width),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader("What's our community cooking"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 10,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildDishListViewCommunity(width),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader('Recommended for you'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 10,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildDishListViewRecommended(width),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader('Trending'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 10,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildDishListViewTrending(width),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader('Popular recipes this week'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 10,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildDishListAddedLastWeek(width),
+                  ),
+                ),
+                const Padding(
+                  padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 20),
+                  child: Text(
+                    "Unleash Your Culinary Creativity!",
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    maxLines: 3,
+                  ),
+                ),
+                const Padding(
+                  padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+                  child: Row(
                     children: [
-                      Text('Username: ${user['username']}'),
-                      // Text('Sex: ${user['sex']}'),
-                      Text('Mobile Number: ${user['mobileNumber']}'),
-                      Text('Email Address: ${user['emailAddress']}'),
-                      Text('Date of Birth: ${user['dateOfBirth']}'),
-                      Text('Address: ${user['address']}'),
-                      Text('Profile Photo: ${user['profilePhoto']}'),
+                      Text(
+                        "Crafted with ",
+                        style: TextStyle(
+                          fontFamily: 'Georgia',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Icon(
+                        Icons.favorite_sharp,
+                        color: Colors.red,
+                        size: 23,
+                      ),
+                      Text(
+                        " in Mumbai, India",
+                        style: TextStyle(
+                          fontFamily: 'Georgia',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                     ],
                   ),
-                );
-              },
-            );
-          },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 20),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Georgia',
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDishListViewCommunity(double width) {
+    return SizedBox(
+      height: 255,
+      child: Query(
+        options: QueryOptions(
+          document: gql(getDishesQuery),
         ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> dishes = result.data?['displayDish'] ?? [];
+
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: dishes.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(width: 10);
+            },
+            itemBuilder: (context, index) {
+              final dish = dishes[index];
+              return SizedBox(
+                width: width / 3 + 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width / 3,
+                      height: width / 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: const Image(
+                          image: NetworkImage(
+                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      dish['dishName'],
+                      style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.shopping_bag,
+                          color: Colors.amber[600],
+                          size: 15,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Affordable',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 12,
+                            color: Colors.amber[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDishListViewRecommended(double width) {
+    return SizedBox(
+      height: 225,
+      child: Query(
+        options: QueryOptions(
+          document: gql(getDishesQuery),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> dishes = result.data?['displayDish'] ?? [];
+
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: dishes.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(width: 10);
+            },
+            itemBuilder: (context, index) {
+              final dish = dishes[index];
+              return SizedBox(
+                width: width / 3 + 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width / 3,
+                      height: width / 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: const Image(
+                          image: NetworkImage(
+                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      dish['dishName'],
+                      style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.shopping_bag,
+                          color: Colors.amber[600],
+                          size: 15,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Affordable',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 12,
+                            color: Colors.amber[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDishListViewTrending(double width) {
+    return SizedBox(
+      height: 225,
+      child: Query(
+        options: QueryOptions(
+          document: gql(getDishesQuery),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> dishes = result.data?['displayDish'] ?? [];
+
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: dishes.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(width: 10);
+            },
+            itemBuilder: (context, index) {
+              final dish = dishes[index];
+              return SizedBox(
+                width: width / 3 + 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width / 3,
+                      height: width / 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: const Image(
+                          image: NetworkImage(
+                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      dish['dishName'],
+                      style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.shopping_bag,
+                          color: Colors.amber[600],
+                          size: 15,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Affordable',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 12,
+                            color: Colors.amber[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDishListAddedLastWeek(double width) {
+    return SizedBox(
+      height: 225,
+      child: Query(
+        options: QueryOptions(
+          document: gql(getDishAddedLastWeek),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> dishes = result.data?['displayDishesAddedLastWeek'] ?? [];
+
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: dishes.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(width: 10);
+            },
+            itemBuilder: (context, index) {
+              final dish = dishes[index];
+              return SizedBox(
+                width: width / 3 + 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width / 3,
+                      height: width / 3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: const Image(
+                          image: NetworkImage(
+                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      dish['dishName'],
+                      style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.shopping_bag,
+                          color: Colors.amber[600],
+                          size: 15,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Affordable',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 12,
+                            color: Colors.amber[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildLastDishView(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getLastDishesQuery),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final Map<String, dynamic> data =
+              result.data?['displayLastAddedDish'];
+
+          if (data == null) {
+            return const Text('No dishes found');
+          }
+
+          // final String id = data['id'];
+          final String dishName = data['dishName'];
+
+          return ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '');
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              shadowColor: Colors.transparent,
+              minimumSize: Size.zero,
+              padding: const EdgeInsets.all(0),
+            ),
+            child: SizedBox(
+              child: Container(
+                width: width - 40,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: width - 40,
+                      height: width - 40,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 5,
+                        bottom: 20,
+                      ),
+                      child: Text(
+                        dishName,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontFamily: 'Georgia',
+                          fontSize: 28,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

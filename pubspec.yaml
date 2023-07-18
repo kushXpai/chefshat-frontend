@@ -43,6 +43,7 @@ dependencies:
   pinput: ^2.2.31
   firebase_auth: ^4.7.0
   firebase_core: ^2.15.0
+  responsive_sizer:
 
   # Registration
   image_picker: ^1.0.1
@@ -72,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/backgroundPhotos/
     - assets/landingPagePhotos/
     - assets/registrationPagePhotos/
   #   - images/a_dot_burr.jpeg
