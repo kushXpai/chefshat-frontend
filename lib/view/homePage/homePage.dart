@@ -1,3 +1,5 @@
+import 'package:animate_gradient/animate_gradient.dart';
+import 'package:chefs_hat/constants/colors/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -6,12 +8,13 @@ import '../../controller/graphQL/graphQLClient.dart';
 class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
 
+  static String dishId = "";
+
   @override
   State<homePage> createState() => _homePageState();
 }
 
 class _homePageState extends State<homePage> {
-
   final String getDishesQuery = r'''
     query{
       displayDish{
@@ -20,7 +23,7 @@ class _homePageState extends State<homePage> {
         dishImage
         dishCalories
         dishRating
-        course
+        dishCourse
         dishTotalTime
       }
     }
@@ -31,6 +34,7 @@ class _homePageState extends State<homePage> {
       displayLastAddedDish {
           id
           dishName
+          dishImage
       }
     }
   ''';
@@ -52,7 +56,6 @@ class _homePageState extends State<homePage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-
       body: Stack(
         children: [
           Opacity(
@@ -135,7 +138,7 @@ class _homePageState extends State<homePage> {
                       minimumSize: Size.zero,
                       padding: const EdgeInsets.all(0),
                     ),
-                    child: SizedBox(
+                    child: const SizedBox(
                       child: Row(
                         children: [
                           Text(
@@ -144,12 +147,12 @@ class _homePageState extends State<homePage> {
                               fontFamily: 'Georgia',
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.red.shade200,
+                              color: Colors.lime,
                             ),
                           ),
                           Icon(
                             Icons.arrow_forward_ios_outlined,
-                            color: Colors.red.shade200,
+                            color: Colors.lime,
                             size: 20,
                           ),
                         ],
@@ -157,7 +160,6 @@ class _homePageState extends State<homePage> {
                     ),
                   ),
                 ),
-
 
                 // Recommended
                 Padding(
@@ -230,8 +232,8 @@ class _homePageState extends State<homePage> {
 
                 // Footer
                 const Padding(
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 20),
+                  padding: EdgeInsets.only(
+                      left: 20, right: 20, top: 100, bottom: 20),
                   child: Text(
                     "Unleash Your Culinary Creativity!",
                     style: TextStyle(
@@ -302,7 +304,7 @@ class _homePageState extends State<homePage> {
 
   Widget _buildDishListViewCommunity(double width) {
     return SizedBox(
-      height: 200,
+      height: 190,
       child: Query(
         options: QueryOptions(
           document: gql(getDishesQuery),
@@ -310,16 +312,360 @@ class _homePageState extends State<homePage> {
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
             print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
           if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
@@ -333,36 +679,63 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return SizedBox(
-                width: width / 3 + 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: width / 3,
-                      height: width / 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Image(
-                          image: NetworkImage(
-                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+              return ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    homePage.dishId = dish['id'];
+                  });
+                  if (homePage.dishId is int) {
+                    print('myVariable is an integer.');
+                  } else {
+                    print('myVariable is not an integer.');
+                  }
+                  Navigator.pushNamed(context, 'dishDescription');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: SizedBox(
+                  width: width / 3 + 10,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: width / 3,
+                        height: width / 3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image(
+                            image: NetworkImage(
+                              "http://192.168.68.105:8000/media/" + dish['dishImage'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
-                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      dish['dishName'],
-                      style: const TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 14,
-                        color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 10,
+                          bottom: 0,
+                        ),
+                        child: Text(
+                          dish['dishName'],
+                          style: const TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          maxLines: 3,
+                        ),
                       ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -374,7 +747,7 @@ class _homePageState extends State<homePage> {
 
   Widget _buildDishListViewRecommended(double width) {
     return SizedBox(
-      height: 200,
+      height: 190,
       child: Query(
         options: QueryOptions(
           document: gql(getDishesQuery),
@@ -382,16 +755,360 @@ class _homePageState extends State<homePage> {
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
             print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
           if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
@@ -405,36 +1122,58 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return SizedBox(
-                width: width / 3 + 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: width / 3,
-                      height: width / 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Image(
-                          image: NetworkImage(
-                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+              return ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    homePage.dishId = dish['id'];
+                  });
+                  Navigator.pushNamed(context, 'dishDescription');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: SizedBox(
+                  width: width / 3 + 10,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: width / 3,
+                        height: width / 3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image(
+                            image: NetworkImage(
+                              "http://192.168.68.105:8000/media/" + dish['dishImage'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
-                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      dish['dishName'],
-                      style: const TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 14,
-                        color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 10,
+                          bottom: 0,
+                        ),
+                        child: Text(
+                          dish['dishName'],
+                          style: const TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          maxLines: 3,
+                        ),
                       ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -446,7 +1185,7 @@ class _homePageState extends State<homePage> {
 
   Widget _buildDishListViewTrending(double width) {
     return SizedBox(
-      height: 200,
+      height: 190,
       child: Query(
         options: QueryOptions(
           document: gql(getDishesQuery),
@@ -454,16 +1193,360 @@ class _homePageState extends State<homePage> {
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
             print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
           if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
@@ -477,36 +1560,58 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return SizedBox(
-                width: width / 3 + 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: width / 3,
-                      height: width / 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Image(
-                          image: NetworkImage(
-                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+              return ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    homePage.dishId = dish['id'];
+                  });
+                  Navigator.pushNamed(context, 'dishDescription');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: SizedBox(
+                  width: width / 3 + 10,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: width / 3,
+                        height: width / 3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image(
+                            image: NetworkImage(
+                              "http://192.168.68.105:8000/media/" + dish['dishImage'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
-                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      dish['dishName'],
-                      style: const TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 14,
-                        color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 10,
+                          bottom: 0,
+                        ),
+                        child: Text(
+                          dish['dishName'],
+                          style: const TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          maxLines: 3,
+                        ),
                       ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -518,7 +1623,7 @@ class _homePageState extends State<homePage> {
 
   Widget _buildDishListAddedLastWeek(double width) {
     return SizedBox(
-      height: 200,
+      height: 190,
       child: Query(
         options: QueryOptions(
           document: gql(getDishAddedLastWeek),
@@ -526,16 +1631,360 @@ class _homePageState extends State<homePage> {
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
             print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: width / 3,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 60,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
           if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: width / 3 - 27,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RotatedBox(
+                        quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                        child: AnimateGradient(
+                          primaryColors: const [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.white,
+                          ],
+                          secondaryColors: const [
+                            Colors.white,
+                            Colors.grey,
+                            Colors.black,
+                          ],
+                          duration: const Duration(milliseconds: 1500),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: width / 3 - 27,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
 
@@ -549,36 +1998,58 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return SizedBox(
-                width: width / 3 + 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: width / 3,
-                      height: width / 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Image(
-                          image: NetworkImage(
-                            'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
+              return ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    homePage.dishId = dish['id'];
+                  });
+                  Navigator.pushNamed(context, 'dishDescription');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: SizedBox(
+                  width: width / 3 + 10,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: width / 3,
+                        height: width / 3,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image(
+                            image: NetworkImage(
+                              "http://192.168.68.105:8000/media/" + dish['dishImage'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
-                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      dish['dishName'],
-                      style: const TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 14,
-                        color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 10,
+                          bottom: 0,
+                        ),
+                        child: Text(
+                          dish['dishName'],
+                          style: const TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          maxLines: 3,
+                        ),
                       ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -589,94 +2060,210 @@ class _homePageState extends State<homePage> {
   }
 
   Widget _buildLastDishView(double width) {
-    return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getLastDishesQuery),
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
-            );
-          }
-
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final Map<String, dynamic> data =
-          result.data?['displayLastAddedDish'];
-
-          if (data == null) {
-            return const Text('No dishes found');
-          }
-
-          // final String id = data['id'];
-          final String dishName = data['dishName'];
-
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '');
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              shadowColor: Colors.transparent,
-              minimumSize: Size.zero,
-              padding: const EdgeInsets.all(0),
-            ),
-            child: SizedBox(
-              child: Container(
-                width: width - 40,
-                decoration: BoxDecoration(
-                  color: Colors.lime,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: width - 40,
-                      height: width - 40,
+    return Query(
+      options: QueryOptions(
+        document: gql(getLastDishesQuery),
+      ),
+      builder: (QueryResult result, {fetchMore, refetch}) {
+        if (result.hasException) {
+          print(result.exception.toString());
+          return Center(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  child: RotatedBox(
+                    quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                    child: AnimateGradient(
+                      primaryColors: const [
+                        Colors.black,
+                        Colors.grey,
+                        Colors.white,
+                      ],
+                      secondaryColors: const [
+                        Colors.white,
+                        Colors.grey,
+                        Colors.black,
+                      ],
+                      duration: const Duration(milliseconds: 1500),
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/84/46/e9/8446e90a87bc558e143f9cb0324f246a.jpg',
-                          fit: BoxFit.fill,
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: width,
+                          width: 337,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: 10,
-                        bottom: 20,
-                      ),
-                      child: Text(
-                        dishName,
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                          fontFamily: 'Georgia',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 10,),
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                  child: RotatedBox(
+                    quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                    child: AnimateGradient(
+                      primaryColors: const [
+                        Colors.black,
+                        Colors.grey,
+                        Colors.white,
+                      ],
+                      secondaryColors: const [
+                        Colors.white,
+                        Colors.grey,
+                        Colors.black,
+                      ],
+                      duration: const Duration(milliseconds: 1500),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: width,
+                          width: 70,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
-        },
-      ),
+        }
+
+        if (result.isLoading) {
+          return Center(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  child: RotatedBox(
+                    quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                    child: AnimateGradient(
+                      primaryColors: const [
+                        Colors.black,
+                        Colors.grey,
+                        Colors.white,
+                      ],
+                      secondaryColors: const [
+                        Colors.white,
+                        Colors.grey,
+                        Colors.black,
+                      ],
+                      duration: const Duration(milliseconds: 1500),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: width,
+                          width: 337,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10,),
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                  child: RotatedBox(
+                    quarterTurns: 1, // Rotate 90 degrees clockwise (left to right)
+                    child: AnimateGradient(
+                      primaryColors: const [
+                        Colors.black,
+                        Colors.grey,
+                        Colors.white,
+                      ],
+                      secondaryColors: const [
+                        Colors.white,
+                        Colors.grey,
+                        Colors.black,
+                      ],
+                      duration: const Duration(milliseconds: 1500),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          height: width,
+                          width: 70,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        final Map<String, dynamic> data =
+            result.data?['displayLastAddedDish'];
+
+        if (data == null) {
+          return const Text('No dishes found');
+        }
+
+        // final String id = data['id'];
+        final String dishName = data['dishName'];
+
+
+        return ElevatedButton(
+          onPressed: () {
+            setState(() {
+              homePage.dishId = data['id'];
+            });
+            Navigator.pushNamed(context, 'dishDescription');
+          },
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.all(0),
+          ),
+          child: SizedBox(
+            child: Container(
+              width: width - 40,
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: width - 40,
+                    height: width - 40,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      child: Image(
+                        image: NetworkImage(
+                          "http://192.168.68.105:8000/media/" + data['dishImage'],
+                        ),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 10,
+                      bottom: 20,
+                    ),
+                    child: Text(
+                      dishName,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: CustomColors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

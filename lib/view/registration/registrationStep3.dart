@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graphql/client.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../../constants/colors/customColors.dart';
@@ -11,6 +11,8 @@ import '../../controller/registration/registration.dart';
 class registrationStep3 extends StatefulWidget {
   const registrationStep3({Key? key}) : super(key: key);
 
+  static String img = "";
+
   @override
   State<registrationStep3> createState() => _registrationStep3State();
 }
@@ -18,66 +20,74 @@ class registrationStep3 extends StatefulWidget {
 class _registrationStep3State extends State<registrationStep3> {
   String profilePhoto = "";
 
-  File? file;
-  ImagePicker image = ImagePicker();
+  // File? file;
+  // ImagePicker image = ImagePicker();
+  //
+  // getImageFromGallery() async {
+  //   // ignore: deprecated_member_use
+  //   var img = await image.pickImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     file = File(img!.path);
+  //   });
+  // }
+  //
+  // getImageFromCamera() async {
+  //   // ignore: deprecated_member_use
+  //   var img = await image.pickImage(source: ImageSource.camera);
+  //   setState(() {
+  //     file = File(img!.path);
+  //   });
+  // }
 
-  getImageFromGallery() async {
-    // ignore: deprecated_member_use
-    var img = await image.pickImage(source: ImageSource.gallery);
-    setState(() {
-      file = File(img!.path);
-    });
-  }
+  File? file = File("");
+  final ImagePicker _imagePicker = ImagePicker();
 
-  getImageFromCamera() async {
-    // ignore: deprecated_member_use
-    var img = await image.pickImage(source: ImageSource.camera);
-    setState(() {
-      file = File(img!.path);
-    });
-  }
-
-  Future<void> _createUser() async {
-    final String createUserMutation = '''
-      mutation{
-        createUser(
-          username: "${UserFormFields.userName}", 
-          sex: "${UserFormFields.userSex}", 
-          mobileNumber: "${UserFormFields.userMobileNumber}", 
-          emailAddress: "${UserFormFields.userEmail}", 
-          dateOfBirth: "${UserFormFields.userDateOfBirth}", 
-          address: "${UserFormFields.userAddress}", 
-          profilePhoto: "${file?.path ?? ''}"
-        ) {
-          user {
-            id
-            username
-            sex
-            mobileNumber
-            emailAddress
-            dateOfBirth
-            address
-            profilePhoto
-          }
-        }
-      }
-    ''';
-
-    final GraphQLClient _client = client.value;
-
-    final MutationOptions options = MutationOptions(
-      document: gql(createUserMutation),
-    );
-
-    final QueryResult result = await _client.mutate(options);
-
-    if (result.hasException) {
-      print('Error creating user: ${result.exception.toString()}');
-    } else {
-      print('User created successfully!');
-      // Clear form fields after successful user creation
+  Future<void> getImageFromGallery() async {
+    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        file = File(pickedFile.path);
+        // registrationStep3.img = pickedFile.path; // Update the static variable
+      });
     }
   }
+
+  Future<void> getImageFromCamera() async {
+    final pickedFile = await _imagePicker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        file = File(pickedFile.path);
+        // registrationStep3.img = pickedFile.path; // Update the static variable
+      });
+    }
+  }
+
+  _createUser() async {
+    var request = http.MultipartRequest('POST', Uri.parse('${httpLinkC}/user/'));
+    print("before send");
+    request.fields.addAll({
+      'username': "${UserFormFields.userName}",
+      'sex': "${UserFormFields.userSex}",
+      'mobileNumber': "${UserFormFields.userMobileNumber}",
+      'emailAddress': "${UserFormFields.userEmail}",
+      'dateOfBirth': "${UserFormFields.userDateOfBirth}",
+      'address': "${UserFormFields.userAddress}",
+    });
+    print(file!.path.toString());
+    request.files.add(await http.MultipartFile.fromPath('profilePhoto', file!.path.toString()));
+    print("after request send ");
+
+    http.StreamedResponse response = await request.send();
+    print("after awaitt");
+
+    if (response.statusCode == 200) {
+      print(response);
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

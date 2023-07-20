@@ -208,7 +208,7 @@ class _otpVerificationState extends State<otpVerification> {
                     print(len);
 
                     if (len == 1){
-                      Navigator.pushNamed(context, 'test');
+                      Navigator.pushNamed(context, 'homePage');
                     } else if (len == 0) {
                       Navigator.pushNamed(context, 'registrationStep1');
                     }

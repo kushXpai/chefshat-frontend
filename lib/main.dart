@@ -1,6 +1,7 @@
 import 'package:chefs_hat/test.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
+import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
 import 'package:chefs_hat/view/registration/registrationStep1.dart';
@@ -15,8 +16,9 @@ void main() {
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    // initialRoute: 'landingPage',
-    initialRoute: 'homePage',
+    initialRoute: 'landingPage',
+    // initialRoute: 'homePage',
+    // initialRoute: 'test',
 
     routes: {
       // VIEWS
@@ -31,6 +33,8 @@ void main() {
       'registrationStep3': (context) => const registrationStep3(),
       // VIEWS - HOMEPAGE
       'homePage': (context) => const homePage(),
+      // VIEWS - DESCRIPTION
+      'dishDescription': (context) => const dishDescription(),
 
       'test': (context) => const test(),
     },
