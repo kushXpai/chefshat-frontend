@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -19,25 +20,6 @@ class registrationStep3 extends StatefulWidget {
 
 class _registrationStep3State extends State<registrationStep3> {
   String profilePhoto = "";
-
-  // File? file;
-  // ImagePicker image = ImagePicker();
-  //
-  // getImageFromGallery() async {
-  //   // ignore: deprecated_member_use
-  //   var img = await image.pickImage(source: ImageSource.gallery);
-  //   setState(() {
-  //     file = File(img!.path);
-  //   });
-  // }
-  //
-  // getImageFromCamera() async {
-  //   // ignore: deprecated_member_use
-  //   var img = await image.pickImage(source: ImageSource.camera);
-  //   setState(() {
-  //     file = File(img!.path);
-  //   });
-  // }
 
   File? file = File("");
   final ImagePicker _imagePicker = ImagePicker();
@@ -87,6 +69,46 @@ class _registrationStep3State extends State<registrationStep3> {
       print(response.reasonPhrase);
     }
   }
+
+  final String displayUserByMobileNumber = r'''
+    query{
+      displayUserByMobileNumber(mobileNumber: $User){
+        id
+      }
+    }
+  ''';
+
+  _getUserId() {
+    return Query(
+      options: QueryOptions(
+        document: gql(displayUserByMobileNumber),
+      ),
+      builder: (QueryResult result, {fetchMore, refetch}) {
+        if (result.hasException) {
+          print(result.exception.toString());
+          return CircularProgressIndicator();
+        }
+
+        if (result.isLoading) {
+          return CircularProgressIndicator();
+        }
+
+        final Map<String, dynamic> data = result.data?['displayUserByMobileNumber'];
+
+        if (data == null) {
+          return const Text('No dishes found');
+        }
+
+        final String id = data['id'];
+        // final String dishName = data['dishName'];
+        print(id);
+
+
+        return Text("");
+      },
+    );
+  }
+
 
 
   @override
@@ -310,6 +332,7 @@ class _registrationStep3State extends State<registrationStep3> {
                     print(UserFormFields.userAddress);
                     print(UserFormFields.userEmail);
                     print(UserFormFields.userSex);
+                    _getUserId();
                     Navigator.pushNamed(context, 'test');
                   },
                   style: ElevatedButton.styleFrom(

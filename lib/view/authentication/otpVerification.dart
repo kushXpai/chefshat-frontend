@@ -1,4 +1,5 @@
 import 'package:chefs_hat/controller/registration/registration.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:pinput/pinput.dart';
@@ -7,6 +8,8 @@ import '../../constants/colors/customColors.dart';
 
 class otpVerification extends StatefulWidget {
   const otpVerification({Key? key}) : super(key: key);
+
+  static String userId = "";
 
   @override
   State<otpVerification> createState() => _otpVerificationState();

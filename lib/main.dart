@@ -16,8 +16,8 @@ void main() {
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: 'landingPage',
-    // initialRoute: 'homePage',
+    // initialRoute: 'landingPage',
+    initialRoute: 'homePage',
     // initialRoute: 'test',
 
     routes: {

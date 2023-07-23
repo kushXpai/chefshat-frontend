@@ -50,18 +50,6 @@ class _dishDescriptionState extends State<dishDescription> {
   double opacityext3 = 1;
 
   double serves = 2;
-  static double i1 = 4;
-  static double i2 = 120;
-  static double i3 = 200;
-  static double i4 = 12;
-  static double i5 = 30;
-  static double i6 = 2;
-  double di1 = i1;
-  double di2 = i2;
-  double di3 = i3;
-  double di4 = i4;
-  double di5 = i5;
-  double di6 = i6;
 
   final String getDishById = r'''
     query($id: ID!) {
@@ -87,6 +75,26 @@ class _dishDescriptionState extends State<dishDescription> {
         dishSugar
         dishSodium
         dishLastUpdate
+      }
+    }
+  ''';
+
+  final String getDishIngredients = r'''
+    query($id: ID!) {
+      displayDishById(id: $id) {
+        id
+        dishName
+        
+        ingredients(dishId: $id) {
+          id
+          dishIngredientQuantity
+          dishIngredientQuantityUnit
+          ingredientId {
+            id
+            ingredientName
+            ingredientImage
+          }
+        }
       }
     }
   ''';
@@ -438,13 +446,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                         onDecrement: (value) {
                                           setState(() {
                                             serves = value;
-                                            di1 = i1 / 2 * value;
-                                            di2 = i2 / 2 * value;
-                                            di3 = i3 / 2 * value;
-                                            di4 = i4 / 2 * value;
-                                            di5 = i5 / 2 * value;
-                                            di6 = i6 / 2 * value;
-                                            print(serves);
                                           });
                                           // ScaffoldMessenger.of(context).showSnackBar(
                                           //   SnackBar(
@@ -456,13 +457,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                         onIncrement: (value) {
                                           setState(() {
                                             serves = value;
-                                            di1 = i1 / 2 * value;
-                                            di2 = i2 / 2 * value;
-                                            di3 = i3 / 2 * value;
-                                            di4 = i4 / 2 * value;
-                                            di5 = i5 / 2 * value;
-                                            di6 = i6 / 2 * value;
-                                            print(serves);
                                           });
                                           // ScaffoldMessenger.of(context).showSnackBar(
                                           //   SnackBar(
@@ -472,12 +466,15 @@ class _dishDescriptionState extends State<dishDescription> {
                                           // );
                                         },
                                         onCountChange: (value) {
-                                          // ScaffoldMessenger.of(context).showSnackBar(
-                                          //   SnackBar(
-                                          //     content: Text("Value Changed: $value"),
-                                          //     duration: const Duration(milliseconds: 250),
-                                          //   ),
-                                          // );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Dish serves: ${(value).toInt()} people"),
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ],
@@ -560,1009 +557,739 @@ class _dishDescriptionState extends State<dishDescription> {
 
   Widget _buildDishByIdNutritionalFacts(double width) {
     return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getDishById),
-          variables: {'id': '${homePage.dishId}'},
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
-            );
-          }
+        child: Opacity(
+      opacity: opacityext3,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          AnimatedContainer(
+            width: _width3,
+            height: _height3 + 58,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(24, 24, 24, 1),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+            ),
+            // Define how long the animation should take.
+            duration: const Duration(seconds: 1),
+            // Provide an optional curve to make the animation feel smoother.
+            curve: Curves.fastOutSlowIn,
 
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final Map<String, dynamic> data = result.data?['displayDishById'];
-
-          if (data == null) {
-            return const Text('No dishes found');
-          }
-
-          return Opacity(
-            opacity: opacityext3,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AnimatedContainer(
-                  width: _width3,
-                  height: _height3 + 58,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(24, 24, 24, 1),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40)),
-                  ),
-                  // Define how long the animation should take.
-                  duration: const Duration(seconds: 1),
-                  // Provide an optional curve to make the animation feel smoother.
-                  curve: Curves.fastOutSlowIn,
-
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 25, top: 10, bottom: 0),
-                        child: SizedBox(
-                          width: width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (ext3 == false) {
-                                setState(() {
-                                  ext3 = true;
-                                  ext3icon = const Icon(
-                                    Icons.arrow_drop_up_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                  opacityext1 = 0;
-                                  opacityext2 = 0;
-                                });
-                              } else {
-                                setState(() {
-                                  ext3 = false;
-                                  ext2icon = const Icon(
-                                    Icons.arrow_drop_down_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                  opacityext1 = 1;
-                                  opacityext2 = 1;
-                                });
-                              }
-                              // Use setState to rebuild the widget with new values.
-                              setState(() {
-                                if (ext3 == true) {
-                                  _width3 = width;
-                                  _height3 = 530;
-                                  _isShowExt3 = !_isShowExt3;
-                                } else {
-                                  _width3 = width;
-                                  _height3 = 145;
-                                  _isShowExt3 = !_isShowExt3;
-                                }
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 25, top: 10, bottom: 0),
+                  child: SizedBox(
+                    width: width,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (ext3 == false) {
+                          setState(() {
+                            ext3 = true;
+                            ext3icon = const Icon(
+                              Icons.arrow_drop_up_rounded,
+                              color: Colors.white,
+                              size: 30,
+                            );
+                            opacityext1 = 0;
+                            opacityext2 = 0;
+                          });
+                        } else {
+                          setState(() {
+                            ext3 = false;
+                            ext2icon = const Icon(
+                              Icons.arrow_drop_down_rounded,
+                              color: Colors.white,
+                              size: 30,
+                            );
+                            opacityext1 = 1;
+                            opacityext2 = 1;
+                          });
+                        }
+                        setState(() {
+                          if (ext3 == true) {
+                            _width3 = width;
+                            _height3 = 530;
+                            _isShowExt3 = !_isShowExt3;
+                          } else {
+                            _width3 = width;
+                            _height3 = 145;
+                            _isShowExt3 = !_isShowExt3;
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        minimumSize: Size.zero,
+                        padding: const EdgeInsets.all(0),
+                      ),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Nutritional Facts',
+                            style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: CustomColors.white,
                             ),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Nutritional Facts',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: CustomColors.white,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const Expanded(child: SizedBox()),
-                                ext3icon,
-                              ],
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Expanded(child: SizedBox()),
+                          ext3icon,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Visibility(
+                    visible: _isShowExt3,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding:
+                                EdgeInsets.only(left: 20, right: 20, top: 10),
+                            child: Divider(
+                              color: Colors.white,
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 10),
+                            child: Query(
+                              options: QueryOptions(
+                                document: gql(getDishById),
+                                variables: {'id': '${homePage.dishId}'},
+                              ),
+                              builder: (QueryResult result, {fetchMore, refetch}) {
+                                if (result.hasException) {
+                                  print(result.exception.toString());
+                                  return Center(
+                                    child: Text(
+                                      'Error fetching dishes: ${result.exception.toString()}',
+                                    ),
+                                  );
+                                }
+
+                                if (result.isLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+
+                                final Map<String, dynamic> data = result.data?['displayDishById'];
+
+                                if (data == null) {
+                                  return const Text('No dishes found');
+                                }
+
+                                return Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Calories',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishCalories']} kcal',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Proteins',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishProteins']} g',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Fats',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishFats']} g',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Carbohydrates',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishCarbohydrates']} g',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Fibre',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishFibres']} g',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Sugar',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Expanded(
+                                            child: SizedBox(
+                                              child: Text(
+                                                '....................................................................',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          '${data['dishSugar']} g',
+                                          style: const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 20,
+                                            color: Colors.amber,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Estimated values based on serving size',
+                                          style: TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 10,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Widget _buildDishByIdIngredients(double width) {
+    return SizedBox(
+      child: Opacity(
+        opacity: opacityext2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AnimatedContainer(
+              width: _width2,
+              height: _height2 + 58,
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(40, 40, 40, 1),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
+              ),
+              // Define how long the animation should take.
+              duration: const Duration(seconds: 1),
+              // Provide an optional curve to make the animation feel smoother.
+              curve: Curves.fastOutSlowIn,
+
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 25, top: 10, bottom: 0),
+                    child: SizedBox(
+                      width: width,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (ext2 == false) {
+                            setState(() {
+                              ext2 = true;
+                              ext2icon = const Icon(
+                                Icons.arrow_drop_up_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              );
+                              opacityext1 = 0;
+                            });
+                          } else {
+                            setState(() {
+                              ext2 = false;
+                              ext2icon = const Icon(
+                                Icons.arrow_drop_down_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              );
+                              opacityext1 = 1;
+                            });
+                          }
+                          // Use setState to rebuild the widget with new values.
+                          setState(() {
+                            if (ext2 == true) {
+                              _width2 = width;
+                              _height2 = 530;
+                              _isShowExt2 = !_isShowExt2;
+                            } else {
+                              _width2 = width;
+                              _height2 = 80;
+                              _isShowExt2 = !_isShowExt2;
+                            }
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(0),
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Ingredients',
+                              style: TextStyle(
+                                fontFamily: 'Georgia',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: CustomColors.white,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const Expanded(child: SizedBox()),
+                            ext2icon,
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Visibility(
-                          visible: _isShowExt3,
-                          child: SingleChildScrollView(
-                            child: Column(
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: _isShowExt2,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Divider(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, right: 20, top: 10),
-                                  child: Divider(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Padding(
+                                Container(
                                   padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10),
+                                      left: 20, right: 20),
                                   child: Column(
                                     children: [
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
                                         children: [
-                                          const Text(
-                                            'Calories',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                'Ingredients for',
+                                                style: TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 23,
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
+                                              Text(
+                                                '$serves servings',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 17,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            '${data['dishCalories']} kcal',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
+                                          const Expanded(child: SizedBox()),
                                         ],
                                       ),
                                       const SizedBox(
-                                        height: 10,
+                                        height: 20,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Proteins',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
+                                      SizedBox(
+                                        height: 400,
+                                        child: Query(
+                                          options: QueryOptions(
+                                            document: gql(getDishIngredients),
+                                            variables: {
+                                              'id': '${homePage.dishId}',
+                                              'dishId': '${homePage.dishId}'
+                                            },
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${data['dishProteins']} g',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Fats',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${data['dishFats']} g',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Carbohydrates',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${data['dishCarbohydrates']} g',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Fibre',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${data['dishFibres']} g',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Sugar',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Expanded(
-                                              child: SizedBox(
-                                            child: Text(
-                                              '....................................................................',
-                                              style: TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            '${data['dishSugar']} g',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 20,
-                                              color: Colors.amber,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Estimated values based on serving size',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 10,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
+                                          builder: (QueryResult result,
+                                              {fetchMore, refetch}) {
+                                            if (result.hasException) {
+                                              print(
+                                                  result.exception.toString());
+                                              return Center(
+                                                child: Text(
+                                                  'Error fetching dishes: ${result.exception.toString()}',
+                                                ),
+                                              );
+                                            }
+
+                                            if (result.isLoading) {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+
+                                            final Map<String, dynamic> data =
+                                                result.data?['displayDishById'];
+
+                                            final String dishId = data['id'];
+                                            final String dishName =
+                                                data['dishName'];
+
+                                            // Accessing the ingredients list
+                                            final List<dynamic> ingredients =
+                                                data['ingredients'];
+
+                                            return ListView.separated(
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: ingredients
+                                                  .length, // Use the length of the ingredients list
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return const SizedBox(
+                                                    height: 10);
+                                              },
+                                              itemBuilder: (context, index) {
+                                                final ingredient =
+                                                    ingredients[index];
+
+                                                // Accessing the details of the ingredient
+                                                final String ingredientName =
+                                                    ingredient['ingredientId']
+                                                        ['ingredientName'];
+                                                final String ingredientImage =
+                                                    ingredient['ingredientId']
+                                                        ['ingredientImage'];
+                                                final int quantity = ingredient[
+                                                    'dishIngredientQuantity'];
+                                                final String unit = ingredient[
+                                                    'dishIngredientQuantityUnit'];
+
+                                                return SizedBox(
+                                                  width: width,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                              height: 50,
+                                                              width: 50,
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(5),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Colors
+                                                                    .black,
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .white54,
+                                                                    width: 1.0),
+                                                              ),
+                                                              child:
+                                                                  Image.network(
+                                                                "http://192.168.68.105:8000/media/" +
+                                                                    ingredientImage,
+                                                              )),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 10,
+                                                                    right: 0,
+                                                                    top: 0,
+                                                                    bottom: 0),
+                                                            child: Text(
+                                                              '$ingredientName',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    'Georgia',
+                                                                fontSize: 15,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const Expanded(
+                                                              child:
+                                                                  SizedBox()),
+                                                          Text(
+                                                            '${(quantity) * serves / 2} $unit',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily:
+                                                                  'Georgia',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  Colors.amber,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
+                            )
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildDishByIdIngredients(double width) {
-    return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getDishById),
-          variables: {'id': '${homePage.dishId}'},
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
+                ],
               ),
-            );
-          }
-
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final Map<String, dynamic> data = result.data?['displayDishById'];
-
-          if (data == null) {
-            return const Text('No dishes found');
-          }
-
-          return Opacity(
-            opacity: opacityext2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AnimatedContainer(
-                  width: _width2,
-                  height: _height2 + 58,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(40, 40, 40, 1),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40)),
-                  ),
-                  // Define how long the animation should take.
-                  duration: const Duration(seconds: 1),
-                  // Provide an optional curve to make the animation feel smoother.
-                  curve: Curves.fastOutSlowIn,
-
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 25, top: 10, bottom: 0),
-                        child: SizedBox(
-                          width: width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (ext2 == false) {
-                                setState(() {
-                                  ext2 = true;
-                                  ext2icon = const Icon(
-                                    Icons.arrow_drop_up_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                  opacityext1 = 0;
-                                });
-                              } else {
-                                setState(() {
-                                  ext2 = false;
-                                  ext2icon = const Icon(
-                                    Icons.arrow_drop_down_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                  opacityext1 = 1;
-                                });
-                              }
-                              // Use setState to rebuild the widget with new values.
-                              setState(() {
-                                if (ext2 == true) {
-                                  _width2 = width;
-                                  _height2 = 530;
-                                  _isShowExt2 = !_isShowExt2;
-                                } else {
-                                  _width2 = width;
-                                  _height2 = 80;
-                                  _isShowExt2 = !_isShowExt2;
-                                }
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Ingredients',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: CustomColors.white,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const Expanded(child: SizedBox()),
-                                ext2icon,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Visibility(
-                          visible: _isShowExt2,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Divider(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text(
-                                                    'Ingredients for',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Georgia',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 23,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '$serves servings',
-                                                    style: const TextStyle(
-                                                      fontFamily: 'Georgia',
-                                                      fontSize: 17,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient1.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Portabello',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di1 large',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient2.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Mozzerella Cheese',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di2 g',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient3.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Cherry Tomatoes',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di3 g',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient4.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Basil Leaves',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di4 leaves',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient5.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Balsamic Glaze',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di5 ml',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient6.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Olive Oil',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '$di6 tbsp',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 10,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.black,
-                                                      border: Border.all(
-                                                          color: Colors.white54,
-                                                          width: 1.0),
-                                                    ),
-                                                    child: Image.asset(
-                                                      'assets/demoassets/ingredient7.png',
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                              ),
-                                              const Text(
-                                                'Salt N Pepper',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Expanded(child: SizedBox()),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'To taste',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  color: Colors.amber,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
@@ -2058,9 +1785,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2120,9 +1847,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2181,9 +1908,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2242,9 +1969,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2303,9 +2030,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2365,9 +2092,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2426,9 +2153,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
@@ -2487,9 +2214,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   onPressed: () {},
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                        backgroundColor:
+                                                    backgroundColor:
                                                         Colors.transparent,
-                                                        foregroundColor:
+                                                    foregroundColor:
                                                         Colors.transparent,
                                                     elevation: 0,
                                                     shadowColor:
