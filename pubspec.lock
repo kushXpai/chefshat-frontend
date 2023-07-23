@@ -260,18 +260,18 @@ packages:
     dependency: transitive
     description:
       name: gql
-      sha256: "07ae289bc5ccfbfd143883bfe9a380f5bf52c94559ded740cf3fb152fcbdbe2e"
+      sha256: c73af0c980545965e21e40e49de33939bbc9cf27d55b48ae39d59712623aa2f3
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1686240655988"
+    version: "1.0.1-alpha+1690125199407"
   gql_dedupe_link:
     dependency: transitive
     description:
       name: gql_dedupe_link
-      sha256: dac8e5eec5e9f6274302e5c01f77c7558f89d727f2c0dff7cda568c440a171cd
+      sha256: "7ed7719085a1592057ce86e9af794fd883a5bb932d35e78f4f7a6e8f3f748001"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4-alpha+1686240656097"
+    version: "2.0.4-alpha+1690125199506"
   gql_error_link:
     dependency: transitive
     description:
@@ -284,10 +284,10 @@ packages:
     dependency: transitive
     description:
       name: gql_exec
-      sha256: "04fb14e41fdc3fafa80fa7218224bceba019e00b80de9130c2dd0a9a77c6392d"
+      sha256: "9508fa678f7381abc38ceda0ac5256591f3acbe3d2ae83d80b94f14158d4ab75"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1686240655996"
+    version: "1.0.1-alpha+1690125199414"
   gql_http_link:
     dependency: transitive
     description:
@@ -300,10 +300,10 @@ packages:
     dependency: transitive
     description:
       name: gql_link
-      sha256: ecf2419e6c543d1b8dedd7dbbc538ce037f4d53a3b5b7d694a98a7d636da2817
+      sha256: f63d4c18588b5c3de338ae9cd89d1560b977557fe3f7edcc5f894cc66c9d5f3c
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1686240656001"
+    version: "1.0.1-alpha+1690125199423"
   gql_transform_link:
     dependency: transitive
     description:
@@ -328,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.0-beta.5"
+  graphs:
+    dependency: transitive
+    description:
+      name: graphs
+      sha256: aedc5a15e78fc65a6e23bcd927f24c64dd995062bcd1ca6eda65a3cff92a4d19
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
   hive:
     dependency: transitive
     description:
@@ -572,18 +580,34 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      sha256: "43798d895c929056255600343db8f049921cbec94d31ec87f1dc5c16c01935dd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.5"
   responsive_sizer:
     dependency: "direct main"
     description:
       name: responsive_sizer
-      sha256: "1632edd443b9ace1b88b3eb3c0520cb610cc8dcf3710197f7e3a0c0f38aae508"
+      sha256: "206d1f77f65ed8394ef2a526583e38e874ee36f036f3fe9aefb0f58ecba9bef9"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.2.0"
+  rive:
+    dependency: "direct main"
+    description:
+      name: rive
+      sha256: dad9f32e2c7a131b7cfe7354b51907369cc11e49e93cc12b8dfe36aae26689aa
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.5"
+  rive_common:
+    dependency: transitive
+    description:
+      name: rive_common
+      sha256: "12f1e1c4c384a07c83685eece0b8303681ee9a6cffe35265f800b3f2da402c36"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   rxdart:
     dependency: transitive
     description:

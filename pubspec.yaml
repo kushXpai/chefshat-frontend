@@ -42,6 +42,9 @@ dependencies:
   animate_gradient: ^0.0.2+1
   http: ^1.1.0
 
+  # Entry Point
+  rive: ^0.11.5
+
   # Authentication
   pinput: ^2.2.31
   firebase_auth: ^4.7.0
