@@ -1,3 +1,4 @@
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:customizable_counter/customizable_counter.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +56,8 @@ class _dishDescriptionState extends State<dishDescription> {
     query($id: ID!) {
       displayDishById(id: $id) {
         dishName
-        dishCourse
-        dishCuisine
+        dishCategoryCourse
+        dishCategoryCuisine
         dishCategoryDietary
         dishCategoryAllergen
         dishCategorySpicenessLevel
@@ -98,6 +99,77 @@ class _dishDescriptionState extends State<dishDescription> {
       }
     }
   ''';
+
+
+  bool isLiked = false;
+
+  final String addRecipeToSavedRecipesMutation = r'''
+    mutation AddRecipeToSavedRecipes($userId: ID!, $dishId: ID!) {
+      addRecipeToSavedRecipes(userId: $userId, dishId: $dishId) {
+        savedRecipe {
+          id
+          userId {
+            id
+            username
+          }
+          dishId {
+            id
+            dishName
+          }
+          recipeSaved
+        }
+      }
+    }
+  ''';
+
+
+  final String removeRecipeFromSavedRecipesMutation = r'''
+    mutation RemoveRecipeFromSavedRecipes($userId: ID!, $dishId: ID!) {
+      remove_recipe_from_saved_recipes(userId: $userId, dishId: $dishId) {
+        deletedCount
+      }
+    }
+  ''';
+
+  void toggleLike() async {
+    setState(() {
+      isLiked = !isLiked;
+    });
+    print(isLiked);
+
+    final userId = otpVerification.userId;
+    final dishId = homePage.dishId;
+
+    final GraphQLClient _client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: HttpLink(httpLinkC),
+    );
+
+    try {
+      if (isLiked) {
+        print("CREATE");
+        final response = await _client.mutate(
+          MutationOptions(
+            document: gql(addRecipeToSavedRecipesMutation),
+            variables: {'userId': userId, 'dishId': dishId},
+          ),
+        );
+        print(response);
+      } else {
+        print("DELETE");
+        final response = await _client.mutate(
+          MutationOptions(
+            document: gql(removeRecipeFromSavedRecipesMutation),
+            variables: {'userId': userId, 'dishId': dishId},
+          ),
+        );
+        print(response);
+      }
+    } catch (e) {
+      print("Mutation Error: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,92 +213,58 @@ class _dishDescriptionState extends State<dishDescription> {
                 client: client,
                 child: _buildDishByIdDirections(width),
               ),
-              Container(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: width,
-                      height: 250,
+
+
+              Padding(
+                padding: EdgeInsets.only(left: 289, right: 0, top: 253, bottom: 0),
+
+                child: SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      toggleLike();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lime,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      padding: EdgeInsets.all(0),
                     ),
-                    Opacity(
-                      opacity: 0.85,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 65,
-                            height: 65,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.lime,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(22),
-                                ),
-                              ),
-                              child: const Text(''),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          )
-                        ],
+                    child: LikeButton(
+                      onTap: (bool isLiked) async {
+                        toggleLike();
+                      },
+                      isLiked: isLiked, // Replace 'isLiked' with your own variable that represents the liked state
+                      size: 40,
+                      animationDuration: const Duration(milliseconds: 900),
+                      bubblesColor: const BubblesColor(
+                        dotPrimaryColor: Color.fromARGB(255, 255, 255, 0),
+                        dotSecondaryColor: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      likeBuilder: (bool isLiked) {
+                        if (isLiked) {
+                          return const Icon(
+                            Icons.favorite,
+                            size: 40,
+                            color: Color.fromARGB(255, 255, 255, 215),
+                          );
+                        } else {
+                          return const Icon(
+                            Icons.favorite_outline,
+                            size: 40,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          );
+                        }
+                      },
+                      circleColor: const CircleColor(
+                        start: Color.fromARGB(255, 255, 255, 255),
+                        end: Color.fromARGB(255, 255, 255, 0),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: width,
-                      height: 250,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: 65,
-                          height: 65,
-                          child: LikeButton(
-                            size: 40,
-                            animationDuration:
-                                const Duration(milliseconds: 900),
-                            bubblesColor: const BubblesColor(
-                              dotPrimaryColor: Color.fromARGB(255, 255, 255, 0),
-                              dotSecondaryColor:
-                                  Color.fromARGB(255, 255, 255, 255),
-                            ),
-                            likeBuilder: (isliked) {
-                              if (isliked) {
-                                return const Icon(
-                                  Icons.favorite,
-                                  size: 40,
-                                  color: Color.fromARGB(255, 255, 255, 215),
-                                );
-                              }
-                              if (!isliked) {
-                                return const Icon(
-                                  Icons.favorite_outline,
-                                  size: 40,
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                );
-                              }
-                            },
-                            circleColor: const CircleColor(
-                                start: Color.fromARGB(255, 255, 255, 255),
-                                end: Color.fromARGB(255, 255, 255, 0)),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        )
-                      ],
-                    ),
-                  ],
+
+                  ),
                 ),
               ),
             ],

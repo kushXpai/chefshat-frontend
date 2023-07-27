@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -70,43 +71,52 @@ class _registrationStep3State extends State<registrationStep3> {
     }
   }
 
-  final String displayUserByMobileNumber = r'''
-    query{
-      displayUserByMobileNumber(mobileNumber: $User){
-        id
-      }
-    }
-  ''';
+  Future<int> _getUserId() async {
+    final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
 
-  _getUserId() {
-    return Query(
-      options: QueryOptions(
-        document: gql(displayUserByMobileNumber),
+    final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
+      GraphQLClient(
+        cache: GraphQLCache(),
+        link: httpLink,
       ),
-      builder: (QueryResult result, {fetchMore, refetch}) {
-        if (result.hasException) {
-          print(result.exception.toString());
-          return CircularProgressIndicator();
-        }
-
-        if (result.isLoading) {
-          return CircularProgressIndicator();
-        }
-
-        final Map<String, dynamic> data = result.data?['displayUserByMobileNumber'];
-
-        if (data == null) {
-          return const Text('No dishes found');
-        }
-
-        final String id = data['id'];
-        // final String dishName = data['dishName'];
-        print(id);
-
-
-        return Text("");
-      },
     );
+
+    final String getUsersCountQuery = '''
+      query GetUsersCount(\$mobileNumber: String!) {
+        displayUserByMobileNumber(mobileNumber: \$mobileNumber) {
+          id
+        }
+      }
+    ''';
+
+    print('UserMobileNumber: ${UserFormFields.userMobileNumber.toString()}');
+    final QueryOptions options = QueryOptions(
+      document: gql(getUsersCountQuery),
+      variables: {'mobileNumber': UserFormFields.userMobileNumber.toString()},
+    );
+
+    try {
+      final QueryResult result = await client.value.query(options);
+
+      if (result.hasException) {
+        throw result.exception!;
+      }
+
+      final dynamic user = result.data?['displayUserByMobileNumber'];
+      if (user == null) {
+        return 0; // User not found
+      } else if (user is List<dynamic>) {
+        // Since you mentioned that the query should return a list, let's access the first item.
+        // If you expect multiple users, you may need to change this logic.
+        final int userId = user.isNotEmpty ? int.parse(user[0]['id']) : 0;
+        return userId; // Return the user ID
+      } else {
+        final int userId = int.parse(user['id']);
+        return userId; // Single user found
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
 
@@ -324,16 +334,23 @@ class _registrationStep3State extends State<registrationStep3> {
                 height: 45,
                 width: width,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     _createUser();
+
                     print(UserFormFields.userName);
                     print(UserFormFields.userDateOfBirth);
                     print(UserFormFields.userMobileNumber);
                     print(UserFormFields.userAddress);
                     print(UserFormFields.userEmail);
                     print(UserFormFields.userSex);
-                    _getUserId();
-                    Navigator.pushNamed(context, 'test');
+                    int userId = await _getUserId(); // Call the _ge
+                    setState(() {
+                      otpVerification.userId = userId;
+                    });
+                    print(UserFormFields.userMobileNumber);
+                    print(otpVerification.userId);
+
+                    Navigator.pushNamed(context, 'entryPoint');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lime,
