@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
+import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
@@ -90,7 +91,7 @@ class _entryPointState extends State<entryPoint> with TickerProviderStateMixin {
                   child: Center(
                     child: entryPointStatics.indexBottomNavigationBar == 0
                         ? homePage(): entryPointStatics.indexBottomNavigationBar == 1
-                        ? homePage(): entryPointStatics.indexBottomNavigationBar == 2
+                        ? recipeGenerator(): entryPointStatics.indexBottomNavigationBar == 2
                         ? homePage() : profile(),
                   ),
                 ),

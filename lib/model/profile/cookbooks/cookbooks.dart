@@ -1,11 +1,9 @@
-import 'package:chefs_hat/controller/profile/cookbooks/savedRecipes.dart';
-import 'package:chefs_hat/controller/registration/registration.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../constants/colors/customColors.dart';
-import '../../graphQL/graphQLClient.dart';
+import '../../../controller/graphQL/graphQLClient.dart';
 
 class cookbooks extends StatefulWidget {
   const cookbooks({Key? key}) : super(key: key);

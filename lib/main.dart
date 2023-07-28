@@ -1,8 +1,9 @@
-import 'package:chefs_hat/controller/profile/activity/activity.dart';
-import 'package:chefs_hat/controller/profile/cookbooks/cookbooks.dart';
-import 'package:chefs_hat/controller/profile/cookbooks/savedRecipes.dart';
-import 'package:chefs_hat/controller/profile/photos/photos.dart';
+
 import 'package:chefs_hat/entryPoint.dart';
+import 'package:chefs_hat/model/profile/activity/activity.dart';
+import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
+import 'package:chefs_hat/model/profile/cookbooks/savedRecipes.dart';
+import 'package:chefs_hat/model/profile/photos/photos.dart';
 import 'package:chefs_hat/test.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
@@ -10,6 +11,7 @@ import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
+import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
 import 'package:chefs_hat/view/registration/registrationStep1.dart';
 import 'package:chefs_hat/view/registration/registrationStep2.dart';
 import 'package:chefs_hat/view/registration/registrationStep3.dart';
@@ -22,8 +24,8 @@ void main() {
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: 'landingPage',
-    // initialRoute: 'entryPoint',
+    // initialRoute: 'landingPage',
+    initialRoute: 'entryPoint',
     // initialRoute: 'test',
 
     routes: {
@@ -50,6 +52,8 @@ void main() {
       'savedRecipes' : (context) => const savedRecipes(),
       // VIEWS - PROFILE - ACTIVITY
       'activity' : (context) => const activity(),
+      // VIEWS - RECIPE GENERATOR
+      'recipeGenerator' : (context) => const recipeGenerator(),
 
       'entryPoint': (context) => const entryPoint(),
       'test': (context) => const test(),

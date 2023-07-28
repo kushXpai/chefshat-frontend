@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../constants/colors/customColors.dart';
-import '../../graphQL/graphQLClient.dart';
+import '../../../controller/graphQL/graphQLClient.dart';
 
 class savedRecipes extends StatefulWidget {
   const savedRecipes({Key? key}) : super(key: key);

@@ -1,4 +1,7 @@
-import 'package:chefs_hat/controller/profile/profile.dart';
+import 'package:chefs_hat/model/profile/activity/activity.dart';
+import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
+import 'package:chefs_hat/model/profile/photos/photos.dart';
+import 'package:chefs_hat/model/profile/profile.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +9,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../constants/colors/customColors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
-import '../../controller/profile/activity/activity.dart';
-import '../../controller/profile/cookbooks/cookbooks.dart';
-import '../../controller/profile/photos/photos.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
