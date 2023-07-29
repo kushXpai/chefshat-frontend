@@ -88,6 +88,7 @@ flutter:
     - assets/registrationPagePhotos/
     - assets/profilePagePhotos/
     - assets/recipeGeneratorPhotos/
+    - assets/general/
 
     - assets/avaters/
     - assets/Backgrounds/

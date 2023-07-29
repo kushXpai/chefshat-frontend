@@ -424,7 +424,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: size.width,
                         height: 224,
                         child: Column(
@@ -2831,7 +2831,9 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                                   ),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.pushNamed(context, 'test');
+                                      if (recipeGenerator.ingredientsSelected > 0){
+                                        Navigator.pushNamed(context, 'displayDishList');
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.transparent,

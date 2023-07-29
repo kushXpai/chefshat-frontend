@@ -11,6 +11,7 @@ import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
+import 'package:chefs_hat/view/recipeGenerator/displayDishList.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
 import 'package:chefs_hat/view/registration/registrationStep1.dart';
 import 'package:chefs_hat/view/registration/registrationStep2.dart';
@@ -54,6 +55,7 @@ void main() {
       'activity' : (context) => const activity(),
       // VIEWS - RECIPE GENERATOR
       'recipeGenerator' : (context) => const recipeGenerator(),
+      'displayDishList' : (context) => const displayDishList(),
 
       'entryPoint': (context) => const entryPoint(),
       'test': (context) => const test(),
