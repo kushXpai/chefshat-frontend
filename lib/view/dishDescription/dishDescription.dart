@@ -100,6 +100,15 @@ class _dishDescriptionState extends State<dishDescription> {
     }
   ''';
 
+  final String getDishSteps = r'''
+  query GetDishSteps($dishId: ID!) {
+    displayDishStepById(dishId: $dishId) {
+      id
+      dishStepDescription
+    }
+  }
+''';
+
 
   bool isLiked = false;
 
@@ -121,7 +130,6 @@ class _dishDescriptionState extends State<dishDescription> {
       }
     }
   ''';
-
 
   final String removeRecipeFromSavedRecipesMutation = r'''
     mutation RemoveRecipeFromSavedRecipes($userId: ID!, $dishId: ID!) {
@@ -170,7 +178,6 @@ class _dishDescriptionState extends State<dishDescription> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -182,95 +189,95 @@ class _dishDescriptionState extends State<dishDescription> {
       extendBody: true,
 
       body: Center(
-          child: Stack(
-        children: [
-          Container(
-            width: 392.7,
-            height: 872.7,
-            decoration: const BoxDecoration(
-              color: Colors.white10,
+        child: Stack(
+          children: [
+            Container(
+              width: 392.7,
+              height: 872.7,
+              decoration: const BoxDecoration(
+                color: Colors.white10,
+              ),
             ),
-          ),
-          Stack(
-            children: [
-              GraphQLProvider(
-                client: client,
-                child: _buildDishByIdImage(width),
-              ),
-              GraphQLProvider(
-                client: client,
-                child: _buildDishByIdDescription(width),
-              ),
-              GraphQLProvider(
-                client: client,
-                child: _buildDishByIdNutritionalFacts(width),
-              ),
-              GraphQLProvider(
-                client: client,
-                child: _buildDishByIdIngredients(width),
-              ),
-              GraphQLProvider(
-                client: client,
-                child: _buildDishByIdDirections(width),
-              ),
+            Stack(
+              children: [
+                GraphQLProvider(
+                  client: client,
+                  child: _buildDishByIdImage(width),
+                ),
+                GraphQLProvider(
+                  client: client,
+                  child: _buildDishByIdDescription(width),
+                ),
+                GraphQLProvider(
+                  client: client,
+                  child: _buildDishByIdNutritionalFacts(width),
+                ),
+                GraphQLProvider(
+                  client: client,
+                  child: _buildDishByIdIngredients(width),
+                ),
+                GraphQLProvider(
+                  client: client,
+                  child: _buildDishByIdDirections(width),
+                ),
 
-
-              Padding(
-                padding: EdgeInsets.only(left: 289, right: 0, top: 253, bottom: 0),
-
-                child: SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      toggleLike();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lime,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                      padding: EdgeInsets.all(0),
-                    ),
-                    child: LikeButton(
-                      onTap: (bool isLiked) async {
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 289, right: 0, top: 253, bottom: 0),
+                  child: SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
                         toggleLike();
                       },
-                      isLiked: isLiked, // Replace 'isLiked' with your own variable that represents the liked state
-                      size: 40,
-                      animationDuration: const Duration(milliseconds: 900),
-                      bubblesColor: const BubblesColor(
-                        dotPrimaryColor: Color.fromARGB(255, 255, 255, 0),
-                        dotSecondaryColor: Color.fromARGB(255, 255, 255, 255),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lime,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        padding: EdgeInsets.all(0),
                       ),
-                      likeBuilder: (bool isLiked) {
-                        if (isLiked) {
-                          return const Icon(
-                            Icons.favorite,
-                            size: 40,
-                            color: Color.fromARGB(255, 255, 255, 215),
-                          );
-                        } else {
-                          return const Icon(
-                            Icons.favorite_outline,
-                            size: 40,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          );
-                        }
-                      },
-                      circleColor: const CircleColor(
-                        start: Color.fromARGB(255, 255, 255, 255),
-                        end: Color.fromARGB(255, 255, 255, 0),
+                      child: LikeButton(
+                        onTap: (bool isLiked) async {
+                          toggleLike();
+                        },
+                        isLiked:
+                            isLiked, // Replace 'isLiked' with your own variable that represents the liked state
+                        size: 40,
+                        animationDuration: const Duration(milliseconds: 900),
+                        bubblesColor: const BubblesColor(
+                          dotPrimaryColor: Color.fromARGB(255, 255, 255, 0),
+                          dotSecondaryColor: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        likeBuilder: (bool isLiked) {
+                          if (isLiked) {
+                            return const Icon(
+                              Icons.favorite,
+                              size: 40,
+                              color: Color.fromARGB(255, 255, 255, 215),
+                            );
+                          } else {
+                            return const Icon(
+                              Icons.favorite_outline,
+                              size: 40,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            );
+                          }
+                        },
+                        circleColor: const CircleColor(
+                          start: Color.fromARGB(255, 255, 255, 255),
+                          end: Color.fromARGB(255, 255, 255, 0),
+                        ),
                       ),
                     ),
-
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
-      )),
+              ],
+            )
+          ],
+        )
+      ),
     );
   }
 
@@ -329,34 +336,7 @@ class _dishDescriptionState extends State<dishDescription> {
 
   Widget _buildDishByIdDescription(double width) {
     return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getDishById),
-          variables: {'id': '${homePage.dishId}'},
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
-              ),
-            );
-          }
-
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final Map<String, dynamic> data = result.data?['displayDishById'];
-
-          if (data == null) {
-            return const Text('No dishes found');
-          }
-
-          return Column(
+      child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
@@ -379,217 +359,245 @@ class _dishDescriptionState extends State<dishDescription> {
                             topRight: Radius.circular(40),
                             topLeft: Radius.circular(40)),
                       ),
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
+                      child: Query(
+                        options: QueryOptions(
+                          document: gql(getDishById),
+                          variables: {'id': '${homePage.dishId}'},
+                        ),
+                        builder: (QueryResult result, {fetchMore, refetch}) {
+                          if (result.hasException) {
+                            print(result.exception.toString());
+                            return Center(
+                              child: Text(
+                                'Error fetching dishes: ${result.exception.toString()}',
+                              ),
+                            );
+                          }
+
+                          if (result.isLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          final Map<String, dynamic> data = result.data?['displayDishById'];
+
+                          if (data == null) {
+                            return const Text('No dishes found');
+                          }
+
+                          return Container(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
                               children: [
-                                SizedBox(
-                                  width: width - 40,
-                                  child: Text(
-                                    data['dishName'],
-                                    style: const TextStyle(
-                                      fontFamily: 'Georgia',
-                                      fontSize: 30,
-                                      color: Colors.white,
-                                    ),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  // width: (CustomSizes.width - 40) / 3,
-                                  height: 42,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 9, right: 9),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: width - 40,
+                                      child: Text(
+                                        data['dishName'],
+                                        style: const TextStyle(
+                                          fontFamily: 'Georgia',
+                                          fontSize: 30,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      // width: (CustomSizes.width - 40) / 3,
+                                      height: 42,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 9, right: 9),
+                                        child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: [
-                                            const Icon(
-                                              Icons.star,
-                                              color: Colors.yellow,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              data['dishRating'],
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                              ),
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  data['dishRating'],
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Georgia',
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                  ),
+                                                  maxLines: 3,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  // width: (CustomSizes.width - 40) / 3,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
+                                    SizedBox(
+                                      // width: (CustomSizes.width - 40) / 3,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    children: [
-                                      CustomizableCounter(
-                                        showButtonText: false,
-                                        borderColor: Colors.white,
-                                        borderWidth: 0.5,
-                                        borderRadius: 15,
-                                        backgroundColor: Colors.transparent,
-                                        buttonText: "Add Item",
-                                        textColor: Colors.white,
-                                        textSize: 15,
-                                        count: 2,
-                                        step: 1,
-                                        minCount: 1,
-                                        maxCount: 30,
-                                        incrementIcon: const Icon(
-                                          Icons.add,
-                                          size: 15,
-                                          color: Colors.white,
-                                        ),
-                                        decrementIcon: const Icon(
-                                          Icons.remove,
-                                          size: 15,
-                                          color: Colors.white,
-                                        ),
-                                        onDecrement: (value) {
-                                          setState(() {
-                                            serves = value;
-                                          });
-                                          // ScaffoldMessenger.of(context).showSnackBar(
-                                          //   SnackBar(
-                                          //     content: Text("Value Decremented: $value"),
-                                          //     duration: const Duration(milliseconds: 250),
-                                          //   ),
-                                          // );
-                                        },
-                                        onIncrement: (value) {
-                                          setState(() {
-                                            serves = value;
-                                          });
-                                          // ScaffoldMessenger.of(context).showSnackBar(
-                                          //   SnackBar(
-                                          //     content: Text("Value Incremented: $value"),
-                                          //     duration: const Duration(milliseconds: 250),
-                                          //   ),
-                                          // );
-                                        },
-                                        onCountChange: (value) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Dish serves: ${(value).toInt()} people"),
-                                              duration: const Duration(
-                                                  milliseconds: 500),
+                                        children: [
+                                          CustomizableCounter(
+                                            showButtonText: false,
+                                            borderColor: Colors.white,
+                                            borderWidth: 0.5,
+                                            borderRadius: 15,
+                                            backgroundColor: Colors.transparent,
+                                            buttonText: "Add Item",
+                                            textColor: Colors.white,
+                                            textSize: 15,
+                                            count: 2,
+                                            step: 1,
+                                            minCount: 1,
+                                            maxCount: 30,
+                                            incrementIcon: const Icon(
+                                              Icons.add,
+                                              size: 15,
+                                              color: Colors.white,
                                             ),
-                                          );
-                                        },
+                                            decrementIcon: const Icon(
+                                              Icons.remove,
+                                              size: 15,
+                                              color: Colors.white,
+                                            ),
+                                            onDecrement: (value) {
+                                              setState(() {
+                                                serves = value;
+                                              });
+                                              // ScaffoldMessenger.of(context).showSnackBar(
+                                              //   SnackBar(
+                                              //     content: Text("Value Decremented: $value"),
+                                              //     duration: const Duration(milliseconds: 250),
+                                              //   ),
+                                              // );
+                                            },
+                                            onIncrement: (value) {
+                                              setState(() {
+                                                serves = value;
+                                              });
+                                              // ScaffoldMessenger.of(context).showSnackBar(
+                                              //   SnackBar(
+                                              //     content: Text("Value Incremented: $value"),
+                                              //     duration: const Duration(milliseconds: 250),
+                                              //   ),
+                                              // );
+                                            },
+                                            onCountChange: (value) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      "Dish serves: ${(value).toInt()} people"),
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 150,
-                                  height: 42,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 9, right: 9),
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 255, 130, 0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
+                                    ),
+                                    SizedBox(
+                                      width: 150,
+                                      height: 42,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 9, right: 9),
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color.fromARGB(
+                                                255, 255, 130, 0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
                                               BorderRadius.circular(22),
-                                        ),
-                                        padding: const EdgeInsets.all(0),
-                                      ),
-                                      child: Text(
-                                        '${data['dishCalories']} kcal',
-                                        style: const TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 18,
-                                          color: Colors.white,
+                                            ),
+                                            padding: const EdgeInsets.all(0),
+                                          ),
+                                          child: Text(
+                                            '${data['dishCalories']} kcal',
+                                            style: const TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width: width - 40,
+                                                height: 165,
+                                                child: Text(
+                                                  data['dishDescription'],
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Georgia',
+                                                    fontSize: 12,
+                                                    color: Colors.white,
+                                                  ),
+                                                  maxLines: 15,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
                               ],
                             ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Expanded(
-                                child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: width - 40,
-                                        height: 165,
-                                        child: Text(
-                                          data['dishDescription'],
-                                          style: const TextStyle(
-                                            fontFamily: 'Georgia',
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                          ),
-                                          maxLines: 15,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                ],
-                              ),
-                            )),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+
     );
   }
 
@@ -707,7 +715,8 @@ class _dishDescriptionState extends State<dishDescription> {
                                 document: gql(getDishById),
                                 variables: {'id': '${homePage.dishId}'},
                               ),
-                              builder: (QueryResult result, {fetchMore, refetch}) {
+                              builder: (QueryResult result,
+                                  {fetchMore, refetch}) {
                                 if (result.hasException) {
                                   print(result.exception.toString());
                                   return Center(
@@ -723,7 +732,8 @@ class _dishDescriptionState extends State<dishDescription> {
                                   );
                                 }
 
-                                final Map<String, dynamic> data = result.data?['displayDishById'];
+                                final Map<String, dynamic> data =
+                                    result.data?['displayDishById'];
 
                                 if (data == null) {
                                   return const Text('No dishes found');
@@ -736,7 +746,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Calories',
@@ -751,16 +761,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -779,7 +789,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Proteins',
@@ -794,16 +804,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -822,7 +832,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Fats',
@@ -837,16 +847,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -865,7 +875,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Carbohydrates',
@@ -880,16 +890,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -908,7 +918,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Fibre',
@@ -923,16 +933,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -951,7 +961,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Sugar',
@@ -966,16 +976,16 @@ class _dishDescriptionState extends State<dishDescription> {
                                         ),
                                         const Expanded(
                                             child: SizedBox(
-                                              child: Text(
-                                                '....................................................................',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 20,
-                                                  color: Colors.grey,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            )),
+                                          child: Text(
+                                            '....................................................................',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 20,
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 1,
+                                          ),
+                                        )),
                                         const SizedBox(
                                           width: 10,
                                         ),
@@ -994,7 +1004,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                     ),
                                     const Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Estimated values based on serving size',
@@ -1010,7 +1020,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                 );
                               },
                             ),
-
                           ),
                         ],
                       ),
@@ -1248,8 +1257,8 @@ class _dishDescriptionState extends State<dishDescription> {
                                                                 .start,
                                                         children: [
                                                           Container(
-                                                              height: 50,
-                                                              width: 50,
+                                                              height: 55,
+                                                              width: 55,
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(5),
@@ -1334,959 +1343,360 @@ class _dishDescriptionState extends State<dishDescription> {
 
   Widget _buildDishByIdDirections(double width) {
     return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getDishById),
-          variables: {'id': '${homePage.dishId}'},
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return Center(
-              child: Text(
-                'Error fetching dishes: ${result.exception.toString()}',
+      child: Opacity(
+        opacity: opacityext1,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AnimatedContainer(
+              width: _width1,
+              height: _height1 + 58,
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(56, 56, 56, 1),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
               ),
-            );
-          }
+              // Define how long the animation should take.
+              duration: const Duration(seconds: 1),
+              // Provide an optional curve to make the animation feel smoother.
+              curve: Curves.fastOutSlowIn,
 
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final Map<String, dynamic> data = result.data?['displayDishById'];
-
-          if (data == null) {
-            return const Text('No dishes found');
-          }
-
-          return Opacity(
-            opacity: opacityext1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AnimatedContainer(
-                  width: _width1,
-                  height: _height1 + 58,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(56, 56, 56, 1),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40)),
-                  ),
-                  // Define how long the animation should take.
-                  duration: const Duration(seconds: 1),
-                  // Provide an optional curve to make the animation feel smoother.
-                  curve: Curves.fastOutSlowIn,
-
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 25, top: 10, bottom: 0),
-                        child: SizedBox(
-                          width: width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (ext1 == false) {
-                                setState(() {
-                                  ext1 = true;
-                                  ext1icon = const Icon(
-                                    Icons.arrow_drop_up_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                });
-                              } else {
-                                setState(() {
-                                  ext1 = false;
-                                  ext1icon = const Icon(
-                                    Icons.arrow_drop_down_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  );
-                                });
-                              }
-                              // Use setState to rebuild the widget with new values.
-                              setState(() {
-                                if (ext1 == true) {
-                                  _width1 = width;
-                                  _height1 = 530;
-                                  _isShowExt1 = !_isShowExt1;
-                                } else {
-                                  _width1 = width;
-                                  _height1 = 15;
-                                  _isShowExt1 = !_isShowExt1;
-                                }
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 25, top: 10, bottom: 0),
+                    child: SizedBox(
+                      width: width,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (ext1 == false) {
+                            setState(() {
+                              ext1 = true;
+                              ext1icon = const Icon(
+                                Icons.arrow_drop_up_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              );
+                            });
+                          } else {
+                            setState(() {
+                              ext1 = false;
+                              ext1icon = const Icon(
+                                Icons.arrow_drop_down_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              );
+                            });
+                          }
+                          // Use setState to rebuild the widget with new values.
+                          setState(() {
+                            if (ext1 == true) {
+                              _width1 = width;
+                              _height1 = 530;
+                              _isShowExt1 = !_isShowExt1;
+                            } else {
+                              _width1 = width;
+                              _height1 = 15;
+                              _isShowExt1 = !_isShowExt1;
+                            }
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(0),
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Direction',
+                              style: TextStyle(
+                                fontFamily: 'Georgia',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: CustomColors.white,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Direction',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: CustomColors.white,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const Expanded(child: SizedBox()),
-                                ext1icon,
-                              ],
-                            ),
-                          ),
+                            const Expanded(child: SizedBox()),
+                            ext1icon,
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Visibility(
-                          visible: _isShowExt1,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 20, right: 20),
-                                  child: Divider(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: width,
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 20,
-                                          right: 20,
-                                          top: 0,
-                                          bottom: 0),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 0,
-                                                right: 0,
-                                                top: 20,
-                                                bottom: 0),
-                                            child: Row(
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      'Total Time',
-                                                      style: TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 17,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '${data['dishTotalTime']}',
-                                                      style: const TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontSize: 14,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const Expanded(
-                                                    child: SizedBox()),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      'Prep Time',
-                                                      style: TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 17,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '${data['dishPreparationTime']}',
-                                                      style: const TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontSize: 14,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const Expanded(
-                                                    child: SizedBox()),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      'Cook Time',
-                                                      style: TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 17,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '${data['dishCookingTime']}',
-                                                      style: const TextStyle(
-                                                        fontFamily: 'Georgia',
-                                                        fontSize: 14,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 40,
-                                          ),
-                                          SizedBox(
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: _isShowExt1,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: Divider(
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              width: width,
+                              child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20, top: 0, bottom: 0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 0, right: 0, top: 0, bottom: 20),
+                                          child: SizedBox(
                                             width: width,
-                                            height: 50,
-                                            child: ElevatedButton(
-                                              onPressed: () {},
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                        255, 155, 167, 27),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                ),
+
+                                            child: Query(
+                                              options: QueryOptions(
+                                                document: gql(getDishById),
+                                                variables: {'id': '${homePage.dishId}'},
                                               ),
-                                              child: const Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Step-by-Step mode",
-                                                    style: TextStyle(
-                                                      fontFamily: 'Georgia',
-                                                      fontSize: 17,
+                                              builder: (QueryResult result,
+                                                  {fetchMore, refetch}) {
+                                                if (result.hasException) {
+                                                  print(result.exception.toString());
+                                                  return Center(
+                                                    child: Text(
+                                                      'Error fetching dishes: ${result.exception.toString()}',
                                                     ),
+                                                  );
+                                                }
+
+                                                if (result.isLoading) {
+                                                  return const Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                }
+
+                                                final Map<String, dynamic> data =
+                                                result.data?['displayDishById'];
+
+                                                if (data == null) {
+                                                  return const Text('No dishes found');
+                                                }
+
+                                                return Container(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 0, right: 0, top: 20, bottom: 0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                        children: [
+                                                          const Text(
+                                                            'Total Time',
+                                                            style: TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 17,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '${data['dishTotalTime']}',
+                                                            style: const TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontSize: 14,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                        children: [
+                                                          const Text(
+                                                            'Prep Time',
+                                                            style: TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 17,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '${data['dishPreparationTime']}',
+                                                            style: const TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontSize: 14,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                        children: [
+                                                          const Text(
+                                                            'Cook Time',
+                                                            style: TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 17,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '${data['dishCookingTime']}',
+                                                            style: const TextStyle(
+                                                              fontFamily: 'Georgia',
+                                                              fontSize: 14,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  )
-                                                ],
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Divider(
+                                          color: Colors.white,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 0, right: 0, top: 0, bottom: 20),
+                                          child: SizedBox(
+                                            width: width,
+                                            height: 330,
+
+                                            child: Query(
+                                              options: QueryOptions(
+                                                document: gql(getDishSteps),
+                                                variables: {
+                                                  'dishId': '${homePage.dishId}'
+                                                },
+                                              ),
+                                              builder: (QueryResult result, {fetchMore, refetch}) {
+                                                if (result.hasException) {
+                                                  print(result.exception.toString());
+                                                  return Center(
+                                                    child: Text(
+                                                      'Error fetching dishes: ${result.exception.toString()}',
+                                                    ),
+                                                  );
+                                                }
+
+                                                if (result.isLoading) {
+                                                  return const Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                }
+
+                                                final List<dynamic> steps = result.data?['displayDishStepById'];
+                                                if (steps == null || steps.isEmpty) {
+                                                  // Handle the case when there are no steps available for the dish
+                                                  return Center(
+                                                    child: Text(
+                                                      'No steps found for this dish.',
+                                                    ),
+                                                  );
+                                                }
+
+                                                return ListView.separated(
+                                                  scrollDirection: Axis.vertical,
+                                                  itemCount: steps.length,
+                                                  separatorBuilder: (BuildContext context, int index) {
+                                                    return const SizedBox(height: 10);
+                                                  },
+                                                  itemBuilder: (context, index) {
+                                                    final step = steps[index];
+                                                    final String stepDescription = step['dishStepDescription'];
+
+                                                    // Add 1 to the index to display the step number
+                                                    final int stepNumber = index + 1;
+
+                                                    return ListTile(
+                                                      shape: const RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(25),
+                                                          topRight: Radius.circular(25),
+                                                          bottomRight: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                        ),
+                                                      ),
+                                                      leading: Text(
+                                                        stepNumber.toString(), // Display the step number
+                                                        style: TextStyle(
+                                                          fontFamily: 'Georgia',
+                                                          fontSize: 17,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      title: Text(
+                                                        stepDescription,
+                                                        style: TextStyle(
+                                                          fontFamily: 'Georgia',
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width,
+                                          height: 50,
+                                          child: ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                              const Color.fromARGB(
+                                                  255, 155, 167, 27),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(25),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              "I made this!",
+                                              style: TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 17,
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "1",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Preheat your oven to 350°F (175°C). Grease and flour a 9-inch round cake pan or line it with parchment paper.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "2",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "In a medium bowl, whisk together the flour, baking powder, baking soda, and salt. Set aside.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "3",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "In a large mixing bowl, cream together the softened butter and granulated sugar until light and fluffy.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "4",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Beat in the eggs, one at a time, followed by the vanilla extract, lemon zest, and lemon juice. "
-                                                "Mix well after each addition.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "5",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Gradually add the dry ingredients to the wet ingredients, alternating with the buttermilk. "
-                                                "Begin and end with the dry ingredients, mixing until just combined. Do not overmix.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "6",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Gently fold in the mixed berries into the batter.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "7",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Pour the batter into the prepared cake pan and smooth the top with a spatula.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "8",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Bake in the preheated oven for 35-40 minutes or until a toothpick inserted into the center comes out clean.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "9",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Remove the cake from the oven and allow it to cool in the pan for about 10 minutes. "
-                                                "Then transfer it to a wire rack to cool completely.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "10",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Once the cake has cooled, you can dust it with powdered sugar for decoration, if desired.",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ListTile(
-                                              tileColor: Colors.white24,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(25),
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10),
-                                                              bottomLeft:
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                              leading: const Text(
-                                                "11",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              title: const Text(
-                                                "Slice and serve the Lemon Berry Cake, and enjoy!",
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              trailing: SizedBox(
-                                                height: 50,
-                                                width: 50,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    foregroundColor:
-                                                        Colors.transparent,
-                                                    elevation: 0,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    minimumSize: Size.zero,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

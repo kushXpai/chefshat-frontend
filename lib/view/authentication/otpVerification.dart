@@ -10,7 +10,7 @@ import '../../constants/colors/customColors.dart';
 class otpVerification extends StatefulWidget {
   const otpVerification({Key? key}) : super(key: key);
 
-  static int userId = 0;
+  static int userId = 1;
 
   @override
   State<otpVerification> createState() => _otpVerificationState();

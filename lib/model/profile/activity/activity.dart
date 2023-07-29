@@ -1,4 +1,9 @@
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../../../constants/colors/customColors.dart';
+import '../../../controller/graphQL/graphQLClient.dart';
 
 // import 'constants.dart';
 
@@ -10,15 +15,310 @@ class activity extends StatefulWidget {
 }
 
 class _activityState extends State<activity> {
+
+  final String getRatedRecipe = '''
+    query {
+      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
+        id
+        userId {
+          id
+          username
+        }
+        dishId {
+          id
+          dishName
+          dishImage
+        }
+        rating
+        recipeRated
+      }
+    }
+  ''';
+
   @override
   Widget build(BuildContext context) {
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
 
-    return Text("data");
-    // return SingleChildScrollView(
+    return SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader("My Ratings ( 0 )"),
+            ),
+            GraphQLProvider(
+              client: client,
+              child: _buildUserRatedRecipe(width),
+            ),
+
+
+          ],
+        )
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 10),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Georgia',
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserRatedRecipe(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getRatedRecipe),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic>? savedRecipes = result.data?['displayUserRatedRecipeById'];
+
+          if (savedRecipes == null || savedRecipes.isEmpty) {
+            return Column(
+              children: [
+                Container(
+                  height: 120,
+                  width: width,
+                  child: Image.asset(
+                    'assets/profilePagePhotos/ratings.png',
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                  child: Text(
+                    "Rate your first recipe to see it here.",
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColors.white,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            );
+          } else {
+            int savedRecipesLength = savedRecipes.length.clamp(0, 2); // Limit to 2 saved recipes
+            print(savedRecipesLength);
+            return Column(
+              children: [
+                SizedBox(
+                  height: savedRecipesLength.toDouble() * 125,
+                  child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemCount: savedRecipesLength,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      final savedRecipe = savedRecipes![index];
+                      final String dishName = savedRecipe['dishId']['dishName'];
+                      final String dishImage = savedRecipe['dishId']['dishImage'];
+                      final String dishRating = savedRecipe['rating'];
+                      final String dishRatedTime = savedRecipe['recipeRated'];
+                      final int dishRatings = 142;
+
+                      return Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 10, top: 10, bottom: 10),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.transparent,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                shadowColor: Colors.transparent,
+                                minimumSize: Size.zero,
+                                padding: const EdgeInsets.all(0),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 90,
+                                    width: 90,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        "http://192.168.68.105:8000/media/" + dishImage,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 0, right: 0, top: 5, bottom: 5),
+                                          child: Text(
+                                            dishName,
+                                            style: const TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              color: CustomColors.white,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 0, right: 0, top: 5, bottom: 5),
+                                          child: Text(
+                                            "rated ${formatTimeDifference(dishRatedTime)}",
+                                            style: const TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: CustomColors.grey,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 45,
+                                  width: 45,
+
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: dishRating == "THUMBSUP"
+                                        ? AssetImage('assets/general/ThumbsUp.png')
+                                        : AssetImage('assets/general/ThumbsDown.png'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 10, bottom: 10),
+                  child: Container(
+                    width: width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.lime, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'savedRecipes');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.white10,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        minimumSize: Size.zero,
+                        padding: const EdgeInsets.all(0),
+                      ),
+                      child: const Text(
+                        "See more",
+                        style: TextStyle(
+                          fontFamily: 'Georgia',
+                          fontSize: 20,
+                          color: Colors.lime,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  String formatTimeDifference(String time) {
+    final now = DateTime.now();
+    final ratedTime = DateTime.parse(time);
+
+    final difference = now.difference(ratedTime);
+
+    if (difference.inSeconds < 60) {
+      return 'just now';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays == 1) {
+      return 'yesterday';
+    } else if (difference.inDays < 30) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays < 365) {
+      final months = difference.inDays ~/ 30;
+      return '${months} ${months == 1 ? 'month' : 'months'} ago';
+    } else {
+      final years = difference.inDays ~/ 365;
+      return '${years} ${years == 1 ? 'year' : 'years'} ago';
+    }
+  }
+
+// return SingleChildScrollView(
     //   child: Column(
     //     children: [
     //       // Ratings
@@ -925,5 +1225,4 @@ class _activityState extends State<activity> {
     //     ],
     //   ),
     // );
-  }
 }

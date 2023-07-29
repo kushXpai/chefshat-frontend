@@ -13,9 +13,9 @@ class cookbooks extends StatefulWidget {
 }
 
 class _cookbooksState extends State<cookbooks> {
-  final String getSavedRecipes = '''
+  final String getSavedRecipe = '''
     query {
-      displayUserSavedRecipesById(userId: ${otpVerification.userId}) {
+      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
         id
         userId {
           id
@@ -51,7 +51,7 @@ class _cookbooksState extends State<cookbooks> {
           ),
           GraphQLProvider(
             client: client,
-            child: _buildUserSavedRecipes(width),
+            child: _buildUserSavedRecipe(width),
           ),
 
           Padding(
@@ -382,11 +382,11 @@ class _cookbooksState extends State<cookbooks> {
     );
   }
 
-  Widget _buildUserSavedRecipes(double width) {
+  Widget _buildUserSavedRecipe(double width) {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipes),
+          document: gql(getSavedRecipe),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -403,7 +403,7 @@ class _cookbooksState extends State<cookbooks> {
           }
 
           final List<dynamic> savedRecipes =
-              result.data?['displayUserSavedRecipesById'];
+              result.data?['displayUserSavedRecipeById'];
 
           if (savedRecipes.isEmpty){
             return Column(
