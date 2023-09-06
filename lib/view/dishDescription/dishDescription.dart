@@ -101,20 +101,20 @@ class _dishDescriptionState extends State<dishDescription> {
   ''';
 
   final String getDishSteps = r'''
-  query GetDishSteps($dishId: ID!) {
-    displayDishStepById(dishId: $dishId) {
-      id
-      dishStepDescription
+    query GetDishSteps($dishId: ID!) {
+      displayDishStepById(dishId: $dishId) {
+        id
+        dishStepDescription
+      }
     }
-  }
-''';
+  ''';
 
 
   bool isLiked = false;
 
   final String addRecipeToSavedRecipesMutation = r'''
-    mutation AddRecipeToSavedRecipes($userId: ID!, $dishId: ID!) {
-      addRecipeToSavedRecipes(userId: $userId, dishId: $dishId) {
+    mutation AddRecipeToSavedRecipes($userId: ID!, $dishId: ID!, $userSavedRecipeCategory: String!) {
+      addRecipeToSavedRecipes(userId: $userId, dishId: $dishId, userSavedRecipeCategory: $userSavedRecipeCategory) {
         savedRecipe {
           id
           userId {
@@ -124,6 +124,7 @@ class _dishDescriptionState extends State<dishDescription> {
           dishId {
             id
             dishName
+            dishCategoryCourse
           }
           recipeSaved
         }
@@ -147,6 +148,7 @@ class _dishDescriptionState extends State<dishDescription> {
 
     final userId = otpVerification.userId;
     final dishId = homePage.dishId;
+    final userSavedRecipeCategory = homePage.dishCourse;
 
     final GraphQLClient _client = GraphQLClient(
       cache: GraphQLCache(),
@@ -159,7 +161,7 @@ class _dishDescriptionState extends State<dishDescription> {
         final response = await _client.mutate(
           MutationOptions(
             document: gql(addRecipeToSavedRecipesMutation),
-            variables: {'userId': userId, 'dishId': dishId},
+            variables: {'userId': userId, 'dishId': dishId, 'userSavedRecipeCategory': userSavedRecipeCategory},
           ),
         );
         print(response);
@@ -185,7 +187,6 @@ class _dishDescriptionState extends State<dishDescription> {
 
     return Scaffold(
       backgroundColor: CustomColors.black,
-      // extendBodyBehindAppBar: true,
       extendBody: true,
 
       body: Center(
@@ -222,8 +223,7 @@ class _dishDescriptionState extends State<dishDescription> {
                 ),
 
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 289, right: 0, top: 253, bottom: 0),
+                  padding: const EdgeInsets.only(left: 289, right: 0, top: 253, bottom: 0),
                   child: SizedBox(
                     width: 60,
                     height: 60,
@@ -236,14 +236,13 @@ class _dishDescriptionState extends State<dishDescription> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22),
                         ),
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                       ),
                       child: LikeButton(
                         onTap: (bool isLiked) async {
                           toggleLike();
                         },
-                        isLiked:
-                            isLiked, // Replace 'isLiked' with your own variable that represents the liked state
+                        isLiked: isLiked, // Replace 'isLiked' with your own variable that represents the liked state
                         size: 40,
                         animationDuration: const Duration(milliseconds: 900),
                         bubblesColor: const BubblesColor(
@@ -321,7 +320,7 @@ class _dishDescriptionState extends State<dishDescription> {
                   height: width,
                   child: Image(
                     image: NetworkImage(
-                      "http://192.168.68.105:8000/media/" + dishImage,
+                      httpLinkImage + dishImage,
                     ),
                     fit: BoxFit.fill,
                   ),
@@ -1275,8 +1274,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                                               ),
                                                               child:
                                                                   Image.network(
-                                                                "http://192.168.68.105:8000/media/" +
-                                                                    ingredientImage,
+                                                                    httpLinkImage + ingredientImage,
                                                               )),
                                                           Padding(
                                                             padding:

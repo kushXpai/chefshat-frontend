@@ -93,7 +93,7 @@ class _otpVerificationState extends State<otpVerification> {
   // );
 
   Future<int> _getUserId() async {
-    final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
+    final HttpLink httpLink = HttpLink('http://192.168.227.104:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
@@ -257,7 +257,7 @@ class _otpVerificationState extends State<otpVerification> {
                 child: ElevatedButton(
                   onPressed: () async {
                     var len = await getUsersCountByMobileNumber(UserFormFields.userMobileNumber.toString());
-                    // print(len);
+                    print(len);
 
                     if (len == 1){
                       // Navigator.pushNamed(context, 'homePage');
@@ -270,6 +270,7 @@ class _otpVerificationState extends State<otpVerification> {
                       // Navigator.pushNamed(context, 'homePage');
                       Navigator.pushNamed(context, 'entryPoint');
                     } else if (len == 0) {
+                      print("XXX");
                       Navigator.pushNamed(context, 'registrationStep1');
                     }
                   },

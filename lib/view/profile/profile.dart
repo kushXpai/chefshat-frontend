@@ -52,44 +52,7 @@ class _profileState extends State<profile> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, right: 30, top: 67, bottom: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: const BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.transparent,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            shadowColor: Colors.transparent,
-                            minimumSize: Size.zero,
-                            padding: const EdgeInsets.all(10),
-                          ),
-                          child: const Icon(
-                            Icons.shopping_cart,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+
             Column(
               children: [
                 GraphQLProvider(
@@ -331,6 +294,45 @@ class _profileState extends State<profile> {
                 ),
               ],
             ),
+
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 0, right: 30, top: 67, bottom: 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: const BoxDecoration(
+                          color: Colors.white38,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'pantry');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            minimumSize: Size.zero,
+                            padding: const EdgeInsets.all(10),
+                          ),
+                          child: const Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -382,7 +384,7 @@ class _profileState extends State<profile> {
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       backgroundImage: NetworkImage(
-                          "http://192.168.68.105:8000/media/" + data['profilePhoto']),
+                          httpLinkImage + data['profilePhoto']),
                     ),
                   ),
                 ),

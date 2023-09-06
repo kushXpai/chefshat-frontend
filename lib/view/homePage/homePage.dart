@@ -1,5 +1,6 @@
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:chefs_hat/constants/colors/customColors.dart';
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -10,6 +11,7 @@ class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
 
   static String dishId = "";
+  static String dishCourse = "";
 
   @override
   State<homePage> createState() => _homePageState();
@@ -36,6 +38,7 @@ class _homePageState extends State<homePage> {
           id
           dishName
           dishImage
+          dishCategoryCourse
       }
     }
   ''';
@@ -46,6 +49,7 @@ class _homePageState extends State<homePage> {
         id
         dishName
         dishImage
+        dishCategoryCourse
       }
     }
   ''';
@@ -57,9 +61,49 @@ class _homePageState extends State<homePage> {
         dishName
         dishImage
         dishVisits
+        dishCategoryCourse
       }
     }
   ''';
+
+
+  void addToRecentlyViewed(BuildContext context, String dishId) async {
+    final String addRecipeMutation = """
+    mutation AddRecipeToRecentlyViewed(\$userId: ID!, \$dishId: ID!) {
+      addRecipeToRecentlyViewed(userId: \$userId, dishId: \$dishId) {
+        recentlyViewed {
+          id
+          userId {
+            id
+            username
+          }
+          dishId {
+            id
+            dishName
+          }
+        }
+      }
+    }
+  """;
+
+    // Define variables for the mutation (assuming you have the user ID)
+    final String userId = otpVerification.userId.toString(); // Replace with the actual user ID
+    final Map<String, dynamic> variables = {
+      'userId': userId,
+      'dishId': dishId,
+    };
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: HttpLink(httpLinkC), // Replace with your GraphQL API endpoint
+    );
+
+    final MutationOptions options = MutationOptions(
+      document: gql(addRecipeMutation),
+      variables: variables,
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -505,8 +549,7 @@ class _homePageState extends State<homePage> {
                           topRight: Radius.circular(20)),
                       child: Image(
                         image: NetworkImage(
-                          "http://192.168.68.105:8000/media/" +
-                              data['dishImage'],
+                          httpLinkImage + data['dishImage'],
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -966,7 +1009,10 @@ class _homePageState extends State<homePage> {
                       }); // Execute the mutation when button is clicked
                       setState(() {
                         homePage.dishId = dish['id'];
+                        homePage.dishCourse = dish['dishCategoryCourse'];
                       });
+                      addToRecentlyViewed(context, dish['id']);
+                      print(homePage.dishCourse);
                       Navigator.pushNamed(context, 'dishDescription');
                     },
                     style: ElevatedButton.styleFrom(
@@ -989,8 +1035,7 @@ class _homePageState extends State<homePage> {
                               borderRadius: BorderRadius.circular(20),
                               child: Image(
                                 image: NetworkImage(
-                                  "http://192.168.68.105:8000/media/" +
-                                      dish['dishImage'],
+                                  httpLinkImage + dish['dishImage'],
                                 ),
                                 fit: BoxFit.fill,
                               ),
@@ -1456,8 +1501,7 @@ class _homePageState extends State<homePage> {
                           borderRadius: BorderRadius.circular(20),
                           child: Image(
                             image: NetworkImage(
-                              "http://192.168.68.105:8000/media/" +
-                                  dish['dishImage'],
+                              httpLinkImage + dish['dishImage'],
                             ),
                             fit: BoxFit.fill,
                           ),
@@ -1922,8 +1966,7 @@ class _homePageState extends State<homePage> {
                           borderRadius: BorderRadius.circular(20),
                           child: Image(
                             image: NetworkImage(
-                              "http://192.168.68.105:8000/media/" +
-                                  dish['dishImage'],
+                              httpLinkImage + dish['dishImage'],
                             ),
                             fit: BoxFit.fill,
                           ),
@@ -2388,8 +2431,7 @@ class _homePageState extends State<homePage> {
                           borderRadius: BorderRadius.circular(20),
                           child: Image(
                             image: NetworkImage(
-                              "http://192.168.68.105:8000/media/" +
-                                  dish['dishImage'],
+                              httpLinkImage + dish['dishImage'],
                             ),
                             fit: BoxFit.fill,
                           ),

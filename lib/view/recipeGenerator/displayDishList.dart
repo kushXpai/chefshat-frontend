@@ -312,8 +312,7 @@ class _displayDishListState extends State<displayDishList> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              "http://192.168.68.105:8000/media/" +
-                                  dish['dishImage'],
+                              httpLinkImage + dish['dishImage'],
                               fit: BoxFit
                                   .cover, // Adjust the image's fit as needed
                             ),

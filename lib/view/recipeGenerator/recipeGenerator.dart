@@ -55,7 +55,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
     RecipeButton('ketchup', false),
     RecipeButton('mayonnaise', false),
     RecipeButton('milk', false),
-    RecipeButton('mustard', false),
+    RecipeButton('Mustard', false),
     RecipeButton('olive oil', false),
     RecipeButton('onion', false),
     RecipeButton('onion powder', false),
@@ -2909,7 +2909,6 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   }
 
   Widget buildButtons(List<RecipeButton> ingredients) {
-    // Use the filtered ingredients list instead of the original lists
     return Wrap(
       alignment: WrapAlignment.start,
       spacing: 8.0,

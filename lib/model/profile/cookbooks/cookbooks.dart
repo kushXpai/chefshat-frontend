@@ -1,4 +1,5 @@
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
+import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -7,6 +8,8 @@ import '../../../controller/graphQL/graphQLClient.dart';
 
 class cookbooks extends StatefulWidget {
   const cookbooks({Key? key}) : super(key: key);
+
+  static String savedRecipeCourse = "";
 
   @override
   State<cookbooks> createState() => _cookbooksState();
@@ -31,336 +34,281 @@ class _cookbooksState extends State<cookbooks> {
     }
   ''';
 
+  final String getSavedRecipeCourse = '''
+    query displayUserSavedRecipeByCourse(\$userSavedRecipeCategory : String!) {
+      displayUserSavedRecipeByCourse(userId: ${otpVerification.userId}, userSavedRecipeCategory: \$userSavedRecipeCategory) {
+        id
+        userId {
+          id
+          username
+        }
+        dishId {
+          id
+          dishName
+          dishImage
+        }
+        recipeSaved
+      }
+    }
+  ''';
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-              top: 0,
-              bottom: 0,
-            ),
-            child: _buildSectionHeader("Recently Saved Recipes"),
-          ),
-          GraphQLProvider(
-            client: client,
-            child: _buildUserSavedRecipe(width),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 0, top: 50, bottom: 10),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: Colors.transparent,
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(0),
+    return SizedBox(
+      width: width,
+      height: height * 0.62,
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 10,
+                top: 0,
+                bottom: 0,
               ),
-
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 90,
-                      width: 150,
-
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                          fit: BoxFit.fitWidth,
-                        ),
-                      )
-                  ),
-                  const SizedBox(width: 20,),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Appetizer",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(
-                        "0 recipes",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              child: _buildSectionHeader("Recently Saved Recipes"),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipe(width),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: Colors.transparent,
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(0),
+
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 0,
+                right: 0,
+                top: 50,
+                bottom: 0,
               ),
-
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 90,
-                      width: 150,
-
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                          fit: BoxFit.fitWidth,
-                        ),
-                      )
-                  ),
-                  const SizedBox(width: 20,),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Entrée",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(
-                        "0 recipes",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipeCourse1(width),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: Colors.transparent,
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(0),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
               ),
-
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 90,
-                      width: 150,
-
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                          fit: BoxFit.fitWidth,
-                        ),
-                      )
-                  ),
-                  const SizedBox(width: 20,),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Dessert",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(
-                        "0 recipes",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipeCourse2(width),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: Colors.transparent,
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(0),
-              ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
 
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 90,
-                      width: 150,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
 
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                          fit: BoxFit.fitWidth,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                      )
-                  ),
-                  const SizedBox(width: 20,),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Sides",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(
-                        "0 recipes",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                shadowColor: Colors.transparent,
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(0),
-              ),
 
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 90,
-                      width: 150,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
 
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-
-                        child: Image.network(
-                          'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                          fit: BoxFit.fitWidth,
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Dessert",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
                         ),
-                      )
-                  ),
-                  const SizedBox(width: 20,),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Drinks",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(
-                        "0 recipes",
-                        style:  TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Sides",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Snacks",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 75,),)
         ],
-      )
+      ),
     );
   }
 
@@ -435,8 +383,8 @@ class _cookbooksState extends State<cookbooks> {
             );
           } else {
             int savedRecipesLength = 0;
-            if(savedRecipes.length > 2){
-              savedRecipesLength = 2;
+            if(savedRecipes.length > 5){
+              savedRecipesLength = 5;
             } else {
               savedRecipesLength = savedRecipes.length;
             }
@@ -444,9 +392,9 @@ class _cookbooksState extends State<cookbooks> {
             return Column(
               children: [
                 SizedBox(
-                  height: savedRecipesLength * 125,
+                  height: 210,
                   child: ListView.separated(
-                    scrollDirection: Axis.vertical,
+                    scrollDirection: Axis.horizontal,
                     itemCount: savedRecipesLength, // Use the length of the saved recipes list
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(height: 10);
@@ -461,10 +409,13 @@ class _cookbooksState extends State<cookbooks> {
 
                       return Padding(
                         padding: const EdgeInsets.only(
-                            left: 10, right: 10, top: 0, bottom: 10),
+                            left: 0, right: 10, top: 0, bottom: 10),
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {});
+                            setState(() {
+                              homePage.dishId = savedRecipe['id'];
+                            });
+                            Navigator.pushNamed(context, 'dishDescription');
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.transparent,
@@ -474,62 +425,43 @@ class _cookbooksState extends State<cookbooks> {
                             minimumSize: Size.zero,
                             padding: const EdgeInsets.all(0),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    "http://192.168.68.105:8000/media/" +
-                                        dishImage,
-                                    fit: BoxFit.cover,
+                          child: SizedBox(
+                            width: width / 3 + 10,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: width / 3,
+                                  height: width / 3,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        httpLinkImage + dishImage,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 0, right: 0, top: 5, bottom: 5),
-                                      child: Text(
-                                        dishName,
-                                        style: const TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.white,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 0,
+                                    right: 0,
+                                    top: 10,
+                                    bottom: 0,
+                                  ),
+                                  child: Text(
+                                    dishName,
+                                    style: const TextStyle(
+                                      fontFamily: 'Georgia',
+                                      fontSize: 14,
+                                      color: Colors.white,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 0, right: 0, top: 5, bottom: 5),
-                                      child: Text(
-                                        '$dishRatings ratings',
-                                        style: const TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.grey,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
+                                    maxLines: 3,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -538,7 +470,7 @@ class _cookbooksState extends State<cookbooks> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 10, bottom: 10),
+                      left: 0, right: 0, top: 10, bottom: 10),
                   child: Container(
                     width: width,
                     height: 50,
@@ -578,4 +510,838 @@ class _cookbooksState extends State<cookbooks> {
       ),
     );
   }
+
+  Widget _buildUserSavedRecipeCourse1(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory': 'APPETIZERS', // Replace with your desired category
+          },
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes = result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Appetizers",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            final dish = savedRecipes[0];
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "APPETIZERS";
+                  });
+                  print(cookbooks.savedRecipeCourse);
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            httpLinkImage + dish['dishId']['dishImage'],
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Appetizers",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          "$savedRecipesLength recipes",
+                          style:  const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse2(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory': 'ENTREE', // Replace with your desired category
+          },
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes = result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Entrée",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            final dish = savedRecipes[0];
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            // 'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            httpLinkImage + dish['dishId']['dishImage'],
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Entrée",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          "$savedRecipesLength recipes",
+                          style:  const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse3(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeCourse),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes = result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Dessert",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "DESSERTS";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Dessert",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          "$savedRecipesLength recipes",
+                          style:  const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse4(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeCourse),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes = result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Sides",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "SIDES";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Sides",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          "$savedRecipesLength recipes",
+                          style:  const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse5(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeCourse),
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes = result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "ENTREE";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Snacks",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          "0 recipes",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "SNACKS";
+                  });
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+
+                          child: Image.network(
+                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )
+                    ),
+                    const SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Snacks",
+                          style:  TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          "$savedRecipesLength recipes",
+                          style:  const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
 }

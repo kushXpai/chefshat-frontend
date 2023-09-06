@@ -1,7 +1,10 @@
 
 import 'package:chefs_hat/entryPoint.dart';
+import 'package:chefs_hat/model/pantry/pantryCategory.dart';
+import 'package:chefs_hat/model/pantry/pantryDishes.dart';
 import 'package:chefs_hat/model/profile/activity/activity.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
+import 'package:chefs_hat/model/profile/cookbooks/savedRecipeCourse.dart';
 import 'package:chefs_hat/model/profile/cookbooks/savedRecipes.dart';
 import 'package:chefs_hat/model/profile/photos/photos.dart';
 import 'package:chefs_hat/test.dart';
@@ -10,6 +13,7 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
+import 'package:chefs_hat/view/pantry/pantry.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
 import 'package:chefs_hat/view/recipeGenerator/displayDishList.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
@@ -46,16 +50,22 @@ void main() {
       'dishDescription': (context) => const dishDescription(),
       // VIEWS - PROFILE
       'profile' : (context) => const profile(),
-      // VIEWS - PROFILE - PHOTOS
+      // MODELS - PROFILE - PHOTOS
       'photos' : (context) => const photos(),
-      // VIEWS - PROFILE - COOKBOOKS
+      // MODELS - PROFILE - COOKBOOKS
       'cookbooks' : (context) => const cookbooks(),
+      'savedRecipeCourse' : (context) => const savedRecipeCourse(),
       'savedRecipes' : (context) => const savedRecipes(),
-      // VIEWS - PROFILE - ACTIVITY
+      // MODELS - PROFILE - ACTIVITY
       'activity' : (context) => const activity(),
       // VIEWS - RECIPE GENERATOR
       'recipeGenerator' : (context) => const recipeGenerator(),
       'displayDishList' : (context) => const displayDishList(),
+      // VIEWS - PANTRY
+      'pantry' : (context) => const pantry(),
+      // MODELS - PANTRY
+      'pantryCategory' : (context) => const pantryCategory(),
+      'pantryDishes' : (context) => const pantryDishes(),
 
       'entryPoint': (context) => const entryPoint(),
       'test': (context) => const test(),
