@@ -353,7 +353,7 @@ class _activityState extends State<activity> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'savedRecipes');
+                        Navigator.pushNamed(context, 'ratedRecipes');
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.transparent,

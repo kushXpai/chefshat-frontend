@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:customizable_counter/customizable_counter.dart';
@@ -11,11 +13,20 @@ import '../../controller/graphQL/graphQLClient.dart';
 class dishDescription extends StatefulWidget {
   const dishDescription({Key? key}) : super(key: key);
 
+  static String rating = "";
+
   @override
   State<dishDescription> createState() => _dishDescriptionState();
 }
 
 class _dishDescriptionState extends State<dishDescription> {
+
+  bool added = false;
+  Icon addedIcon = const Icon(
+    Icons.add_circle,
+    color: Colors.lime,
+  );
+
   double _width1 = 392.7;
   double _height1 = 15;
   double _width2 = 392.7;
@@ -1172,6 +1183,31 @@ class _dishDescriptionState extends State<dishDescription> {
                                             ],
                                           ),
                                           const Expanded(child: SizedBox()),
+                                          Container(
+                                            height: 55,
+                                            width: 55,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.white38,
+                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            ),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pushNamed(context, '');
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                foregroundColor: Colors.transparent,
+                                                backgroundColor: Colors.transparent,
+                                                elevation: 0,
+                                                shadowColor: Colors.transparent,
+                                                minimumSize: Size.zero,
+                                                padding: const EdgeInsets.all(10),
+                                              ),
+                                              child: const Icon(
+                                                Icons.add_shopping_cart_sharp,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -1255,27 +1291,49 @@ class _dishDescriptionState extends State<dishDescription> {
                                                             MainAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Container(
-                                                              height: 55,
-                                                              width: 55,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: Colors
-                                                                    .black,
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .white54,
-                                                                    width: 1.0),
+                                                          // Container(
+                                                          //     height: 60,
+                                                          //     width: 60,
+                                                          //     padding:
+                                                          //         const EdgeInsets
+                                                          //             .all(5),
+                                                          //     decoration:
+                                                          //         BoxDecoration(
+                                                          //       shape: BoxShape
+                                                          //           .circle,
+                                                          //       color: Colors
+                                                          //           .black,
+                                                          //       border: Border.all(
+                                                          //           color: Colors
+                                                          //               .white54,
+                                                          //           width: 1.0),
+                                                          //     ),
+                                                          //     child:
+                                                          //         Image.network(
+                                                          //           httpLinkImage + ingredientImage,
+                                                          //     )),
+                                                          SizedBox(
+                                                            height: 35,
+                                                            width: 35,
+
+                                                            child: ElevatedButton(
+                                                              onPressed: () {
+                                                                _showSnackbar(context, ingredientName);
+                                                              },
+                                                              style: ElevatedButton.styleFrom(
+                                                                foregroundColor: Colors.transparent,
+                                                                backgroundColor: Colors.transparent,
+                                                                elevation: 0,
+                                                                shadowColor: Colors.transparent,
+                                                                minimumSize: Size.zero,
+                                                                padding: const EdgeInsets.all(0),
                                                               ),
-                                                              child:
-                                                                  Image.network(
-                                                                    httpLinkImage + ingredientImage,
-                                                              )),
+                                                              child: const Icon(
+                                                                Icons.add_shopping_cart_sharp,
+                                                                color: Colors.white,
+                                                              ),
+                                                            ),
+                                                          ),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -1299,15 +1357,24 @@ class _dishDescriptionState extends State<dishDescription> {
                                                           const Expanded(
                                                               child:
                                                                   SizedBox()),
-                                                          Text(
-                                                            '${(quantity) * serves / 2} $unit',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontFamily:
-                                                                  'Georgia',
-                                                              fontSize: 15,
-                                                              color:
-                                                                  Colors.amber,
+                                                          Padding(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 0,
+                                                                top: 0,
+                                                                bottom: 0),
+                                                            child: Text(
+                                                              quantity == 0 ? unit : '${(quantity) * serves / 2} $unit',
+                                                              style:
+                                                              const TextStyle(
+                                                                fontFamily:
+                                                                'Georgia',
+                                                                fontSize: 15,
+                                                                color:
+                                                                Colors.amber,
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -1605,7 +1672,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                                 final List<dynamic> steps = result.data?['displayDishStepById'];
                                                 if (steps == null || steps.isEmpty) {
                                                   // Handle the case when there are no steps available for the dish
-                                                  return Center(
+                                                  return const Center(
                                                     child: Text(
                                                       'No steps found for this dish.',
                                                     ),
@@ -1636,7 +1703,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                                       ),
                                                       leading: Text(
                                                         stepNumber.toString(), // Display the step number
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontFamily: 'Georgia',
                                                           fontSize: 17,
                                                           color: Colors.white,
@@ -1644,7 +1711,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                                       ),
                                                       title: Text(
                                                         stepDescription,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontFamily: 'Georgia',
                                                           fontSize: 14,
                                                           color: Colors.white,
@@ -1661,7 +1728,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: width,
                                           height: 50,
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              _showDialog(context);
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                               const Color.fromARGB(
@@ -1695,6 +1764,196 @@ class _dishDescriptionState extends State<dishDescription> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // Create a stack to overlay the blurred background and the dialog
+        return Stack(
+          children: [
+            // Background with a blurred effect
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), // Adjust the blur intensity as needed
+              child: Container(
+                color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+              ),
+            ),
+            // Dialog content
+            AlertDialog(
+              backgroundColor: Colors.transparent, // Make the dialog translucent
+              title: const Padding(
+                padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 10),
+                child: Text(
+                  "Rate this recipe",
+                  style: TextStyle(
+                    fontFamily: 'Georgia',
+                    fontSize: 17,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              content: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                    // width: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          dishDescription.rating = "THUMBSUP";
+                        });
+                        print("User ID: ${otpVerification.userId}");
+                        print("Dish ID: ${homePage.dishId}");
+                        print("Rating: ${dishDescription.rating}");
+                        addDishToRatedRecipe(context, otpVerification.userId.toString(), homePage.dishId.toString(), dishDescription.rating.toString());
+                        Navigator.of(context).pop();
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        minimumSize: Size.zero,
+                      ),
+
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: AssetImage('assets/general/ThumbsUp.png'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 100,
+                    // width: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                        setState(() {
+                          dishDescription.rating = "THUMBSDOWN";
+                        });
+                        print("User ID: ${otpVerification.userId}");
+                        print("Dish ID: ${homePage.dishId}");
+                        print("Rating: ${dishDescription.rating}");
+                        addDishToRatedRecipe(context, otpVerification.userId.toString(), homePage.dishId, dishDescription.rating);
+                        Navigator.of(context).pop();
+                      },
+
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        minimumSize: Size.zero,
+                      ),
+
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: AssetImage('assets/general/ThumbsDown.png'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void addDishToRatedRecipe(BuildContext context, String userId, String dishId, String rating) async {
+    // Your mutation query
+    const String addDishToRatedRecipeMutation = r'''
+    mutation AddRecipeToRatedRecipe($userId: ID!, $dishId: ID!, $rating: String!) {
+      addRecipeToRatedRecipe(userId: $userId, dishId: $dishId, rating: $rating) {
+        ratingRecipe {
+          id
+          userId{
+            username
+          }
+          dishId{
+            dishName
+          }
+          rating
+          recipeRated
+        }
+      }
+    }
+  ''';
+
+    // Your variables
+    final Map<String, dynamic> variables = {
+      'userId': otpVerification.userId.toString(),
+      'dishId': homePage.dishId.toString(),
+      'rating': dishDescription.rating.toString(),
+    };
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: HttpLink(httpLinkC), // Replace with your GraphQL API endpoint
+    );
+
+    try {
+      final QueryResult result = await client.mutate(
+        MutationOptions(
+          document: gql(addDishToRatedRecipeMutation),
+          variables: variables,
+        ),
+      );
+
+      if (result.hasException) {
+        // Handle error here
+        print("Mutation error: ${result.exception}");
+      } else {
+        // Mutation was successful, you can access data here if needed
+        final Map<String, dynamic>? responseData = result.data?['addDishToRatedRecipe']['ratedRecipe'];
+        print('Dish added to rated recipe.');
+        // You can access fields from responseData, e.g., responseData['id']
+      }
+    } catch (error) {
+      print("An error occurred: $error");
+    }
+  }
+
+  void _showSnackbar(BuildContext context, String ingredient) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '$ingredient has been added to your pantry',
+          style:
+          const TextStyle(
+            fontFamily: 'Georgia',
+            fontSize: 15,
+            color: Colors.lime
+          ),
+        ),
+        duration: const Duration(seconds: 3), // Adjust the duration as needed
       ),
     );
   }

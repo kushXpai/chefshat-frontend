@@ -3,6 +3,7 @@ import 'package:chefs_hat/entryPoint.dart';
 import 'package:chefs_hat/model/pantry/pantryCategory.dart';
 import 'package:chefs_hat/model/pantry/pantryDishes.dart';
 import 'package:chefs_hat/model/profile/activity/activity.dart';
+import 'package:chefs_hat/model/profile/activity/ratedRecipes.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
 import 'package:chefs_hat/model/profile/cookbooks/savedRecipeCourse.dart';
 import 'package:chefs_hat/model/profile/cookbooks/savedRecipes.dart';
@@ -58,6 +59,7 @@ void main() {
       'savedRecipes' : (context) => const savedRecipes(),
       // MODELS - PROFILE - ACTIVITY
       'activity' : (context) => const activity(),
+      'ratedRecipes' : (context) => const ratedRecipes(),
       // VIEWS - RECIPE GENERATOR
       'recipeGenerator' : (context) => const recipeGenerator(),
       'displayDishList' : (context) => const displayDishList(),

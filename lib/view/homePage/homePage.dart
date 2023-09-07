@@ -102,6 +102,21 @@ class _homePageState extends State<homePage> {
       document: gql(addRecipeMutation),
       variables: variables,
     );
+
+    try {
+      final QueryResult result = await client.mutate(options);
+
+      if (result.hasException) {
+        print("Mutation error: ${result.exception.toString()}");
+        // Handle the error here, e.g., show a snackbar or display an error message.
+      } else {
+        print("Mutation result: ${result.data.toString()}");
+        // Mutation was successful, you can perform any necessary UI updates here.
+      }
+    } catch (e) {
+      print("Mutation error: $e");
+      // Handle exceptions that occur during the mutation.
+    }
   }
 
 
@@ -521,6 +536,7 @@ class _homePageState extends State<homePage> {
             setState(() {
               homePage.dishId = data['id'];
             });
+            addToRecentlyViewed(context, data['id']);
             Navigator.pushNamed(context, 'dishDescription');
           },
           style: ElevatedButton.styleFrom(
@@ -1006,13 +1022,12 @@ class _homePageState extends State<homePage> {
                     onPressed: () {
                       runMutation({
                         'id': dish['id']
-                      }); // Execute the mutation when button is clicked
+                      });
                       setState(() {
                         homePage.dishId = dish['id'];
                         homePage.dishCourse = dish['dishCategoryCourse'];
                       });
                       addToRecentlyViewed(context, dish['id']);
-                      print(homePage.dishCourse);
                       Navigator.pushNamed(context, 'dishDescription');
                     },
                     style: ElevatedButton.styleFrom(
@@ -1474,59 +1489,82 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    homePage.dishId = dish['id'];
-                  });
-                  Navigator.pushNamed(context, 'dishDescription');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
+              return Mutation(
+                options: MutationOptions(
+                  document: gql('''
+                    mutation UpdateDishVisits(\$id: ID!) {
+                      increaseDishvisits(id: \$id) {
+                        dish {
+                          id
+                          dishVisits
+                        }
+                      }
+                    }
+                  '''),
+                  variables: {'id': dish['id']},
                 ),
-                child: SizedBox(
-                  width: width / 3 + 10,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: width / 3,
-                        height: width / 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image(
-                            image: NetworkImage(
-                              httpLinkImage + dish['dishImage'],
+                builder:
+                    (RunMutation runMutation, QueryResult? mutationResult) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      runMutation({
+                        'id': dish['id']
+                      });
+                      setState(() {
+                        homePage.dishId = dish['id'];
+                        homePage.dishCourse = dish['dishCategoryCourse'];
+                      });
+                      addToRecentlyViewed(context, dish['id']);
+                      Navigator.pushNamed(context, 'dishDescription');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                      minimumSize: Size.zero,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                  child: SizedBox(
+                    width: width / 3 + 10,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: width / 3,
+                          height: width / 3,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image(
+                              image: NetworkImage(
+                                httpLinkImage + dish['dishImage'],
+                              ),
+                              fit: BoxFit.fill,
                             ),
-                            fit: BoxFit.fill,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 0,
-                          right: 0,
-                          top: 10,
-                          bottom: 0,
-                        ),
-                        child: Text(
-                          dish['dishName'],
-                          style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 14,
-                            color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 0,
+                            right: 0,
+                            top: 10,
+                            bottom: 0,
                           ),
-                          maxLines: 3,
+                          child: Text(
+                            dish['dishName'],
+                            style: const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                            maxLines: 3,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                  );
+                    },
               );
             },
           );
@@ -1938,60 +1976,82 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    homePage.dishId = dish['id'];
-                  });
-                  Navigator.pushNamed(context, 'dishDescription');
-                  // Navigator.pushNamed(context, 'test');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
+              return Mutation(
+                options: MutationOptions(
+                  document: gql('''
+                    mutation UpdateDishVisits(\$id: ID!) {
+                      increaseDishvisits(id: \$id) {
+                        dish {
+                          id
+                          dishVisits
+                        }
+                      }
+                    }
+                  '''),
+                  variables: {'id': dish['id']},
                 ),
-                child: SizedBox(
-                  width: width / 3 + 10,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: width / 3,
-                        height: width / 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image(
-                            image: NetworkImage(
-                              httpLinkImage + dish['dishImage'],
+                builder:
+                    (RunMutation runMutation, QueryResult? mutationResult) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      runMutation({
+                        'id': dish['id']
+                      });
+                      setState(() {
+                        homePage.dishId = dish['id'];
+                        homePage.dishCourse = dish['dishCategoryCourse'];
+                      });
+                      addToRecentlyViewed(context, dish['id']);
+                      Navigator.pushNamed(context, 'dishDescription');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                      minimumSize: Size.zero,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                    child: SizedBox(
+                      width: width / 3 + 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: width / 3,
+                            height: width / 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image(
+                                image: NetworkImage(
+                                  httpLinkImage + dish['dishImage'],
+                                ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            fit: BoxFit.fill,
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 0,
-                          right: 0,
-                          top: 10,
-                          bottom: 0,
-                        ),
-                        child: Text(
-                          dish['dishName'],
-                          style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 14,
-                            color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 10,
+                              bottom: 0,
+                            ),
+                            child: Text(
+                              dish['dishName'],
+                              style: const TextStyle(
+                                fontFamily: 'Georgia',
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                              maxLines: 3,
+                            ),
                           ),
-                          maxLines: 3,
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             },
           );
@@ -2404,59 +2464,82 @@ class _homePageState extends State<homePage> {
             },
             itemBuilder: (context, index) {
               final dish = dishes[index];
-              return ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    homePage.dishId = dish['id'];
-                  });
-                  Navigator.pushNamed(context, 'dishDescription');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
+              return Mutation(
+                options: MutationOptions(
+                  document: gql('''
+                    mutation UpdateDishVisits(\$id: ID!) {
+                      increaseDishvisits(id: \$id) {
+                        dish {
+                          id
+                          dishVisits
+                        }
+                      }
+                    }
+                  '''),
+                  variables: {'id': dish['id']},
                 ),
-                child: SizedBox(
-                  width: width / 3 + 10,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: width / 3,
-                        height: width / 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image(
-                            image: NetworkImage(
-                              httpLinkImage + dish['dishImage'],
+                builder:
+                    (RunMutation runMutation, QueryResult? mutationResult) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      runMutation({
+                        'id': dish['id']
+                      });
+                      setState(() {
+                        homePage.dishId = dish['id'];
+                        homePage.dishCourse = dish['dishCategoryCourse'];
+                      });
+                      addToRecentlyViewed(context, dish['id']);
+                      Navigator.pushNamed(context, 'dishDescription');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                      minimumSize: Size.zero,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                    child: SizedBox(
+                      width: width / 3 + 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: width / 3,
+                            height: width / 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image(
+                                image: NetworkImage(
+                                  httpLinkImage + dish['dishImage'],
+                                ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            fit: BoxFit.fill,
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 0,
-                          right: 0,
-                          top: 10,
-                          bottom: 0,
-                        ),
-                        child: Text(
-                          dish['dishName'],
-                          style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 14,
-                            color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 10,
+                              bottom: 0,
+                            ),
+                            child: Text(
+                              dish['dishName'],
+                              style: const TextStyle(
+                                fontFamily: 'Georgia',
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                              maxLines: 3,
+                            ),
                           ),
-                          maxLines: 3,
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             },
           );

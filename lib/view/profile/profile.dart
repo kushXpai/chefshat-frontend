@@ -27,6 +27,22 @@ class _profileState extends State<profile> {
     }
   ''';
 
+  final String getRatedRecipeById = '''
+    query {
+      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
+        id
+        userId{
+          username
+        }
+        dishId{
+          dishName
+        }
+        rating
+        recipeRated
+      }
+    }
+  ''';
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -69,37 +85,9 @@ class _profileState extends State<profile> {
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 60, right: 0, top: 0, bottom: 0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.transparent,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            shadowColor: Colors.transparent,
-                            minimumSize: Size.zero,
-                            padding: const EdgeInsets.all(10),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
-                                '0',
-                                style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 18,
-                                    color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'ratings',
-                                style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 15,
-                                    color: Colors.white),
-                              ),
-                            ],
-                          ),
+                        child: GraphQLProvider(
+                          client: client,
+                          child: _buildUserRatings(width),
                         ),
                       ),
                       ElevatedButton(
@@ -402,6 +390,107 @@ class _profileState extends State<profile> {
               ),
             ],
           );
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserRatings(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getRatedRecipeById),
+          variables: {'id': '${otpVerification.userId}'},
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> data = result.data?['displayUserRatedRecipeById'];
+          int numberOfRatedRecipies = 0;
+          numberOfRatedRecipies = data.length;
+
+          if (data.isEmpty) {
+            return ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: const Column(
+                children: [
+                  Text(
+                    '0',
+                    style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 18,
+                        color: Colors.white),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'ratings',
+                    style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 15,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'ratedRecipess');
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "$numberOfRatedRecipies",
+                    style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 18,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    'ratings',
+                    style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 15,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            );
+          }
         },
       ),
     );
