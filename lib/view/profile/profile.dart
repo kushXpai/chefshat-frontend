@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 
 class profile extends StatefulWidget {
@@ -60,22 +60,20 @@ class _profileState extends State<profile> {
               child: SizedBox(
                 height: height,
                 width: width,
-                child: const Image(
+                child: Image(
                   image: AssetImage(
-                    'assets/backgroundPhotos/woodenBackground.jpg',
+                    'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
                   ),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-
             Column(
               children: [
                 GraphQLProvider(
                   client: client,
                   child: _buildUserProfileNameImage(width),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 0, right: 0, top: 0, bottom: 10),
@@ -100,14 +98,15 @@ class _profileState extends State<profile> {
                           minimumSize: Size.zero,
                           padding: const EdgeInsets.all(10),
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Text(
                               '0',
                               style: TextStyle(
-                                  fontFamily: 'Georgia',
-                                  fontSize: 18,
-                                  color: Colors.white),
+                                fontFamily: 'Georgia',
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
                             ),
                             SizedBox(
                               height: 5,
@@ -135,14 +134,15 @@ class _profileState extends State<profile> {
                             minimumSize: Size.zero,
                             padding: const EdgeInsets.all(10),
                           ),
-                          child: const Column(
+                          child: Column(
                             children: [
                               Text(
                                 '0',
                                 style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 18,
-                                    color: Colors.white),
+                                  fontFamily: 'Georgia',
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
                               ),
                               SizedBox(
                                 height: 5,
@@ -150,9 +150,10 @@ class _profileState extends State<profile> {
                               Text(
                                 'photos',
                                 style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 15,
-                                    color: Colors.white),
+                                  fontFamily: 'Georgia',
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ],
                           ),
@@ -161,7 +162,6 @@ class _profileState extends State<profile> {
                     ],
                   ),
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -181,15 +181,16 @@ class _profileState extends State<profile> {
                           minimumSize: Size.zero,
                           padding: const EdgeInsets.all(10),
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Text(
                               'Photos',
                               style: TextStyle(
-                                  fontFamily: 'Georgia',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                fontFamily: 'Georgia',
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                             SizedBox(
                               height: 5,
@@ -214,7 +215,7 @@ class _profileState extends State<profile> {
                           minimumSize: Size.zero,
                           padding: const EdgeInsets.all(10),
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Text(
                               'Cookbooks',
@@ -222,7 +223,7 @@ class _profileState extends State<profile> {
                                   fontFamily: 'Georgia',
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.white,),
                             ),
                             SizedBox(
                               height: 5,
@@ -247,7 +248,7 @@ class _profileState extends State<profile> {
                           minimumSize: Size.zero,
                           padding: const EdgeInsets.all(10),
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Text(
                               'Activity',
@@ -255,7 +256,7 @@ class _profileState extends State<profile> {
                                   fontFamily: 'Georgia',
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.white,),
                             ),
                             SizedBox(
                               height: 5,
@@ -266,23 +267,23 @@ class _profileState extends State<profile> {
                     ),
                   ],
                 ),
-                const Divider(
+                Divider(
                   color: CustomColors.white,
                   thickness: 1,
                 ),
                 SizedBox(
                   height: height - 322,
                   width: width,
-
                   child: SingleChildScrollView(
                     child: profileStatics.profileIndexTabs == 0
-                        ? const photos(): profileStatics.profileIndexTabs == 1
-                        ? const cookbooks(): const activity(),
+                        ? const photos()
+                        : profileStatics.profileIndexTabs == 1
+                            ? const cookbooks()
+                            : const activity(),
                   ),
                 ),
               ],
             ),
-
             Column(
               children: [
                 Padding(
@@ -294,7 +295,7 @@ class _profileState extends State<profile> {
                       Container(
                         height: 55,
                         width: 55,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white38,
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
@@ -310,7 +311,7 @@ class _profileState extends State<profile> {
                             minimumSize: Size.zero,
                             padding: const EdgeInsets.all(10),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.shopping_cart,
                             color: Colors.white,
                           ),
@@ -350,8 +351,7 @@ class _profileState extends State<profile> {
             );
           }
 
-          final Map<String, dynamic>? data =
-              result.data?['displayUserById'];
+          final Map<String, dynamic>? data = result.data?['displayUserById'];
 
           if (data == null) {
             return const Text('No dishes found');
@@ -371,8 +371,8 @@ class _profileState extends State<profile> {
                         border: Border.all(color: Colors.white, width: 1)),
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(
-                          httpLinkImage + data['profilePhoto']),
+                      backgroundImage:
+                          NetworkImage(httpLinkImage + data['profilePhoto']),
                     ),
                   ),
                 ),
@@ -433,14 +433,14 @@ class _profileState extends State<profile> {
                 minimumSize: Size.zero,
                 padding: const EdgeInsets.all(10),
               ),
-              child: const Column(
+              child: Column(
                 children: [
                   Text(
                     '0',
                     style: TextStyle(
                         fontFamily: 'Georgia',
                         fontSize: 18,
-                        color: Colors.white),
+                        color: Colors.white,),
                   ),
                   SizedBox(
                     height: 5,
@@ -450,7 +450,7 @@ class _profileState extends State<profile> {
                     style: TextStyle(
                         fontFamily: 'Georgia',
                         fontSize: 15,
-                        color: Colors.white),
+                        color: Colors.white,),
                   ),
                 ],
               ),
@@ -472,20 +472,20 @@ class _profileState extends State<profile> {
                 children: [
                   Text(
                     "$numberOfRatedRecipies",
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontFamily: 'Georgia',
                         fontSize: 18,
-                        color: Colors.white),
+                        color: Colors.white,),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     'ratings',
                     style: TextStyle(
                         fontFamily: 'Georgia',
                         fontSize: 15,
-                        color: Colors.white),
+                        color: Colors.white,),
                   ),
                 ],
               ),

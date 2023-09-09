@@ -1,4 +1,4 @@
-import 'package:chefs_hat/constants/colors/customColors.dart';
+import 'package:chefs_hat/constants/colors/Colors.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';

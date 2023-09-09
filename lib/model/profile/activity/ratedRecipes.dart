@@ -3,7 +3,7 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../../constants/colors/customColors.dart';
+import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
 
 class ratedRecipes extends StatefulWidget {
@@ -41,26 +41,41 @@ class _ratedRecipesState extends State<ratedRecipes> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: false,
       appBar: AppBar(
+        leading: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.all(0),
+          ),
+          child: const Icon(
+            Icons.arrow_back_ios_new_sharp,
+            color: Colors.white,
+          ),
+        ),
         title: _buildSectionHeader("My Ratings"),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 0, right: 0, top: 20, bottom: 0),
-              child: GraphQLProvider(
-                client: client,
-                child: _buildUserSavedRecipe(width),
-              ),
+          child: Column(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 0),
+            child: GraphQLProvider(
+              client: client,
+              child: _buildUserSavedRecipe(width),
             ),
-          ],
-        )
-      ),
+          ),
+        ],
+      )),
     );
   }
 
@@ -74,7 +89,8 @@ class _ratedRecipesState extends State<ratedRecipes> {
             style: const TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
-              color: Colors.white,
+              color:
+                  Colors.white,
             ),
           ),
         ],
@@ -124,7 +140,7 @@ class _ratedRecipesState extends State<ratedRecipes> {
                       fontFamily: 'Georgia',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: CustomColors.white,
+                      color: Colors.white,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -147,8 +163,10 @@ class _ratedRecipesState extends State<ratedRecipes> {
                     itemBuilder: (context, index) {
                       final savedRecipe = savedRecipes[index];
 
-                      final String dishName = savedRecipe['dishId']['dishName'] ?? "";
-                      final String dishImage = savedRecipe['dishId']['dishImage'] ?? "";
+                      final String dishName =
+                          savedRecipe['dishId']['dishName'] ?? "";
+                      final String dishImage =
+                          savedRecipe['dishId']['dishImage'] ?? "";
                       final String dishRating = savedRecipe['rating'] ?? "";
                       final String dishRated = savedRecipe['recipeRated'];
 
@@ -156,84 +174,101 @@ class _ratedRecipesState extends State<ratedRecipes> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 20, right: 10, top: 10, bottom: 10),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  homePage.dishId = savedRecipe['id'];
-                                });
-                                Navigator.pushNamed(context, 'dishDescription');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.transparent,
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                                shadowColor: Colors.transparent,
-                                minimumSize: Size.zero,
-                                padding: const EdgeInsets.all(0),
+                                left: 15, right: 10, top: 5, bottom: 5),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                    color: Colors.lime,
+                                    width: 1),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: width / 3 - 10,
-                                    width: width / 3 - 10,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        httpLinkImage + dishImage,
-                                        fit: BoxFit.cover,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 5, right: 0, top: 5, bottom: 5),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      homePage.dishId = savedRecipe['id'];
+                                    });
+                                    Navigator.pushNamed(
+                                        context, 'dishDescription');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.transparent,
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                    shadowColor: Colors.transparent,
+                                    minimumSize: Size.zero,
+                                    padding: const EdgeInsets.all(0),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: width / 3 - 10,
+                                        width: width / 3 - 10,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.network(
+                                            httpLinkImage + dishImage,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 0,
-                                              right: 0,
-                                              top: 5,
-                                              bottom: 5),
-                                          child: Text(
-                                            dishName,
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomColors.white,
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 5,
+                                                  bottom: 5),
+                                              child: Text(
+                                                dishName,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: CustomColors.white
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 0,
-                                              right: 0,
-                                              top: 5,
-                                              bottom: 5),
-                                          child: Text(
-                                            'rated ${formatTimeDifference(dishRated)}',
-                                            style: const TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomColors.grey,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 5,
+                                                  bottom: 5),
+                                              child: Text(
+                                                'rated ${formatTimeDifference(dishRated)}',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Georgia',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: CustomColors.grey
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),

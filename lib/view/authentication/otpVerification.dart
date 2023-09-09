@@ -5,7 +5,7 @@ import 'package:graphql/client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 
 class otpVerification extends StatefulWidget {
   const otpVerification({Key? key}) : super(key: key);

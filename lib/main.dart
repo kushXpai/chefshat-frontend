@@ -1,4 +1,3 @@
-
 import 'package:chefs_hat/entryPoint.dart';
 import 'package:chefs_hat/model/pantry/pantryCategory.dart';
 import 'package:chefs_hat/model/pantry/pantryDishes.dart';
@@ -11,6 +10,7 @@ import 'package:chefs_hat/model/profile/photos/photos.dart';
 import 'package:chefs_hat/test.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
+import 'package:chefs_hat/view/community/community.dart';
 import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
@@ -33,6 +33,10 @@ void main() {
     // initialRoute: 'landingPage',
     initialRoute: 'entryPoint',
     // initialRoute: 'test',
+
+    // themeMode: ThemeMode.system,
+    // darkTheme: ThemeData.dark(),
+    // theme: ThemeData.light(),
 
     routes: {
       // VIEWS
@@ -68,6 +72,8 @@ void main() {
       // MODELS - PANTRY
       'pantryCategory' : (context) => const pantryCategory(),
       'pantryDishes' : (context) => const pantryDishes(),
+      // VIEWS - COMMUNITY
+      'community' : (context) => const community(),
 
       'entryPoint': (context) => const entryPoint(),
       'test': (context) => const test(),

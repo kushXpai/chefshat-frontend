@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../controller/registration/registration.dart';
 
 class registrationStep1 extends StatefulWidget {

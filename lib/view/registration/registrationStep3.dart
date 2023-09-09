@@ -6,7 +6,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/registration/registration.dart';
 

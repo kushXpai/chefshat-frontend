@@ -1,5 +1,5 @@
 import 'package:animate_gradient/animate_gradient.dart';
-import 'package:chefs_hat/constants/colors/customColors.dart';
+import 'package:chefs_hat/constants/colors/Colors.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -125,6 +125,8 @@ class _homePageState extends State<homePage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -136,7 +138,7 @@ class _homePageState extends State<homePage> {
               width: width,
               child: const Image(
                 image: AssetImage(
-                  'assets/backgroundPhotos/woodenBackground.jpg',
+                  'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
                 ),
                 fit: BoxFit.fill,
               ),

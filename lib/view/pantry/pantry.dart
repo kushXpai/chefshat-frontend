@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../model/pantry/pantryCategory.dart';
 import '../../model/pantry/pantryDishes.dart';
 

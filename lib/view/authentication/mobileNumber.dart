@@ -1,7 +1,7 @@
 import 'package:chefs_hat/controller/registration/registration.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../controller/authentication/mobileNumber.dart';
 
 class mobileNumber extends StatefulWidget {

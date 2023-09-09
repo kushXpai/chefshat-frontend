@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
-import '../../../constants/colors/customColors.dart';
+import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
 
 class savedRecipes extends StatefulWidget {

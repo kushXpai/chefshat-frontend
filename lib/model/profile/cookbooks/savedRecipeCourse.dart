@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
-import '../../../constants/colors/customColors.dart';
+import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
 
 class savedRecipeCourse extends StatefulWidget {
@@ -71,7 +71,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
               color: Colors.white,
@@ -114,7 +114,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                       'assets/profilePagePhotos/savedRecipes.png',
                       fit: BoxFit.fitWidth,
                     )),
-                const Padding(
+                Padding(
                   padding:
                   EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
@@ -123,7 +123,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                       fontFamily: 'Georgia',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: CustomColors.white,
+                      color: Colors.white,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -203,13 +203,13 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                                           borderRadius: const BorderRadius.all(Radius.circular(10)),
                                         ),
 
-                                        child: const Center(
+                                        child: Center(
                                           child: Text('Trending',
                                             style:  TextStyle(
                                               fontFamily: 'Georgia',
                                               fontSize: 13,
                                               fontWeight: FontWeight.bold,
-                                              color: CustomColors.white,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ),
@@ -221,7 +221,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                                   padding: const EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
                                   child: Text(
                                     dishName,
-                                    style:  const TextStyle(
+                                    style:  TextStyle(
                                       fontFamily: 'Georgia',
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -231,7 +231,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                                const Padding(
+                                Padding(
                                   padding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
                                   child: Text('142 ratings',
                                     style:  TextStyle(

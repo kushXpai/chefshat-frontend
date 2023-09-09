@@ -3,7 +3,7 @@ import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../../constants/colors/customColors.dart';
+import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
 
 // import 'constants.dart';
@@ -111,7 +111,6 @@ class _activityState extends State<activity> {
               ),
             ),
           ),
-
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -129,7 +128,6 @@ class _activityState extends State<activity> {
               child: _buildUserTips(width),
             ),
           ),
-
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -155,8 +153,11 @@ class _activityState extends State<activity> {
               ),
             ),
           ),
-
-          const SliverToBoxAdapter(child: SizedBox(height: 75,),)
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 75,
+            ),
+          )
         ],
       ),
     );
@@ -169,10 +170,11 @@ class _activityState extends State<activity> {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
-              color: Colors.white,
+              color:
+                  Colors.white,
             ),
           ),
         ],
@@ -214,16 +216,16 @@ class _activityState extends State<activity> {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
-                const Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "Rate your first recipe to see it here.",
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: CustomColors.white,
+                      color: Colors.white,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -303,7 +305,7 @@ class _activityState extends State<activity> {
                                       ),
                                       child: Text(
                                         dishName,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: 'Georgia',
                                           fontSize: 14,
                                           color: Colors.white,
@@ -317,7 +319,7 @@ class _activityState extends State<activity> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 0),
+                            padding: const EdgeInsets.only(left: 0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -327,9 +329,9 @@ class _activityState extends State<activity> {
                                   child: CircleAvatar(
                                     backgroundColor: Colors.transparent,
                                     backgroundImage: dishRating == "THUMBSUP"
-                                        ? AssetImage(
+                                        ? const AssetImage(
                                             'assets/general/ThumbsUp.png')
-                                        : AssetImage(
+                                        : const AssetImage(
                                             'assets/general/ThumbsDown.png'),
                                   ),
                                 ),
@@ -348,7 +350,9 @@ class _activityState extends State<activity> {
                     width: width,
                     height: 50,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.lime, width: 2),
+                      border: Border.all(
+                          color: Colors.lime,
+                          width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ElevatedButton(
@@ -357,13 +361,13 @@ class _activityState extends State<activity> {
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.transparent,
-                        backgroundColor: Colors.white10,
+                        backgroundColor: Colors.transparent,
                         elevation: 0,
                         shadowColor: Colors.transparent,
                         minimumSize: Size.zero,
                         padding: const EdgeInsets.all(0),
                       ),
-                      child: const Text(
+                      child: Text(
                         "See more",
                         style: TextStyle(
                           fontFamily: 'Georgia',
@@ -414,16 +418,16 @@ class _activityState extends State<activity> {
                   fit: BoxFit.fitHeight,
                 ),
               ),
-              const Padding(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 20, bottom: 0),
                 child: Text(
                   "Leave your first tip to see it here.",
                   style: TextStyle(
                     fontFamily: 'Georgia',
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: CustomColors.white,
+                    color: Colors.white,
                   ),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
@@ -432,8 +436,7 @@ class _activityState extends State<activity> {
               ),
             ],
           );
-        }
-        else {
+        } else {
           activity.tipsLength = tips.length.clamp(0, 2);
           return SizedBox(
             height: 210,
@@ -455,9 +458,12 @@ class _activityState extends State<activity> {
                   width: width - 20,
                   margin: const EdgeInsets.only(
                       left: 10, right: 10, top: 0, bottom: 10),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white12,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    border: Border.all(
+                        color: Colors.transparent,
+                        width: 1),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Column(
                     children: [
@@ -471,11 +477,11 @@ class _activityState extends State<activity> {
                                   children: [
                                     Text(
                                       dishTipDescription,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontFamily: 'Georgia',
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
-                                        color: CustomColors.white,
+                                        color: Colors.white,
                                       ),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -483,16 +489,16 @@ class _activityState extends State<activity> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    const Row(
+                                    Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Icon(
                                           Icons.thumb_up_alt_outlined,
                                           color: CustomColors.grey,
                                           size: 18,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -510,7 +516,7 @@ class _activityState extends State<activity> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 250,
@@ -523,8 +529,7 @@ class _activityState extends State<activity> {
                                               color: Colors.amber[600],
                                             ),
                                             maxLines: 2,
-                                            overflow:
-                                            TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ],
@@ -534,11 +539,11 @@ class _activityState extends State<activity> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           'added ${formatTimeDifference(dishTipTime)}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 12,
                                             color: CustomColors.grey,
@@ -558,15 +563,14 @@ class _activityState extends State<activity> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: Image(
-                                    image: NetworkImage(
-                                      httpLinkImage + dishImage),
-                                      fit: BoxFit.fill,
+                                    image:
+                                        NetworkImage(httpLinkImage + dishImage),
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
                             ],
-                          )
-                      ),
+                          )),
                     ],
                   ),
                 );
@@ -598,7 +602,8 @@ class _activityState extends State<activity> {
             );
           }
 
-          final List<dynamic>? savedRecipes = result.data?['displayUserRecentlyViewed'];
+          final List<dynamic>? savedRecipes =
+              result.data?['displayUserRecentlyViewed'];
 
           if (savedRecipes == null || savedRecipes.isEmpty) {
             return Column(
@@ -611,16 +616,16 @@ class _activityState extends State<activity> {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
-                const Padding(
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
-                    "Rate your first recipe to see it here.",
+                    "You haven't viewed any recipes yet.",
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: CustomColors.white,
+                      color: CustomColors.white
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -631,7 +636,7 @@ class _activityState extends State<activity> {
             );
           } else {
             int savedRecipesLength =
-            savedRecipes.length.clamp(0, 5); // Limit to 2 saved recipes
+                savedRecipes.length.clamp(0, 5); // Limit to 2 saved recipes
             print(savedRecipesLength);
             return SizedBox(
               height: 210,
@@ -691,7 +696,7 @@ class _activityState extends State<activity> {
                               ),
                               child: Text(
                                 dishName,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: 'Georgia',
                                   fontSize: 14,
                                   color: Colors.white,

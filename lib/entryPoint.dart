@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
+import 'package:chefs_hat/view/community/community.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
@@ -23,14 +24,14 @@ class _entryPointState extends State<entryPoint> with TickerProviderStateMixin {
 
   bool isSideBarOpen = false;
 
-  Menu selectedBottonNav = bottomNavItems.first;
+  Menu selectedBottomNav = bottomNavItems.first;
 
   late SMIBool isMenuOpenInput;
 
   void updateSelectedBtmNav(Menu menu) {
-    if (selectedBottonNav != menu) {
+    if (selectedBottomNav != menu) {
       setState(() {
-        selectedBottonNav = menu;
+        selectedBottomNav = menu;
       });
     }
   }
@@ -90,9 +91,9 @@ class _entryPointState extends State<entryPoint> with TickerProviderStateMixin {
                   ),
                   child: Center(
                     child: entryPointStatics.indexBottomNavigationBar == 0
-                        ? homePage(): entryPointStatics.indexBottomNavigationBar == 1
-                        ? recipeGenerator(): entryPointStatics.indexBottomNavigationBar == 2
-                        ? homePage() : profile(),
+                        ? const homePage(): entryPointStatics.indexBottomNavigationBar == 1
+                        ? const recipeGenerator(): entryPointStatics.indexBottomNavigationBar == 2
+                        ? const community() : const profile(),
                   ),
                 ),
               ),
@@ -104,7 +105,7 @@ class _entryPointState extends State<entryPoint> with TickerProviderStateMixin {
       bottomNavigationBar: Transform.translate(
         offset: Offset(0, 100 * animation.value),
         child: SafeArea(
-          minimum: EdgeInsets.only(bottom: 18),
+          minimum: const EdgeInsets.only(bottom: 18),
           child: Container(
             padding:
             const EdgeInsets.all(10),
@@ -158,7 +159,7 @@ class _entryPointState extends State<entryPoint> with TickerProviderStateMixin {
                         navBar.rive.status = RiveUtils.getRiveInput(artboard,
                             stateMachineName: navBar.rive.stateMachineName);
                       },
-                      selectedNav: selectedBottonNav,
+                      selectedNav: selectedBottomNav,
                     );
                   },
                 ),

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:like_button/like_button.dart';
 
-import '../../constants/colors/customColors.dart';
+import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 
 class dishDescription extends StatefulWidget {
@@ -199,6 +199,42 @@ class _dishDescriptionState extends State<dishDescription> {
     return Scaffold(
       backgroundColor: CustomColors.black,
       extendBody: true,
+      extendBodyBehindAppBar: true,
+
+      appBar: AppBar(
+        leading: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              shadowColor: Colors.transparent,
+              minimumSize: Size.zero,
+              padding: const EdgeInsets.all(0),
+            ),
+            child: Container(
+              height: 40,
+              width: 40,
+
+              decoration: const BoxDecoration(
+                color: Colors.black38,
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+
+              child: const Icon(
+                Icons.arrow_back_ios_new_sharp,
+                color: Colors.white,
+                size: 20,
+
+              ),
+            ),
+
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
 
       body: Center(
         child: Stack(
@@ -1291,27 +1327,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                                             MainAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          // Container(
-                                                          //     height: 60,
-                                                          //     width: 60,
-                                                          //     padding:
-                                                          //         const EdgeInsets
-                                                          //             .all(5),
-                                                          //     decoration:
-                                                          //         BoxDecoration(
-                                                          //       shape: BoxShape
-                                                          //           .circle,
-                                                          //       color: Colors
-                                                          //           .black,
-                                                          //       border: Border.all(
-                                                          //           color: Colors
-                                                          //               .white54,
-                                                          //           width: 1.0),
-                                                          //     ),
-                                                          //     child:
-                                                          //         Image.network(
-                                                          //           httpLinkImage + ingredientImage,
-                                                          //     )),
                                                           SizedBox(
                                                             height: 35,
                                                             width: 35,
