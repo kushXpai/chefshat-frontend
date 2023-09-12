@@ -149,7 +149,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -161,7 +161,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -212,7 +212,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -224,7 +224,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -275,7 +275,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -287,7 +287,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -322,7 +322,7 @@ class _cookbooksState extends State<cookbooks> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
               color:
@@ -367,9 +367,9 @@ class _cookbooksState extends State<cookbooks> {
                       'assets/profilePagePhotos/savedRecipes.png',
                       fit: BoxFit.fitWidth,
                     )),
-                Padding(
+                const Padding(
                   padding:
-                      const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "You haven't liked any recipes yet. When you do they'll appear here.",
                     style: TextStyle(
@@ -458,7 +458,7 @@ class _cookbooksState extends State<cookbooks> {
                                   ),
                                   child: Text(
                                     dishName,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'Georgia',
                                       fontSize: 14,
                                       color: Colors.white,
@@ -499,7 +499,7 @@ class _cookbooksState extends State<cookbooks> {
                         minimumSize: Size.zero,
                         padding: const EdgeInsets.all(0),
                       ),
-                      child: Text(
+                      child: const Text(
                         "See more",
                         style: TextStyle(
                           fontFamily: 'Georgia',
@@ -585,7 +585,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -597,7 +597,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -657,7 +657,7 @@ class _cookbooksState extends State<cookbooks> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Appetizers",
                           style: TextStyle(
                             fontFamily: 'Georgia',
@@ -671,7 +671,7 @@ class _cookbooksState extends State<cookbooks> {
                         ),
                         Text(
                           "$savedRecipesLength recipes",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Georgia',
                             fontSize: 13,
                             color: Colors.grey
@@ -756,7 +756,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -768,7 +768,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -828,7 +828,7 @@ class _cookbooksState extends State<cookbooks> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Entrée",
                           style: TextStyle(
                             fontFamily: 'Georgia',
@@ -842,7 +842,7 @@ class _cookbooksState extends State<cookbooks> {
                         ),
                         Text(
                           "$savedRecipesLength recipes",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Georgia',
                             fontSize: 13,
                             color: Colors.grey
@@ -923,7 +923,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -935,7 +935,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -993,7 +993,7 @@ class _cookbooksState extends State<cookbooks> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Dessert",
                           style: TextStyle(
                             fontFamily: 'Georgia',
@@ -1007,7 +1007,7 @@ class _cookbooksState extends State<cookbooks> {
                         ),
                         Text(
                           "$savedRecipesLength recipes",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Georgia',
                             fontSize: 13,
                             color: Colors.grey
@@ -1088,7 +1088,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -1100,7 +1100,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -1158,7 +1158,7 @@ class _cookbooksState extends State<cookbooks> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Sides",
                           style: TextStyle(
                             fontFamily: 'Georgia',
@@ -1172,7 +1172,7 @@ class _cookbooksState extends State<cookbooks> {
                         ),
                         Text(
                           "$savedRecipesLength recipes",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Georgia',
                             fontSize: 13,
                             color: Colors.grey
@@ -1253,7 +1253,7 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -1265,7 +1265,7 @@ class _cookbooksState extends State<cookbooks> {
                             color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -1323,7 +1323,7 @@ class _cookbooksState extends State<cookbooks> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Snacks",
                           style: TextStyle(
                             fontFamily: 'Georgia',
@@ -1337,7 +1337,7 @@ class _cookbooksState extends State<cookbooks> {
                         ),
                         Text(
                           "$savedRecipesLength recipes",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Georgia',
                             fontSize: 13,
                             color: Colors.grey

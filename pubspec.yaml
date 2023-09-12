@@ -42,6 +42,7 @@ dependencies:
   animate_gradient: ^0.0.2+1
   http: ^1.1.0
   google_fonts: ^5.1.0
+  image_cropper: ^5.0.0
 
   # Entry Point
   rive: ^0.11.5
