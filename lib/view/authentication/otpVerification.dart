@@ -1,6 +1,10 @@
+import 'package:chefs_hat/controller/graphQL/graphQLClient.dart';
 import 'package:chefs_hat/controller/registration/registration.dart';
+import 'package:chefs_hat/entryPoint.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:graphql/client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pinput/pinput.dart';
@@ -19,7 +23,8 @@ class otpVerification extends StatefulWidget {
 class _otpVerificationState extends State<otpVerification> {
 
   static Future<int> getUsersCountByMobileNumber(String mobileNumber) async {
-    final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
+    print("getUsersCountByMobileNumber");
+    // final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
@@ -50,10 +55,13 @@ class _otpVerificationState extends State<otpVerification> {
 
       final dynamic user = result.data?['displayUserByMobileNumber'];
       if (user == null) {
+        print("0");
         return 0; // User not found
       } else if (user is List<dynamic>) {
+        print(user.length);
         return user.length; // Return the count of users
       } else {
+        print("1");
         return 1; // Single user found
       }
     } catch (error) {
@@ -93,7 +101,6 @@ class _otpVerificationState extends State<otpVerification> {
   // );
 
   Future<int> _getUserId() async {
-    final HttpLink httpLink = HttpLink('http://192.168.227.104:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
@@ -260,15 +267,17 @@ class _otpVerificationState extends State<otpVerification> {
                     print(len);
 
                     if (len == 1){
-                      // Navigator.pushNamed(context, 'homePage');
-                      int userId = await _getUserId(); // Call the _ge
+                      int userId = await _getUserId();
+                      // Get.offAll(entryPoint());
                       setState(() {
                         otpVerification.userId = userId;
                       });
                       print(UserFormFields.userMobileNumber);
                       print(otpVerification.userId);
-                      // Navigator.pushNamed(context, 'homePage');
                       Navigator.pushNamed(context, 'entryPoint');
+
+                      // Navigator.pushNamed(context, 'homePage');
+
                     } else if (len == 0) {
                       print("XXX");
                       Navigator.pushNamed(context, 'registrationStep1');

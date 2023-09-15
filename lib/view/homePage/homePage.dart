@@ -1,6 +1,7 @@
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:chefs_hat/constants/colors/Colors.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
+import 'package:chefs_hat/view/community/community.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -66,6 +67,22 @@ class _homePageState extends State<homePage> {
     }
   ''';
 
+  final String getAllUserUploads = '''
+    query {
+      displayUserUpload{
+        userId{
+          username
+          profilePhoto
+        }
+        uploadName
+        uploadImage
+        uploadDescription
+        uploadLikes
+        creationTime
+      }
+    }
+  ''';
+
 
   void addToRecentlyViewed(BuildContext context, String dishId) async {
     final String addRecipeMutation = """
@@ -86,6 +103,7 @@ class _homePageState extends State<homePage> {
     }
   """;
 
+    print("Entered Recentlt viewed");
     // Define variables for the mutation (assuming you have the user ID)
     final String userId = otpVerification.userId.toString(); // Replace with the actual user ID
     final Map<String, dynamic> variables = {
@@ -95,7 +113,7 @@ class _homePageState extends State<homePage> {
 
     final GraphQLClient client = GraphQLClient(
       cache: GraphQLCache(),
-      link: HttpLink(httpLinkC), // Replace with your GraphQL API endpoint
+      link: httpLink, // Replace with your GraphQL API endpoint
     );
 
     final MutationOptions options = MutationOptions(
@@ -194,29 +212,6 @@ class _homePageState extends State<homePage> {
                   ),
                 ),
 
-                // Recommended
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader('Recommended for you'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 10,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildDishListViewRecommended(width),
-                  ),
-                ),
-
                 // Community
                 Padding(
                   padding: const EdgeInsets.only(
@@ -248,7 +243,7 @@ class _homePageState extends State<homePage> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.pushNamed(context, '');
+                      Navigator.pushNamed(context, "entryPoint");
                       print(UserFormFields.userName);
                     },
                     style: ElevatedButton.styleFrom(
@@ -279,6 +274,29 @@ class _homePageState extends State<homePage> {
                         ],
                       ),
                     ),
+                  ),
+                ),
+
+                // Recommended
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: _buildSectionHeader('Recommended for you'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 10,
+                  ),
+                  child: GraphQLProvider(
+                    client: client,
+                    child: _buildDishListViewRecommended(width),
                   ),
                 ),
 
@@ -1577,10 +1595,10 @@ class _homePageState extends State<homePage> {
 
   Widget _buildDishListViewCommunity(double width) {
     return SizedBox(
-      height: 190,
+      height: 250,
       child: Query(
         options: QueryOptions(
-          document: gql(getDishesQuery),
+          document: gql(getAllUserUploads),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -1968,92 +1986,129 @@ class _homePageState extends State<homePage> {
             );
           }
 
-          final List<dynamic> dishes = result.data?['displayDish'] ?? [];
+          final List<dynamic> savedRecipes = result.data?['displayUserUpload'] ?? [];
 
           return ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: dishes.length,
+            itemCount: 5, // Use the length of the saved recipes list
             separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(width: 10);
+              return const SizedBox(height: 10);
             },
             itemBuilder: (context, index) {
-              final dish = dishes[index];
-              return Mutation(
-                options: MutationOptions(
-                  document: gql('''
-                    mutation UpdateDishVisits(\$id: ID!) {
-                      increaseDishvisits(id: \$id) {
-                        dish {
-                          id
-                          dishVisits
-                        }
-                      }
-                    }
-                  '''),
-                  variables: {'id': dish['id']},
-                ),
-                builder:
-                    (RunMutation runMutation, QueryResult? mutationResult) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      runMutation({
-                        'id': dish['id']
-                      });
-                      setState(() {
-                        homePage.dishId = dish['id'];
-                        homePage.dishCourse = dish['dishCategoryCourse'];
-                      });
-                      addToRecentlyViewed(context, dish['id']);
-                      Navigator.pushNamed(context, 'dishDescription');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      minimumSize: Size.zero,
-                      padding: const EdgeInsets.all(0),
-                    ),
-                    child: SizedBox(
-                      width: width / 3 + 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: width / 3,
-                            height: width / 3,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image(
-                                image: NetworkImage(
-                                  httpLinkImage + dish['dishImage'],
+              final savedRecipe = savedRecipes[index];
+
+              // Accessing the details of the dish
+              final String username = savedRecipe['userId']['username'];
+              final String userImage =
+                  savedRecipe['userId']['profilePhoto'] ?? "";
+              final String uploadName = savedRecipe['uploadName'];
+              final String uploadImage = savedRecipe['uploadImage'];
+              final String uploadDescription =
+              savedRecipe['uploadDescription'];
+
+              return Padding(
+                padding: const EdgeInsets.only(
+                    left: 0, right: 20, top: 0, bottom: 0),
+                child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'community');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        minimumSize: Size.zero,
+                        padding: const EdgeInsets.all(0),
+                      ),
+                      child: Container(
+                        width: width / 1.8,
+
+                        decoration: BoxDecoration(
+                            color: Colors.white38,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: width / 1.8,
+                              height: width / 2.5,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                child: Image(
+                                  image: NetworkImage(
+                                    httpLinkImage + uploadImage,
+                                  ),
+                                  fit: BoxFit.fill,
                                 ),
-                                fit: BoxFit.fill,
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
-                              top: 10,
-                              bottom: 0,
-                            ),
-                            child: Text(
-                              dish['dishName'],
-                              style: const TextStyle(
-                                fontFamily: 'Georgia',
-                                fontSize: 14,
-                                color: Colors.white,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 0, top: 20, bottom: 10),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: Colors.white, width: 1)),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage:
+                                      NetworkImage(httpLinkImage + userImage),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 0, top: 0, bottom: 0),
+                                    child: SizedBox(
+                                      width: 155,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              style: TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 14,
+                                                color: Colors.amber[600],
+                                              ),
+                                              children: <TextSpan>[
+                                                TextSpan(text: '$username '),
+                                                const TextSpan(
+                                                    text: 'cooked',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            '$uploadName',
+                                            style: TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 14,
+                                                color: Colors.amber[600]),
+                                            maxLines: 2,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                              maxLines: 3,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  );
-                },
               );
             },
           );

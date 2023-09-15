@@ -15,6 +15,7 @@ import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:chefs_hat/view/landingPage/landingPage.dart';
 import 'package:chefs_hat/view/pantry/pantry.dart';
+import 'package:chefs_hat/view/profile/postUpload.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
 import 'package:chefs_hat/view/recipeGenerator/displayDishList.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
@@ -55,6 +56,7 @@ void main() {
       'dishDescription': (context) => const dishDescription(),
       // VIEWS - PROFILE
       'profile' : (context) => const profile(),
+      'postUpload' : (context) => const postUpload(),
       // MODELS - PROFILE - PHOTOS
       'photos' : (context) => const photos(),
       // MODELS - PROFILE - COOKBOOKS

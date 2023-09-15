@@ -18,6 +18,60 @@ class activity extends StatefulWidget {
 }
 
 class _activityState extends State<activity> {
+
+  void addToRecentlyViewed(BuildContext context, String dishId) async {
+    final String addRecipeMutation = """
+    mutation AddRecipeToRecentlyViewed(\$userId: ID!, \$dishId: ID!) {
+      addRecipeToRecentlyViewed(userId: \$userId, dishId: \$dishId) {
+        recentlyViewed {
+          id
+          userId {
+            id
+            username
+          }
+          dishId {
+            id
+            dishName
+          }
+        }
+      }
+    }
+  """;
+
+    print("Entered Recentlt viewed");
+    // Define variables for the mutation (assuming you have the user ID)
+    final String userId = otpVerification.userId.toString(); // Replace with the actual user ID
+    final Map<String, dynamic> variables = {
+      'userId': userId,
+      'dishId': dishId,
+    };
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink, // Replace with your GraphQL API endpoint
+    );
+
+    final MutationOptions options = MutationOptions(
+      document: gql(addRecipeMutation),
+      variables: variables,
+    );
+
+    try {
+      final QueryResult result = await client.mutate(options);
+
+      if (result.hasException) {
+        print("Mutation error: ${result.exception.toString()}");
+        // Handle the error here, e.g., show a snackbar or display an error message.
+      } else {
+        print("Mutation result: ${result.data.toString()}");
+        // Mutation was successful, you can perform any necessary UI updates here.
+      }
+    } catch (e) {
+      print("Mutation error: $e");
+      // Handle exceptions that occur during the mutation.
+    }
+  }
+
   final String getRatedRecipe = '''
     query {
       displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
@@ -659,6 +713,7 @@ class _activityState extends State<activity> {
                         setState(() {
                           homePage.dishId = savedRecipe['dishId']["id"];
                         });
+                        addToRecentlyViewed(context, homePage.dishId);
                         Navigator.pushNamed(context, 'dishDescription');
                       },
                       style: ElevatedButton.styleFrom(

@@ -23,54 +23,51 @@ class profile extends StatefulWidget {
 
 class _profileState extends State<profile> {
 
-  XFile? _imageFile;
-
-// Function to pick an image from the gallery.
-  Future<void> _pickImageFromGallery() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    }
-  }
-
-// Function to take a photo with the camera.
-  Future<void> _takePhotoWithCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    File? img = File(pickedFile!.path);
-    img = await _cropImage(imageFile: img);
-
-
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    }
-  }
-
-
-  Future<File?> _cropImage({required File imageFile}) async {
-    CroppedFile? croppedImage =
-    await ImageCropper().cropImage(sourcePath: imageFile.path);
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
-  }
-
-
-// Widget to display the picked image.
-  Widget _displayImage() {
-    if (_imageFile == null) {
-      return Text('No image selected.');
-    } else {
-      return Image.file(File(_imageFile!.path));
-    }
-  }
-
+//   XFile? _imageFile;
+//
+// // Function to pick an image from the gallery.
+//   Future<void> _pickImageFromGallery() async {
+//     final picker = ImagePicker();
+//     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+//
+//     if (pickedFile != null) {
+//       setState(() {
+//         _imageFile = pickedFile;
+//       });
+//     }
+//   }
+//
+// // Function to take a photo with the camera.
+//   Future<void> _takePhotoWithCamera() async {
+//     final picker = ImagePicker();
+//     final pickedFile = await picker.pickImage(source: ImageSource.camera);
+//
+//     if (pickedFile != null) {
+//       setState(() {
+//         _imageFile = pickedFile;
+//         // _imageFile = img as XFile?;
+//       });
+//     }
+//   }
+//
+//
+//   Future<File?> _cropImage({required File imageFile}) async {
+//     CroppedFile? croppedImage =
+//     await ImageCropper().cropImage(sourcePath: imageFile.path);
+//     if (croppedImage == null) return null;
+//     return File(croppedImage.path);
+//   }
+//
+//
+// // Widget to display the picked image.
+//   Widget _displayImage() {
+//     if (_imageFile == null) {
+//       return Text('No image selected.');
+//     } else {
+//       return Image.file(File(_imageFile!.path));
+//     }
+//   }
+//
 
   final String getUserById = r'''
     query($id: ID!) {
@@ -139,7 +136,8 @@ class _profileState extends State<profile> {
               width: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  _showBottomSheet(context);
+                  // _showBottomSheet(context);
+                  Navigator.pushNamed(context, 'postUpload');
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.transparent,
@@ -433,8 +431,6 @@ class _profileState extends State<profile> {
                 // const Divider(
                 //   color: CustomColors.white,
                 //   thickness: 1,
-                // ),
-                SizedBox(child: _displayImage(),),
                 SizedBox(
                   height: height - 322,
                   width: width,
@@ -626,33 +622,33 @@ class _profileState extends State<profile> {
     );
   }
 
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Wrap(
-          children: <Widget>[
-            ListTile(
-              leading: const Icon(Icons.camera),
-              title: const Text('Take a Photo'),
-              onTap: () {
-                _takePhotoWithCamera();
-                // Handle take photo option
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Choose from Gallery'),
-              onTap: () {
-                _pickImageFromGallery();
-                // Handle choose from gallery option
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showBottomSheet(BuildContext context) {
+  //   showModalBottomSheet<void>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Wrap(
+  //         children: <Widget>[
+  //           ListTile(
+  //             leading: const Icon(Icons.camera),
+  //             title: const Text('Take a Photo'),
+  //             onTap: () {
+  //               _takePhotoWithCamera();
+  //               // Handle take photo option
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //           ListTile(
+  //             leading: const Icon(Icons.photo_library),
+  //             title: const Text('Choose from Gallery'),
+  //             onTap: () {
+  //               _pickImageFromGallery();
+  //               // Handle choose from gallery option
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }
