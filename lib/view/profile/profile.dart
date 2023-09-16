@@ -582,7 +582,7 @@ class _profileState extends State<profile> {
           } else {
             return ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'ratedRecipess');
+                Navigator.pushNamed(context, 'ratedRecipes');
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.transparent,

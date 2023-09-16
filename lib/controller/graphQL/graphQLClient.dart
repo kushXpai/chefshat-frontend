@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 
 // PP
-final HttpLink httpLink = HttpLink('http://192.168.0.200:8000/graphql/');
-final httpLinkC = 'http://192.168.0.200:8000';
-final httpLinkImage = 'http://192.168.0.200:8000/media/';
+// final HttpLink httpLink = HttpLink('http://192.168.0.200:8000/graphql/');
+// final httpLinkC = 'http://192.168.0.200:8000';
+// final httpLinkImage = 'http://192.168.0.200:8000/media/';
 
 // Xiaomi 11i
-// final HttpLink httpLink = HttpLink('http://192.168.78.104:8000/graphql/');
-// final httpLinkC = 'http://192.168.78.104:8000';
-// final httpLinkImage = 'http://192.168.78.104:8000/media/';
+final HttpLink httpLink = HttpLink('http://192.168.251.104:8000/graphql/');
+final httpLinkC = 'http://192.168.251.104:8000';
+final httpLinkImage = 'http://192.168.251.104:8000/media/';
 
 // A Oppo F11 Pro
 // final HttpLink httpLink = HttpLink('http://192.168.187.104:8000/graphql/');
