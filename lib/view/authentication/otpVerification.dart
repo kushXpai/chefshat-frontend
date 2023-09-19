@@ -1,10 +1,7 @@
 import 'package:chefs_hat/controller/graphQL/graphQLClient.dart';
 import 'package:chefs_hat/controller/registration/registration.dart';
-import 'package:chefs_hat/entryPoint.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:graphql/client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pinput/pinput.dart';

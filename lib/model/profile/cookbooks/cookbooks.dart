@@ -1,10 +1,7 @@
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
-import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
-import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
 
 class cookbooks extends StatefulWidget {
@@ -22,7 +19,6 @@ class _cookbooksState extends State<cookbooks> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
 
     return SizedBox(
       width: width,
@@ -230,7 +226,6 @@ class _cookbooksState extends State<cookbooks> {
                       final String dishName = savedRecipe['dishId']['dishName'];
                       final String dishImage =
                           savedRecipe['dishId']['dishImage'];
-                      final int dishRatings = 142;
 
                       return Padding(
                         padding: const EdgeInsets.only(

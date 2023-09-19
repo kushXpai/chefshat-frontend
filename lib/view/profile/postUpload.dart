@@ -1,11 +1,7 @@
 import 'dart:io';
-import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:http/http.dart' as http;
-import 'package:chefs_hat/controller/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 
 class postUpload extends StatefulWidget {
@@ -16,9 +12,6 @@ class postUpload extends StatefulWidget {
 }
 
 class _postUploadState extends State<postUpload> {
-
-  final TextEditingController _controller = TextEditingController();
-  bool _isFocused = false;
 
   String profilePhoto = "";
 

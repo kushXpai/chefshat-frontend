@@ -1200,11 +1200,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                             final Map<String, dynamic> data =
                                                 result.data?['displayDishById'];
 
-                                            final String dishId = data['id'];
-                                            final String dishName =
-                                                data['dishName'];
-
-                                            // Accessing the ingredients list
                                             final List<dynamic> ingredients =
                                                 data['ingredients'];
 
@@ -1226,9 +1221,6 @@ class _dishDescriptionState extends State<dishDescription> {
                                                 final String ingredientName =
                                                     ingredient['ingredientId']
                                                         ['ingredientName'];
-                                                final String ingredientImage =
-                                                    ingredient['ingredientId']
-                                                        ['ingredientImage'];
                                                 final int quantity = ingredient[
                                                     'dishIngredientQuantity'];
                                                 final String unit = ingredient[

@@ -103,7 +103,6 @@ class _communityState extends State<community> {
                 final String username = savedRecipe['userId']['username'];
                 final String userImage =
                     savedRecipe['userId']['profilePhoto'] ?? "";
-                final String uploadName = savedRecipe['uploadName'];
                 final String uploadLikes = savedRecipe['uploadLikes'].toString();
                 final String uploadImage = savedRecipe['uploadImage'];
                 final String uploadDescription = savedRecipe['uploadDescription'];

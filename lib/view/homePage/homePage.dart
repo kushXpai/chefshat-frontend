@@ -5,9 +5,7 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
 import '../../controller/graphQL/graphQLClient.dart';
-import '../../controller/registration/registration.dart';
 
 class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
@@ -1948,7 +1946,6 @@ class _homePageState extends State<homePage> {
                   savedRecipe['userId']['profilePhoto'] ?? "";
               final String uploadName = savedRecipe['uploadName'];
               final String uploadImage = savedRecipe['uploadImage'];
-              final String uploadDescription = savedRecipe['uploadDescription'];
 
               return Padding(
                 padding: const EdgeInsets.only(

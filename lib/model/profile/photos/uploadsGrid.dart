@@ -20,7 +20,6 @@ class _uploadsGridState extends State<uploadsGrid> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
 
     return GraphQLProvider(
       client: client,
@@ -90,14 +89,7 @@ class _uploadsGridState extends State<uploadsGrid> {
 
                 final savedRecipe = savedRecipes[index];
 
-                // Accessing the details of the dish
-                final String postId = savedRecipe['id'] ?? "";
-                final String username = savedRecipe['userId']['username'];
-                final String userImage = savedRecipe['userId']['profilePhoto'];
-                final String uploadName = savedRecipe['uploadName'];
-                final String uploadLikes = savedRecipe['uploadLikes'].toString();
                 final String uploadImage = savedRecipe['uploadImage'];
-                final String uploadDescription = savedRecipe['uploadDescription'];
 
                 return GestureDetector(
                   onTap: () {

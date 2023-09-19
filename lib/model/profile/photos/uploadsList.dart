@@ -1,5 +1,4 @@
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
-import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -115,7 +114,6 @@ class _uploadsListState extends State<uploadsList> {
                 final String username = savedRecipe['userId']['username'];
                 final String userImage =
                     savedRecipe['userId']['profilePhoto'] ?? "";
-                final String uploadName = savedRecipe['uploadName'];
                 final String uploadLikes = savedRecipe['uploadLikes'].toString();
                 final String uploadImage = savedRecipe['uploadImage'];
                 final String uploadDescription = savedRecipe['uploadDescription'];

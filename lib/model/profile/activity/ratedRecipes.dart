@@ -1,6 +1,5 @@
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:flutter/material.dart';
-import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -20,7 +19,6 @@ class _ratedRecipesState extends State<ratedRecipes> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.black,

@@ -77,7 +77,6 @@ class _activityState extends State<activity> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
 
     return SizedBox(
       width: width,
@@ -252,8 +251,6 @@ class _activityState extends State<activity> {
                       final String dishImage =
                           savedRecipe['dishId']['dishImage'];
                       final String dishRating = savedRecipe['rating'];
-                      final String dishRatedTime = savedRecipe['recipeRated'];
-                      final int dishRatings = 142;
 
                       // rated ${formatTimeDifference(dishRatedTime)}
                       return Stack(
