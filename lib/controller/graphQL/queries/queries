@@ -1,0 +1,68 @@
+Home Page
+
+final String getDishesQuery = r'''
+    query{
+      displayDish{
+        id
+        dishName
+        dishImage
+        dishCalories
+        dishRating
+        dishCategoryCourse
+        dishTotalTime
+      }
+    }
+  ''';
+
+  final String getLastDishesQuery = r'''
+    query {
+      displayLastAddedDish {
+          id
+          dishName
+          dishImage
+          dishCategoryCourse
+      }
+    }
+  ''';
+
+  final String getDishAddedLastWeek = r'''
+    query {
+      displayDishesAddedLastWeek {
+        id
+        dishName
+        dishImage
+        dishCategoryCourse
+      }
+    }
+  ''';
+
+  final String getDishTrending = r'''
+    query{
+      displayDishesTrending{
+        id
+        dishName
+        dishImage
+        dishVisits
+        dishCategoryCourse
+      }
+    }
+  ''';
+
+  final String getAllUserUploads = '''
+    query {
+      displayUserUpload{
+        userId{
+          username
+          profilePhoto
+        }
+        uploadName
+        uploadImage
+        uploadDescription
+        uploadLikes
+        creationTime
+      }
+    }
+  ''';
+
+
+

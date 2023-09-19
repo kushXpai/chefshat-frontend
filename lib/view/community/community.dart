@@ -1,3 +1,4 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -12,21 +13,24 @@ class community extends StatefulWidget {
 }
 
 class _communityState extends State<community> {
-  final String getAllUserUploads = '''
-    query {
-      displayUserUpload{
-        userId{
-          username
-          profilePhoto
-        }
-        uploadName
-        uploadImage
-        uploadDescription
-        uploadLikes
-        creationTime
-      }
-    }
-  ''';
+
+  final String getAllUserUploads = Uploads.getAllUserUploads;
+
+  // final String getAllUserUploads = '''
+  //   query {
+  //     displayUserUpload{
+  //       userId{
+  //         username
+  //         profilePhoto
+  //       }
+  //       uploadName
+  //       uploadImage
+  //       uploadDescription
+  //       uploadLikes
+  //       creationTime
+  //     }
+  //   }
+  // ''';
 
   @override
   Widget build(BuildContext context) {

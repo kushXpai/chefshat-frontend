@@ -1,7 +1,8 @@
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:chefs_hat/constants/colors/Colors.dart';
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
-import 'package:chefs_hat/view/community/community.dart';
+import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -18,72 +19,17 @@ class homePage extends StatefulWidget {
   State<homePage> createState() => _homePageState();
 }
 
-
-
 class _homePageState extends State<homePage> {
-  final String getDishesQuery = r'''
-    query{
-      displayDish{
-        id
-        dishName
-        dishImage
-        dishCalories
-        dishRating
-        dishCategoryCourse
-        dishTotalTime
-      }
-    }
-  ''';
+  final String getDishesQuery = Dishes.getDishesQuery;
 
-  final String getLastDishesQuery = r'''
-    query {
-      displayLastAddedDish {
-          id
-          dishName
-          dishImage
-          dishCategoryCourse
-      }
-    }
-  ''';
+  final String getLastDishesQuery = Dishes.getLastDishesQuery;
 
-  final String getDishAddedLastWeek = r'''
-    query {
-      displayDishesAddedLastWeek {
-        id
-        dishName
-        dishImage
-        dishCategoryCourse
-      }
-    }
-  ''';
+  final String getDishAddedLastWeek = Dishes.getDishAddedLastWeek;
 
-  final String getDishTrending = r'''
-    query{
-      displayDishesTrending{
-        id
-        dishName
-        dishImage
-        dishVisits
-        dishCategoryCourse
-      }
-    }
-  ''';
+  final String getDishTrending = Dishes.getDishTrending;
 
-  final String getAllUserUploads = '''
-    query {
-      displayUserUpload{
-        userId{
-          username
-          profilePhoto
-        }
-        uploadName
-        uploadImage
-        uploadDescription
-        uploadLikes
-        creationTime
-      }
-    }
-  ''';
+  final String getAllUserUploads = Uploads.getAllUserUploads;
+
 
   void addToRecentlyViewed(BuildContext context, String dishId) async {
     final String addRecipeMutation = """
@@ -104,10 +50,7 @@ class _homePageState extends State<homePage> {
     }
   """;
 
-    print("Entered Recentlt viewed");
-    // Define variables for the mutation (assuming you have the user ID)
-    final String userId =
-        otpVerification.userId.toString(); // Replace with the actual user ID
+    final String userId = otpVerification.userId.toString();
     final Map<String, dynamic> variables = {
       'userId': userId,
       'dishId': dishId,
@@ -125,17 +68,13 @@ class _homePageState extends State<homePage> {
 
     try {
       final QueryResult result = await client.mutate(options);
-
       if (result.hasException) {
         print("Mutation error: ${result.exception.toString()}");
-        // Handle the error here, e.g., show a snackbar or display an error message.
       } else {
         print("Mutation result: ${result.data.toString()}");
-        // Mutation was successful, you can perform any necessary UI updates here.
       }
     } catch (e) {
       print("Mutation error: $e");
-      // Handle exceptions that occur during the mutation.
     }
   }
 
@@ -146,233 +85,217 @@ class _homePageState extends State<homePage> {
 
     return Scaffold(
       backgroundColor: CustomColors.backgroundBlack,
-      body: Stack(
-        children: [
-          // Opacity(
-          //   opacity: 0.4,
-          //   child: SizedBox(
-          //     height: height,
-          //     width: width,
-          //     child: const Image(
-          //       image: AssetImage(
-          //         'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
-          //       ),
-          //       fit: BoxFit.fill,
-          //     ),
-          //   ),
-          // ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // What are we loving now
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 50,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader("What are we loving now"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 20,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildLastDishView(width),
-                  ),
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // What are we loving now
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 50,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader("What are we loving now"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 20,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildLastDishView(width),
+              ),
+            ),
 
-                // Trending
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader('Trending'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 10,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildDishListViewTrending(width),
-                  ),
-                ),
+            // Trending
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader('Trending'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 10,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildDishListViewTrending(width),
+              ),
+            ),
 
-                // Community
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader("What's our community cooking"),
+            // Community
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader("What's our community cooking"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 10,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildDishListViewCommunity(width),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    entryPointStatics.indexBottomNavigationBar == 2;
+                  });
+                  Navigator.pushNamed(context, "entryPoint");
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 10,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildDishListViewCommunity(width),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "entryPoint");
-                      print(UserFormFields.userName);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      minimumSize: Size.zero,
-                      padding: const EdgeInsets.all(0),
-                    ),
-                    child: const SizedBox(
-                      child: Row(
-                        children: [
-                          Text(
-                            "See more Community ",
-                            style: TextStyle(
-                              fontFamily: 'Georgia',
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.lime,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: Colors.lime,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Recommended
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader('Recommended for you'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 10,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildDishListViewRecommended(width),
-                  ),
-                ),
-
-                // This week
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 0,
-                  ),
-                  child: _buildSectionHeader('Popular recipes this week'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 0,
-                    bottom: 10,
-                  ),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildDishListAddedLastWeek(width),
-                  ),
-                ),
-
-                // Footer
-                const Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 100, bottom: 20),
-                  child: Text(
-                    "Unleash Your Culinary Creativity!",
-                    style: TextStyle(
-                      fontFamily: 'Georgia',
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: CustomColors.textWhite,
-                    ),
-                    maxLines: 3,
-                  ),
-                ),
-                const Padding(
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 100),
+                child: const SizedBox(
                   child: Row(
                     children: [
                       Text(
-                        "Crafted with ",
+                        "See more Community ",
                         style: TextStyle(
                           fontFamily: 'Georgia',
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.lime,
                         ),
                       ),
                       Icon(
-                        Icons.favorite_sharp,
-                        color: Colors.red,
+                        Icons.arrow_forward_ios_outlined,
+                        color: Colors.lime,
                         size: 20,
-                      ),
-                      Text(
-                        " in Mumbai, India",
-                        style: TextStyle(
-                          fontFamily: 'Georgia',
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
-      ),
 
+            // Recommended
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader('Recommended for you'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 10,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildDishListViewRecommended(width),
+              ),
+            ),
+
+            // This week
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 0,
+              ),
+              child: _buildSectionHeader('Popular recipes this week'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 10,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildDishListAddedLastWeek(width),
+              ),
+            ),
+
+            // Footer
+            const Padding(
+              padding: EdgeInsets.only(
+                  left: 20, right: 20, top: 100, bottom: 20),
+              child: Text(
+                "Unleash Your Culinary Creativity!",
+                style: TextStyle(
+                  fontFamily: 'Georgia',
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: CustomColors.textWhite,
+                ),
+                maxLines: 3,
+              ),
+            ),
+            const Padding(
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 100),
+              child: Row(
+                children: [
+                  Text(
+                    "Crafted with ",
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Icon(
+                    Icons.favorite_sharp,
+                    color: Colors.red,
+                    size: 20,
+                  ),
+                  Text(
+                    " in Mumbai, India",
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
