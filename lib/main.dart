@@ -24,6 +24,7 @@ import 'package:chefs_hat/view/registration/registrationStep1.dart';
 import 'package:chefs_hat/view/registration/registrationStep2.dart';
 import 'package:chefs_hat/view/registration/registrationStep3.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 
 void main() {
@@ -35,10 +36,6 @@ void main() {
     // initialRoute: 'landingPage',
     initialRoute: 'entryPoint',
     // initialRoute: 'test',
-
-    // themeMode: ThemeMode.system,
-    // darkTheme: ThemeData.dark(),
-    // theme: ThemeData.light(),
 
     routes: {
       // VIEWS

@@ -19,7 +19,6 @@ class activity extends StatefulWidget {
 }
 
 class _activityState extends State<activity> {
-
   void addToRecentlyViewed(BuildContext context, String dishId) async {
     final String addRecipeMutation = """
     mutation AddRecipeToRecentlyViewed(\$userId: ID!, \$dishId: ID!) {
@@ -41,7 +40,8 @@ class _activityState extends State<activity> {
 
     print("Entered Recentlt viewed");
     // Define variables for the mutation (assuming you have the user ID)
-    final String userId = otpVerification.userId.toString(); // Replace with the actual user ID
+    final String userId =
+        otpVerification.userId.toString(); // Replace with the actual user ID
     final Map<String, dynamic> variables = {
       'userId': userId,
       'dishId': dishId,
@@ -97,8 +97,8 @@ class _activityState extends State<activity> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
+                left: 10,
+                right: 10,
                 top: 0,
                 bottom: 0,
               ),
@@ -170,8 +170,7 @@ class _activityState extends State<activity> {
             style: const TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
-              color:
-                  Colors.white,
+              color: Colors.white,
             ),
           ),
         ],
@@ -214,8 +213,8 @@ class _activityState extends State<activity> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 0),
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "Rate your first recipe to see it here.",
                     style: TextStyle(
@@ -232,122 +231,129 @@ class _activityState extends State<activity> {
               ],
             );
           } else {
-            int savedRecipesLength =
-                savedRecipes.length.clamp(0, 5); // Limit to 2 saved recipes
-            print(savedRecipesLength);
+            int savedRecipesLength = savedRecipes.length.clamp(0, 3); // Limit to 2 saved recipes
             return Column(
               children: [
-                SizedBox(
-                  height: 210,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: savedRecipesLength,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(height: 10);
-                    },
-                    itemBuilder: (context, index) {
-                      final savedRecipe = savedRecipes![index];
-                      final String dishName = savedRecipe['dishId']['dishName'];
-                      final String dishImage =
-                          savedRecipe['dishId']['dishImage'];
-                      final String dishRating = savedRecipe['rating'];
+                ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  itemCount: savedRecipesLength,
+                  shrinkWrap: true, // Added this
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 10);
+                  },
+                  itemBuilder: (context, index) {
+                    final savedRecipe = savedRecipes![index];
+                    final String dishName = savedRecipe['dishId']['dishName'];
+                    final String dishImage =
+                        savedRecipe['dishId']['dishImage'];
+                    final String dishRating = savedRecipe['rating'];
+                    final String dishRecipeRated = savedRecipe['recipeRated'];
 
-                      // rated ${formatTimeDifference(dishRatedTime)}
-                      return Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 10, bottom: 10),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  homePage.dishId = savedRecipe['dishId']["id"];
-                                });
-                                Navigator.pushNamed(context, 'dishDescription');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.transparent,
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                                shadowColor: Colors.transparent,
-                                minimumSize: Size.zero,
-                                padding: const EdgeInsets.all(0),
-                              ),
-                              child: SizedBox(
-                                width: width / 3 + 10,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: width / 3,
-                                      height: width / 3,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image(
-                                          image: NetworkImage(
-                                            httpLinkImage + dishImage,
-                                          ),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 0,
-                                        right: 0,
-                                        top: 10,
-                                        bottom: 0,
-                                      ),
-                                      child: Text(
-                                        dishName,
-                                        style: const TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
-                                        maxLines: 3,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                    // rated ${formatTimeDifference(dishRatedTime)}
+                    return Stack(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              homePage.dishId = savedRecipe['dishId']["id"];
+                            });
+                            Navigator.pushNamed(context, 'dishDescription');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            minimumSize: Size.zero,
+                            padding: const EdgeInsets.all(0),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 0, top: 10, bottom: 0),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  height: 55,
-                                  width: 55,
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: dishRating == "THUMBSUP"
-                                        ? const AssetImage(
-                                            'assets/general/ThumbsUp.png')
-                                        : const AssetImage(
-                                            'assets/general/ThumbsDown.png'),
+                                  height: 90,
+                                  width: 90,
+
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      httpLinkImage + dishImage,
+                                      fit: BoxFit.cover, // Adjust the image's fit as needed
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
+                                        child: Text(
+                                          dishName,
+                                          style:  const TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                            color: CustomColors.white,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
+                                        child: Text(
+                                          '${formatTimeDifference(dishRecipeRated)}',
+                                          style:  TextStyle(
+                                            fontFamily: 'Georgia',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: CustomColors.grey,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: dishRating == "THUMBSUP"
+                                    ? const AssetImage(
+                                        'assets/general/ThumbsUp.png')
+                                    : const AssetImage(
+                                        'assets/general/ThumbsDown.png'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 0, right: 0, top: 10, bottom: 10),
+                      left: 10, right: 10, top: 10, bottom: 10),
                   child: Container(
                     width: width,
                     height: 50,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.lime,
-                          width: 2),
+                      border: Border.all(color: Colors.lime, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ElevatedButton(
@@ -414,8 +420,8 @@ class _activityState extends State<activity> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(
-                    left: 20, right: 20, top: 20, bottom: 0),
+                padding:
+                    EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                 child: Text(
                   "Leave your first tip to see it here.",
                   style: TextStyle(
@@ -433,144 +439,178 @@ class _activityState extends State<activity> {
           );
         } else {
           activity.tipsLength = tips.length.clamp(0, 2);
-          return SizedBox(
-            height: 210,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: activity.tipsLength,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                final tip = tips![index];
-                final String dishName = tip['dishId']['dishName'];
-                final String dishImage = tip['userTipImage'];
-                final String dishTipDescription = tip['tipDescription'];
-                final String dishTipTime = tip['recipeTiped'];
+          return Column(
+            children: [
+              ListView.separated(
+                scrollDirection: Axis.vertical,
+                itemCount: activity.tipsLength,
+                shrinkWrap: true, // Added this
+                physics: const NeverScrollableScrollPhysics(),
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  final tip = tips![index];
+                  final String dishName = tip['dishId']['dishName'];
+                  final String dishImage = tip['userTipImage'];
+                  final String dishTipDescription = tip['tipDescription'];
+                  final String dishTipTime = tip['recipeTiped'];
 
-                return Container(
-                  height: 210,
-                  width: width - 20,
-                  margin: const EdgeInsets.only(
-                      left: 10, right: 10, top: 0, bottom: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white12,
-                    border: Border.all(
-                        color: Colors.transparent,
-                        width: 1),
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 10, bottom: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      dishTipDescription,
-                                      style: const TextStyle(
-                                        fontFamily: 'Georgia',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                  return Container(
+                    width: width - 20,
+                    margin: const EdgeInsets.only(
+                        left: 10, right: 10, top: 0, bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white12,
+                      border: Border.all(color: Colors.transparent, width: 1),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        dishTipDescription,
+                                        style: const TextStyle(
+                                          fontFamily: 'Georgia',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up_alt_outlined,
-                                          color: CustomColors.grey,
-                                          size: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '10',
-                                          style: TextStyle(
-                                            fontFamily: 'Georgia',
-                                            fontSize: 15,
-                                            color: CustomColors.white,
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.thumb_up_alt_outlined,
+                                            color: CustomColors.grey,
+                                            size: 18,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: 250,
-                                          child: Text(
-                                            dishName,
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            '10',
                                             style: TextStyle(
                                               fontFamily: 'Georgia',
                                               fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.amber[600],
+                                              color: CustomColors.white,
                                             ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'added ${formatTimeDifference(dishTipTime)}',
-                                          style: const TextStyle(
-                                            fontFamily: 'Georgia',
-                                            fontSize: 12,
-                                            color: CustomColors.grey,
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 250,
+                                            child: Text(
+                                              dishName,
+                                              style: TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber[600],
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SizedBox(
-                                height: 160,
-                                width: 90,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image(
-                                    image:
-                                        NetworkImage(httpLinkImage + dishImage),
-                                    fit: BoxFit.fill,
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'added ${formatTimeDifference(dishTipTime)}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 12,
+                                              color: CustomColors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          )),
-                    ],
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                SizedBox(
+                                  height: 160,
+                                  width: 90,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image(
+                                      image:
+                                          NetworkImage(httpLinkImage + dishImage),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 0, bottom: 10),
+                child: Container(
+                  width: width,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.lime, width: 2),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                );
-              },
-            ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                      minimumSize: Size.zero,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                    child: const Text(
+                      "See more",
+                      style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 20,
+                        color: Colors.lime,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         }
       },
@@ -612,16 +652,15 @@ class _activityState extends State<activity> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 0),
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "You haven't viewed any recipes yet.",
                     style: TextStyle(
-                      fontFamily: 'Georgia',
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: CustomColors.white
-                    ),
+                        fontFamily: 'Georgia',
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColors.white),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,

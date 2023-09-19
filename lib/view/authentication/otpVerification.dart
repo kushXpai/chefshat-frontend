@@ -128,8 +128,6 @@ class _otpVerificationState extends State<otpVerification> {
       if (user == null) {
         return 0; // User not found
       } else if (user is List<dynamic>) {
-        // Since you mentioned that the query should return a list, let's access the first item.
-        // If you expect multiple users, you may need to change this logic.
         final int userId = user.isNotEmpty ? int.parse(user[0]['id']) : 0;
         return userId; // Return the user ID
       } else {

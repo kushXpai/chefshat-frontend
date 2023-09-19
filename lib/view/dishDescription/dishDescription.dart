@@ -21,6 +21,7 @@ class dishDescription extends StatefulWidget {
 }
 
 class _dishDescriptionState extends State<dishDescription> {
+
   List<int> selectedIngredientIndices = [];
 
   bool added = false;
@@ -115,9 +116,6 @@ class _dishDescriptionState extends State<dishDescription> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-    print(height);
-    print(width);
 
     return Scaffold(
       backgroundColor: CustomColors.black,
@@ -237,6 +235,9 @@ class _dishDescriptionState extends State<dishDescription> {
     return Query(
       options: QueryOptions(
         document: gql(DishDescription.getDishById),
+        variables: {
+          'id': '${homePage.dishId}',
+        },
       ),
       builder: (QueryResult result, {fetchMore, refetch}) {
         if (result.hasException) {
@@ -312,6 +313,9 @@ class _dishDescriptionState extends State<dishDescription> {
                   child: Query(
                     options: QueryOptions(
                       document: gql(DishDescription.getDishById),
+                      variables: {
+                        'id': '${homePage.dishId}',
+                      },
                     ),
                     builder: (QueryResult result, {fetchMore, refetch}) {
                       if (result.hasException) {
@@ -662,6 +666,9 @@ class _dishDescriptionState extends State<dishDescription> {
                             child: Query(
                               options: QueryOptions(
                                 document: gql(DishDescription.getDishById),
+                                variables: {
+                                  'id': '${homePage.dishId}',
+                                },
                               ),
                               builder: (QueryResult result,
                                   {fetchMore, refetch}) {
@@ -1410,6 +1417,9 @@ class _dishDescriptionState extends State<dishDescription> {
                                 child: Query(
                                   options: QueryOptions(
                                     document: gql(DishDescription.getDishById),
+                                    variables: {
+                                      'id': '${homePage.dishId}',
+                                    },
                                   ),
                                   builder: (QueryResult result,
                                       {fetchMore, refetch}) {

@@ -1,6 +1,8 @@
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
+import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
@@ -18,6 +20,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -68,6 +71,10 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
       child: Query(
         options: QueryOptions(
           document: gql(SavedRecipes.getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory':
+            cookbooks.savedRecipeCourse, // Replace with your desired category
+          },
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -131,6 +138,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
                   final String dishName = savedRecipe['dishId']['dishName'];
                   final String dishImage = savedRecipe['dishId']['dishImage'];
                   final String dishCategoryDietary = savedRecipe['dishId']['dishCategoryDietary'] ?? "";
+                  final int dishRatings = 142;
 
 
                   return Padding(

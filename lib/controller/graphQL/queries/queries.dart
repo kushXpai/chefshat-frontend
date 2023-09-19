@@ -87,9 +87,9 @@ class Homepage {
 }
 
 class DishDescription {
-  static String getDishById = '''
-    query {
-      displayDishById(id: ${homePage.dishId}) {
+  static String getDishById = r'''
+    query ($id: ID!) {
+      displayDishById(id: $id) {
         dishName
         dishCategoryCourse
         dishCategoryCuisine
@@ -368,5 +368,3 @@ class RecentlyViewedRecipes {
     }
   ''';
 }
-
-
