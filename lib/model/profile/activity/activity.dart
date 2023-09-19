@@ -1,3 +1,4 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
@@ -71,63 +72,6 @@ class _activityState extends State<activity> {
       // Handle exceptions that occur during the mutation.
     }
   }
-
-  final String getRatedRecipe = '''
-    query {
-      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-        }
-        rating
-        recipeRated
-      }
-    }
-  ''';
-
-  final String getTips = '''
-    query {
-      displayUserTipById(userId: ${otpVerification.userId}) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-        }
-        tipDescription
-        userTipImage
-        recipeTiped
-      }
-    }
-  ''';
-
-  final String getRecentlyViewed = '''
-    query {
-      displayUserRecentlyViewed(userId: ${otpVerification.userId}){
-        id
-        userId{
-          id
-          username
-        }
-        dishId{
-          id
-          dishName
-          dishImage
-        }
-        recipeViewedTime
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +168,7 @@ class _activityState extends State<activity> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Georgia',
               fontSize: 20,
               color:
@@ -240,7 +184,7 @@ class _activityState extends State<activity> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getRatedRecipe),
+          document: gql(RatedRecipes.getRatedRecipes),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -270,8 +214,8 @@ class _activityState extends State<activity> {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "Rate your first recipe to see it here.",
@@ -359,7 +303,7 @@ class _activityState extends State<activity> {
                                       ),
                                       child: Text(
                                         dishName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: 'Georgia',
                                           fontSize: 14,
                                           color: Colors.white,
@@ -421,7 +365,7 @@ class _activityState extends State<activity> {
                         minimumSize: Size.zero,
                         padding: const EdgeInsets.all(0),
                       ),
-                      child: Text(
+                      child: const Text(
                         "See more",
                         style: TextStyle(
                           fontFamily: 'Georgia',
@@ -443,7 +387,7 @@ class _activityState extends State<activity> {
   Widget _buildUserTips(double width) {
     return Query(
       options: QueryOptions(
-        document: gql(getTips),
+        document: gql(Tips.getTips),
       ),
       builder: (QueryResult result, {fetchMore, refetch}) {
         if (result.hasException) {
@@ -472,8 +416,8 @@ class _activityState extends State<activity> {
                   fit: BoxFit.fitHeight,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                     left: 20, right: 20, top: 20, bottom: 0),
                 child: Text(
                   "Leave your first tip to see it here.",
@@ -531,7 +475,7 @@ class _activityState extends State<activity> {
                                   children: [
                                     Text(
                                       dishTipDescription,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: 'Georgia',
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
@@ -543,7 +487,7 @@ class _activityState extends State<activity> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    Row(
+                                    const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
@@ -552,7 +496,7 @@ class _activityState extends State<activity> {
                                           color: CustomColors.grey,
                                           size: 18,
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -597,7 +541,7 @@ class _activityState extends State<activity> {
                                       children: [
                                         Text(
                                           'added ${formatTimeDifference(dishTipTime)}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 12,
                                             color: CustomColors.grey,
@@ -640,7 +584,7 @@ class _activityState extends State<activity> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getRecentlyViewed),
+          document: gql(RecentlyViewedRecipes.getRecentlyViewedRecipes),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -670,8 +614,8 @@ class _activityState extends State<activity> {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20, right: 20, top: 20, bottom: 0),
                   child: Text(
                     "You haven't viewed any recipes yet.",
@@ -751,7 +695,7 @@ class _activityState extends State<activity> {
                               ),
                               child: Text(
                                 dishName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Georgia',
                                   fontSize: 14,
                                   color: Colors.white,

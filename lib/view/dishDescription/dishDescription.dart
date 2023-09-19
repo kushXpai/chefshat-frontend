@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:customizable_counter/customizable_counter.dart';
@@ -20,7 +21,6 @@ class dishDescription extends StatefulWidget {
 }
 
 class _dishDescriptionState extends State<dishDescription> {
-
   List<int> selectedIngredientIndices = [];
 
   bool added = false;
@@ -29,11 +29,11 @@ class _dishDescriptionState extends State<dishDescription> {
     color: Colors.lime,
   );
 
-  double _width1 = 392.7;
+  double _width1 = 392;
   double _height1 = 15;
-  double _width2 = 392.7;
+  double _width2 = 392;
   double _height2 = 15 + 65;
-  double _width3 = 392.7;
+  double _width3 = 392;
   double _height3 = 15 + 65 + 65;
 
   bool ext1 = false;
@@ -65,92 +65,8 @@ class _dishDescriptionState extends State<dishDescription> {
 
   double serves = 2;
 
-  final String getDishById = r'''
-    query($id: ID!) {
-      displayDishById(id: $id) {
-        dishName
-        dishCategoryCourse
-        dishCategoryCuisine
-        dishCategoryDietary
-        dishCategoryAllergen
-        dishCategorySpicenessLevel
-        dishCategorySeason
-        dishImage
-        dishDescription
-        dishRating
-        dishTotalTime
-        dishPreparationTime
-        dishCookingTime
-        dishCalories
-        dishProteins
-        dishFats
-        dishCarbohydrates
-        dishFibres
-        dishSugar
-        dishSodium
-        dishLastUpdate
-      }
-    }
-  ''';
-
-  final String getDishIngredients = r'''
-    query($id: ID!) {
-      displayDishById(id: $id) {
-        id
-        dishName
-        
-        ingredients(dishId: $id) {
-          id
-          dishIngredientQuantity
-          dishIngredientQuantityUnit
-          ingredientId {
-            id
-            ingredientName
-            ingredientImage
-          }
-        }
-      }
-    }
-  ''';
-
-  final String getDishSteps = r'''
-    query GetDishSteps($dishId: ID!) {
-      displayDishStepById(dishId: $dishId) {
-        id
-        dishStepDescription
-      }
-    }
-  ''';
-
   bool isLiked = false;
 
-  final String addRecipeToSavedRecipesMutation = r'''
-    mutation AddRecipeToSavedRecipes($userId: ID!, $dishId: ID!, $userSavedRecipeCategory: String!) {
-      addRecipeToSavedRecipes(userId: $userId, dishId: $dishId, userSavedRecipeCategory: $userSavedRecipeCategory) {
-        savedRecipe {
-          id
-          userId {
-            id
-            username
-          }
-          dishId {
-            id
-            dishName
-            dishCategoryCourse
-          }
-          recipeSaved
-        }
-      }
-    }
-  ''';
-
-  final String removeRecipeFromSavedRecipesMutation = r'''
-    mutation RemoveRecipeFromSavedRecipes($userId: ID!, $dishId: ID!) {
-      remove_recipe_from_saved_recipes(userId: $userId, dishId: $dishId) {
-        deletedCount
-      }
-    }
-  ''';
 
   void toggleLike() async {
     setState(() {
@@ -171,7 +87,7 @@ class _dishDescriptionState extends State<dishDescription> {
         print("CREATE");
         final response = await _client.mutate(
           MutationOptions(
-            document: gql(addRecipeToSavedRecipesMutation),
+            document: gql(DishDescription.addRecipeToSavedRecipesMutation),
             variables: {
               'userId': userId,
               'dishId': dishId,
@@ -184,7 +100,7 @@ class _dishDescriptionState extends State<dishDescription> {
         print("DELETE");
         final response = await _client.mutate(
           MutationOptions(
-            document: gql(removeRecipeFromSavedRecipesMutation),
+            document: gql(DishDescription.removeRecipeFromSavedRecipesMutation),
             variables: {'userId': userId, 'dishId': dishId},
           ),
         );
@@ -199,6 +115,9 @@ class _dishDescriptionState extends State<dishDescription> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    print(height);
+    print(width);
 
     return Scaffold(
       backgroundColor: CustomColors.black,
@@ -236,15 +155,6 @@ class _dishDescriptionState extends State<dishDescription> {
       ),
       body: Center(
           child: Stack(
-        children: [
-          Container(
-            width: 392.7,
-            height: 872.7,
-            decoration: const BoxDecoration(
-              color: Colors.white10,
-            ),
-          ),
-          Stack(
             children: [
               GraphQLProvider(
                 client: client,
@@ -285,9 +195,6 @@ class _dishDescriptionState extends State<dishDescription> {
                     ),
                     child: LikeButton(
                       onTap: (bool isLiked) async {
-                        print(otpVerification.userId);
-                        print(homePage.dishId);
-                        print(homePage.dishCourse);
                         toggleLike();
                       },
                       isLiked:
@@ -322,17 +229,14 @@ class _dishDescriptionState extends State<dishDescription> {
                 ),
               ),
             ],
-          )
-        ],
-      )),
+          )),
     );
   }
 
   Widget _buildDishByIdImage(double width) {
     return Query(
       options: QueryOptions(
-        document: gql(getDishById),
-        variables: {'id': '${homePage.dishId}'},
+        document: gql(DishDescription.getDishById),
       ),
       builder: (QueryResult result, {fetchMore, refetch}) {
         if (result.hasException) {
@@ -407,8 +311,7 @@ class _dishDescriptionState extends State<dishDescription> {
                   ),
                   child: Query(
                     options: QueryOptions(
-                      document: gql(getDishById),
-                      variables: {'id': '${homePage.dishId}'},
+                      document: gql(DishDescription.getDishById),
                     ),
                     builder: (QueryResult result, {fetchMore, refetch}) {
                       if (result.hasException) {
@@ -758,8 +661,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                 left: 20, right: 20, top: 10),
                             child: Query(
                               options: QueryOptions(
-                                document: gql(getDishById),
-                                variables: {'id': '${homePage.dishId}'},
+                                document: gql(DishDescription.getDishById),
                               ),
                               builder: (QueryResult result,
                                   {fetchMore, refetch}) {
@@ -1192,7 +1094,11 @@ class _dishDescriptionState extends State<dishDescription> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 0,
+                                            bottom: 0),
                                         child: Row(
                                           children: [
                                             Column(
@@ -1229,9 +1135,12 @@ class _dishDescriptionState extends State<dishDescription> {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  if(selectedIngredientIndices.isNotEmpty) {
-                                                    print(selectedIngredientIndices);
-                                                    selectedIngredientIndices.clear();
+                                                  if (selectedIngredientIndices
+                                                      .isNotEmpty) {
+                                                    print(
+                                                        selectedIngredientIndices);
+                                                    selectedIngredientIndices
+                                                        .clear();
                                                   }
                                                   _showSnackbarClear(context);
                                                 },
@@ -1241,7 +1150,8 @@ class _dishDescriptionState extends State<dishDescription> {
                                                   backgroundColor:
                                                       Colors.transparent,
                                                   elevation: 0,
-                                                  shadowColor: Colors.transparent,
+                                                  shadowColor:
+                                                      Colors.transparent,
                                                   minimumSize: Size.zero,
                                                   padding:
                                                       const EdgeInsets.all(10),
@@ -1262,7 +1172,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                         height: 400,
                                         child: Query(
                                           options: QueryOptions(
-                                            document: gql(getDishIngredients),
+                                            document: gql(DishDescription.getDishIngredients),
                                             variables: {
                                               'id': '${homePage.dishId}',
                                               'dishId': '${homePage.dishId}'
@@ -1324,23 +1234,33 @@ class _dishDescriptionState extends State<dishDescription> {
                                                 final String unit = ingredient[
                                                     'dishIngredientQuantityUnit'];
 
-                                                final bool isSelected = selectedIngredientIndices.contains(index);
+                                                final bool isSelected =
+                                                    selectedIngredientIndices
+                                                        .contains(index);
 
                                                 return ListTile(
                                                   leading: IconButton(
                                                     icon: Icon(
-                                                      isSelected ? Icons.check_circle : Icons.add_shopping_cart_sharp,
-                                                      color: isSelected ? Colors.lime : Colors.white,
+                                                      isSelected
+                                                          ? Icons.check_circle
+                                                          : Icons
+                                                              .add_shopping_cart_sharp,
+                                                      color: isSelected
+                                                          ? Colors.lime
+                                                          : Colors.white,
                                                     ),
                                                     onPressed: () {
                                                       setState(() {
                                                         if (isSelected) {
-                                                          selectedIngredientIndices.remove(index);
+                                                          selectedIngredientIndices
+                                                              .remove(index);
                                                         } else {
-                                                          selectedIngredientIndices.add(index);
+                                                          selectedIngredientIndices
+                                                              .add(index);
                                                         }
                                                       });
-                                                      _showSnackbarAdd(context, ingredientName);
+                                                      _showSnackbarAdd(context,
+                                                          ingredientName);
                                                     },
                                                   ),
                                                   title: Text(
@@ -1497,8 +1417,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                 width: width,
                                 child: Query(
                                   options: QueryOptions(
-                                    document: gql(getDishById),
-                                    variables: {'id': '${homePage.dishId}'},
+                                    document: gql(DishDescription.getDishById),
                                   ),
                                   builder: (QueryResult result,
                                       {fetchMore, refetch}) {
@@ -1615,7 +1534,7 @@ class _dishDescriptionState extends State<dishDescription> {
                               height: 340,
                               child: Query(
                                 options: QueryOptions(
-                                  document: gql(getDishSteps),
+                                  document: gql(DishDescription.getDishSteps),
                                   variables: {'dishId': '${homePage.dishId}'},
                                 ),
                                 builder: (QueryResult result,
@@ -1861,9 +1780,8 @@ class _dishDescriptionState extends State<dishDescription> {
     );
   }
 
-  void addDishToRatedRecipe(
-      BuildContext context, String userId, String dishId, String rating) async {
-    // Your mutation query
+  void addDishToRatedRecipe(BuildContext context, String userId, String dishId, String rating) async {
+
     const String addDishToRatedRecipeMutation = r'''
     mutation AddRecipeToRatedRecipe($userId: ID!, $dishId: ID!, $rating: String!) {
       addRecipeToRatedRecipe(userId: $userId, dishId: $dishId, rating: $rating) {

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chefs_hat/model/profile/activity/activity.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
 import 'package:chefs_hat/model/profile/photos/uploadsGrid.dart';
@@ -8,11 +6,10 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
+import '../../controller/graphQL/queries/queries.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -22,117 +19,11 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
-//   XFile? _imageFile;
-//
-// // Function to pick an image from the gallery.
-//   Future<void> _pickImageFromGallery() async {
-//     final picker = ImagePicker();
-//     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-//
-//     if (pickedFile != null) {
-//       setState(() {
-//         _imageFile = pickedFile;
-//       });
-//     }
-//   }
-//
-// // Function to take a photo with the camera.
-//   Future<void> _takePhotoWithCamera() async {
-//     final picker = ImagePicker();
-//     final pickedFile = await picker.pickImage(source: ImageSource.camera);
-//
-//     if (pickedFile != null) {
-//       setState(() {
-//         _imageFile = pickedFile;
-//         // _imageFile = img as XFile?;
-//       });
-//     }
-//   }
-//
-//
-//   Future<File?> _cropImage({required File imageFile}) async {
-//     CroppedFile? croppedImage =
-//     await ImageCropper().cropImage(sourcePath: imageFile.path);
-//     if (croppedImage == null) return null;
-//     return File(croppedImage.path);
-//   }
-//
-//
-// // Widget to display the picked image.
-//   Widget _displayImage() {
-//     if (_imageFile == null) {
-//       return Text('No image selected.');
-//     } else {
-//       return Image.file(File(_imageFile!.path));
-//     }
-//   }
-//
-
-  final String getUserById = r'''
-    query($id: ID!) {
-      displayUserById(id: $id) {
-        username
-        profilePhoto
-      }
-    }
-  ''';
-
-  final String getRatedRecipeById = '''
-    query {
-      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId{
-          username
-        }
-        dishId{
-          dishName
-        }
-        rating
-        recipeRated
-      }
-    }
-  ''';
-
-  final String getSavedRecipeById = '''
-    query {
-      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-          dishCategoryDietary
-        }
-        recipeSaved
-      }
-    }
-  ''';
-
-  final String getAllUserUploadsById = '''
-    query {
-      displayUserUploadById(userId: ${otpVerification.userId}){
-        userId{
-          username
-          profilePhoto
-        }
-        uploadName
-        uploadImage
-        uploadDescription
-        uploadLikes
-        creationTime
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -440,7 +331,7 @@ class _profileState extends State<profile> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getUserById),
+          document: gql(Profile.getUserById),
           variables: {'id': '${otpVerification.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
@@ -507,7 +398,7 @@ class _profileState extends State<profile> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getAllUserUploadsById),
+          document: gql(Profile.getAllUserUploadsById),
           variables: {'userId': '${otpVerification.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
@@ -572,7 +463,7 @@ class _profileState extends State<profile> {
           } else {
             return ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'photosList');
+                Navigator.pushNamed(context, 'uploadsList');
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.transparent,
@@ -616,7 +507,7 @@ class _profileState extends State<profile> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getRatedRecipeById),
+          document: gql(Profile.getRatedRecipeById),
           variables: {'id': '${otpVerification.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
@@ -721,7 +612,7 @@ class _profileState extends State<profile> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipeById),
+          document: gql(Profile.getSavedRecipeById),
           variables: {'userId': '${otpVerification.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
@@ -821,34 +712,4 @@ class _profileState extends State<profile> {
       ),
     );
   }
-
-  // void _showBottomSheet(BuildContext context) {
-  //   showModalBottomSheet<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Wrap(
-  //         children: <Widget>[
-  //           ListTile(
-  //             leading: const Icon(Icons.camera),
-  //             title: const Text('Take a Photo'),
-  //             onTap: () {
-  //               _takePhotoWithCamera();
-  //               // Handle take photo option
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //           ListTile(
-  //             leading: const Icon(Icons.photo_library),
-  //             title: const Text('Choose from Gallery'),
-  //             onTap: () {
-  //               _pickImageFromGallery();
-  //               // Handle choose from gallery option
-  //               Navigator.pop(context);
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

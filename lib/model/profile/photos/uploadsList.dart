@@ -15,23 +15,6 @@ class uploadsList extends StatefulWidget {
 
 class _uploadsListState extends State<uploadsList> {
 
-  final String getUserUploadsById = Uploads.getUserUploadsById;
-  // final String getUserUploadsById = '''
-  //   query {
-  //     displayUserUploadById(userId: ${otpVerification.userId}){
-  //       id
-  //       userId{
-  //         username
-  //         profilePhoto
-  //       }
-  //       uploadName
-  //       uploadImage
-  //       uploadDescription
-  //       uploadLikes
-  //       creationTime
-  //     }
-  //   }
-  // ''';
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +79,7 @@ class _uploadsListState extends State<uploadsList> {
       height: height,
       child: Query(
         options: QueryOptions(
-          document: gql(getUserUploadsById),
+          document: gql(Uploads.getUserUploadsById),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

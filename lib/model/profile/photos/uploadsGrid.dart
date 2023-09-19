@@ -16,25 +16,6 @@ class uploadsGrid extends StatefulWidget {
 
 class _uploadsGridState extends State<uploadsGrid> {
 
-  final String getUserUploadsById = Uploads.getUserUploadsById;
-  // final String getUserUploadsById = '''
-  //   query {
-  //     displayUserUploadById(userId: ${otpVerification.userId}){
-  //       id
-  //       userId{
-  //         username
-  //         profilePhoto
-  //       }
-  //       uploadName
-  //       uploadImage
-  //       uploadDescription
-  //       uploadLikes
-  //       creationTime
-  //     }
-  //   }
-  // ''';
-
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -54,7 +35,7 @@ class _uploadsGridState extends State<uploadsGrid> {
 
       child: Query(
         options: QueryOptions(
-          document: gql(getUserUploadsById),
+          document: gql(Uploads.getUserUploadsById),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -120,7 +101,7 @@ class _uploadsGridState extends State<uploadsGrid> {
 
                 return GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, 'photosList');
+                    Navigator.pushNamed(context, 'uploadsList');
                   },
                   // onLongPress: () {
                   //   setState(() {

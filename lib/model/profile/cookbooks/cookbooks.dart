@@ -1,3 +1,4 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
@@ -16,41 +17,6 @@ class cookbooks extends StatefulWidget {
 }
 
 class _cookbooksState extends State<cookbooks> {
-  final String getSavedRecipe = '''
-    query {
-      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-        }
-        recipeSaved
-      }
-    }
-  ''';
-
-  final String getSavedRecipeCourse = '''
-    query displayUserSavedRecipeByCourse(\$userSavedRecipeCategory : String!) {
-      displayUserSavedRecipeByCourse(userId: ${otpVerification.userId}, userSavedRecipeCategory: \$userSavedRecipeCategory) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-        }
-        recipeSaved
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -119,189 +85,42 @@ class _cookbooksState extends State<cookbooks> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 0, top: 10, bottom: 10),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: 90,
-                        width: 150,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                            fit: BoxFit.fitWidth,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Dessert",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipeCourse3(width),
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 0, top: 10, bottom: 10),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: 90,
-                        width: 150,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                            fit: BoxFit.fitWidth,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Sides",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipeCourse4(width),
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 0, top: 10, bottom: 10),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: 90,
-                        width: 150,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                            fit: BoxFit.fitWidth,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Snacks",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              ),
+              child: GraphQLProvider(
+                client: client,
+                child: _buildUserSavedRecipeCourse5(width),
               ),
             ),
           ),
@@ -338,7 +157,7 @@ class _cookbooksState extends State<cookbooks> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipe),
+          document: gql(SavedRecipes.getSavedRecipe),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -522,7 +341,7 @@ class _cookbooksState extends State<cookbooks> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
+          document: gql(SavedRecipes.getSavedRecipeCourse),
           variables: {
             'userSavedRecipeCategory': 'APPETIZERS', // Replace with your desired category
           },
@@ -692,7 +511,7 @@ class _cookbooksState extends State<cookbooks> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
+          document: gql(SavedRecipes.getSavedRecipeCourse),
           variables: {
             'userSavedRecipeCategory':
                 'ENTREE', // Replace with your desired category
@@ -863,7 +682,10 @@ class _cookbooksState extends State<cookbooks> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
+          document: gql(SavedRecipes.getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory': 'DESSERTS', // Replace with your desired category
+          },
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -880,78 +702,11 @@ class _cookbooksState extends State<cookbooks> {
           }
 
           final List<dynamic> savedRecipes =
-              result.data?['displayUserSavedRecipeByCourse'];
+          result.data?['displayUserSavedRecipeByCourse'];
           int savedRecipesLength = 0;
           savedRecipesLength = savedRecipes.length;
 
           if (savedRecipes.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 0, top: 10, bottom: 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    cookbooks.savedRecipeCourse = "ENTREE";
-                  });
-                  Navigator.pushNamed(context, 'savedRecipeCourse');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.all(0),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: 90,
-                        width: 150,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                            fit: BoxFit.fitWidth,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Dessert",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else {
             return Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 0, top: 10, bottom: 10),
@@ -989,27 +744,27 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Dessert",
+                        Text(
+                          "Desserts",
                           style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
-                          "$savedRecipesLength recipes",
-                          style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
+                          "0 recipes",
+                          style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
                           ),
                         ),
                       ],
@@ -1018,46 +773,17 @@ class _cookbooksState extends State<cookbooks> {
                 ),
               ),
             );
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildUserSavedRecipeCourse4(double width) {
-    return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final List<dynamic> savedRecipes =
-              result.data?['displayUserSavedRecipeByCourse'];
-          int savedRecipesLength = 0;
-          savedRecipesLength = savedRecipes.length;
-
-          if (savedRecipes.isEmpty) {
+          } else {
+            final dish = savedRecipes[0];
             return Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 0, top: 10, bottom: 10),
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    cookbooks.savedRecipeCourse = "ENTREE";
+                    cookbooks.savedRecipeCourse = "DESSERTS";
                   });
+                  print(cookbooks.savedRecipeCourse);
                   Navigator.pushNamed(context, 'savedRecipeCourse');
                 },
                 style: ElevatedButton.styleFrom(
@@ -1080,34 +806,34 @@ class _cookbooksState extends State<cookbooks> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            httpLinkImage + dish['dishId']['dishImage'],
                             fit: BoxFit.fitWidth,
                           ),
                         )),
                     const SizedBox(
                       width: 20,
                     ),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Sides",
+                        const Text(
+                          "Desserts",
                           style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
+                          "$savedRecipesLength recipes",
+                          style: const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
                           ),
                         ),
                       ],
@@ -1116,7 +842,41 @@ class _cookbooksState extends State<cookbooks> {
                 ),
               ),
             );
-          } else {
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse4(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(SavedRecipes.getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory': 'SIDES', // Replace with your desired category
+          },
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes =
+          result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty) {
             return Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 0, top: 10, bottom: 10),
@@ -1154,27 +914,27 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "Sides",
                           style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         Text(
-                          "$savedRecipesLength recipes",
-                          style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
+                          "0 recipes",
+                          style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
                           ),
                         ),
                       ],
@@ -1183,46 +943,17 @@ class _cookbooksState extends State<cookbooks> {
                 ),
               ),
             );
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildUserSavedRecipeCourse5(double width) {
-    return SizedBox(
-      child: Query(
-        options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
-        ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            print(result.exception.toString());
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (result.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final List<dynamic> savedRecipes =
-              result.data?['displayUserSavedRecipeByCourse'];
-          int savedRecipesLength = 0;
-          savedRecipesLength = savedRecipes.length;
-
-          if (savedRecipes.isEmpty) {
+          } else {
+            final dish = savedRecipes[0];
             return Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 0, top: 10, bottom: 10),
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    cookbooks.savedRecipeCourse = "ENTREE";
+                    cookbooks.savedRecipeCourse = "SIDES";
                   });
+                  print(cookbooks.savedRecipeCourse);
                   Navigator.pushNamed(context, 'savedRecipeCourse');
                 },
                 style: ElevatedButton.styleFrom(
@@ -1245,34 +976,34 @@ class _cookbooksState extends State<cookbooks> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
+                            httpLinkImage + dish['dishId']['dishImage'],
                             fit: BoxFit.fitWidth,
                           ),
                         )),
                     const SizedBox(
                       width: 20,
                     ),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Snacks",
+                        const Text(
+                          "Sides",
                           style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
-                          "0 recipes",
-                          style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
+                          "$savedRecipesLength recipes",
+                          style: const TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
                           ),
                         ),
                       ],
@@ -1281,7 +1012,41 @@ class _cookbooksState extends State<cookbooks> {
                 ),
               ),
             );
-          } else {
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipeCourse5(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(SavedRecipes.getSavedRecipeCourse),
+          variables: {
+            'userSavedRecipeCategory': 'SNACKS', // Replace with your desired category
+          },
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> savedRecipes =
+          result.data?['displayUserSavedRecipeByCourse'];
+          int savedRecipesLength = 0;
+          savedRecipesLength = savedRecipes.length;
+
+          if (savedRecipes.isEmpty) {
             return Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 0, top: 10, bottom: 10),
@@ -1319,16 +1084,85 @@ class _cookbooksState extends State<cookbooks> {
                     const SizedBox(
                       width: 20,
                     ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Snacks",
+                          style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "0 recipes",
+                          style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            final dish = savedRecipes[0];
+            return Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 0, top: 10, bottom: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    cookbooks.savedRecipeCourse = "SNACKS";
+                  });
+                  print(cookbooks.savedRecipeCourse);
+                  Navigator.pushNamed(context, 'savedRecipeCourse');
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 90,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            httpLinkImage + dish['dishId']['dishImage'],
+                            fit: BoxFit.fitWidth,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           "Snacks",
                           style: TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                              fontFamily: 'Georgia',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
                         const SizedBox(
@@ -1337,9 +1171,9 @@ class _cookbooksState extends State<cookbooks> {
                         Text(
                           "$savedRecipesLength recipes",
                           style: const TextStyle(
-                            fontFamily: 'Georgia',
-                            fontSize: 13,
-                            color: Colors.grey
+                              fontFamily: 'Georgia',
+                              fontSize: 13,
+                              color: Colors.grey
                           ),
                         ),
                       ],

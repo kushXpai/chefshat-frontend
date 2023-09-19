@@ -20,16 +20,6 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  final String getDishesQuery = Dishes.getDishesQuery;
-
-  final String getLastDishesQuery = Dishes.getLastDishesQuery;
-
-  final String getDishAddedLastWeek = Dishes.getDishAddedLastWeek;
-
-  final String getDishTrending = Dishes.getDishTrending;
-
-  final String getAllUserUploads = Uploads.getAllUserUploads;
-
 
   void addToRecentlyViewed(BuildContext context, String dishId) async {
     final String addRecipeMutation = """
@@ -320,7 +310,7 @@ class _homePageState extends State<homePage> {
   Widget _buildLastDishView(double width) {
     return Query(
       options: QueryOptions(
-        document: gql(getLastDishesQuery),
+        document: gql(Homepage.getLastDishesQuery),
       ),
       builder: (QueryResult result, {fetchMore, refetch}) {
         if (result.hasException) {
@@ -545,7 +535,7 @@ class _homePageState extends State<homePage> {
       height: 190,
       child: Query(
         options: QueryOptions(
-          document: gql(getDishTrending),
+          document: gql(Homepage.getDishTrending),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -1043,7 +1033,7 @@ class _homePageState extends State<homePage> {
       height: 190,
       child: Query(
         options: QueryOptions(
-          document: gql(getDishesQuery),
+          document: gql(Homepage.getDishesQuery),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -1540,7 +1530,7 @@ class _homePageState extends State<homePage> {
       height: 250,
       child: Query(
         options: QueryOptions(
-          document: gql(getAllUserUploads),
+          document: gql(Uploads.getAllUserUploads),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -2076,7 +2066,7 @@ class _homePageState extends State<homePage> {
       height: 190,
       child: Query(
         options: QueryOptions(
-          document: gql(getDishAddedLastWeek),
+          document: gql(Homepage.getDishAddedLastWeek),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

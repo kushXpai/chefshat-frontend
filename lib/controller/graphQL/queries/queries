@@ -66,3 +66,192 @@ final String getDishesQuery = r'''
 
 
 
+
+
+
+
+
+
+
+Dish Description
+
+final String getDishById = r'''
+    query($id: ID!) {
+      displayDishById(id: $id) {
+        dishName
+        dishCategoryCourse
+        dishCategoryCuisine
+        dishCategoryDietary
+        dishCategoryAllergen
+        dishCategorySpicenessLevel
+        dishCategorySeason
+        dishImage
+        dishDescription
+        dishRating
+        dishTotalTime
+        dishPreparationTime
+        dishCookingTime
+        dishCalories
+        dishProteins
+        dishFats
+        dishCarbohydrates
+        dishFibres
+        dishSugar
+        dishSodium
+        dishLastUpdate
+      }
+    }
+  ''';
+
+  final String getDishIngredients = r'''
+    query($id: ID!) {
+      displayDishById(id: $id) {
+        id
+        dishName
+
+        ingredients(dishId: $id) {
+          id
+          dishIngredientQuantity
+          dishIngredientQuantityUnit
+          ingredientId {
+            id
+            ingredientName
+            ingredientImage
+          }
+        }
+      }
+    }
+  ''';
+
+  final String getDishSteps = r'''
+    query GetDishSteps($dishId: ID!) {
+      displayDishStepById(dishId: $dishId) {
+        id
+        dishStepDescription
+      }
+    }
+  ''';
+
+  bool isLiked = false;
+
+  final String addRecipeToSavedRecipesMutation = r'''
+    mutation AddRecipeToSavedRecipes($userId: ID!, $dishId: ID!, $userSavedRecipeCategory: String!) {
+      addRecipeToSavedRecipes(userId: $userId, dishId: $dishId, userSavedRecipeCategory: $userSavedRecipeCategory) {
+        savedRecipe {
+          id
+          userId {
+            id
+            username
+          }
+          dishId {
+            id
+            dishName
+            dishCategoryCourse
+          }
+          recipeSaved
+        }
+      }
+    }
+  ''';
+
+  final String removeRecipeFromSavedRecipesMutation = r'''
+    mutation RemoveRecipeFromSavedRecipes($userId: ID!, $dishId: ID!) {
+      remove_recipe_from_saved_recipes(userId: $userId, dishId: $dishId) {
+        deletedCount
+      }
+    }
+  ''';
+
+
+
+
+
+
+
+
+
+Upload
+
+  final String getUserUploadsById = '''
+    query {
+      displayUserUploadById(userId: ${otpVerification.userId}){
+        id
+        userId{
+          username
+          profilePhoto
+        }
+        uploadName
+        uploadImage
+        uploadDescription
+        uploadLikes
+        creationTime
+      }
+    }
+  ''';
+
+
+
+
+
+
+
+
+
+Profile Activty
+
+final String getRatedRecipe = '''
+    query {
+      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
+        id
+        userId {
+          id
+          username
+        }
+        dishId {
+          id
+          dishName
+          dishImage
+        }
+        rating
+        recipeRated
+      }
+    }
+  ''';
+
+  final String getTips = '''
+    query {
+      displayUserTipById(userId: ${otpVerification.userId}) {
+        id
+        userId {
+          id
+          username
+        }
+        dishId {
+          id
+          dishName
+          dishImage
+        }
+        tipDescription
+        userTipImage
+        recipeTiped
+      }
+    }
+  ''';
+
+  final String getRecentlyViewed = '''
+    query {
+      displayUserRecentlyViewed(userId: ${otpVerification.userId}){
+        id
+        userId{
+          id
+          username
+        }
+        dishId{
+          id
+          dishName
+          dishImage
+        }
+        recipeViewedTime
+      }
+    }
+  ''';

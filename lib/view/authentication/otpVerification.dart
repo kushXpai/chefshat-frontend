@@ -24,7 +24,6 @@ class _otpVerificationState extends State<otpVerification> {
 
   static Future<int> getUsersCountByMobileNumber(String mobileNumber) async {
     print("getUsersCountByMobileNumber");
-    // final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
@@ -71,8 +70,6 @@ class _otpVerificationState extends State<otpVerification> {
 
 
   var code = "";
-
-  // final FirebaseAuth auth = FirebaseAuth.instance;
 
   final defaultPinTheme = PinTheme(
     width: 56,

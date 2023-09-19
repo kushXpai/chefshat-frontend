@@ -52,14 +52,14 @@ class _postUploadState extends State<postUpload> {
   String uploadDescription = "";
 
   _createUserUpload() async {
-    print('${httpLinkC}/userUpload/');
+
     var request = http.MultipartRequest('POST', Uri.parse('${httpLinkC}/userUpload/'));
     print("before send");
     request.fields.addAll({
       'userId': "1",
       'uploadLikes': "0",
-      'uploadName': "a",
-      'uploadDescription': "a",
+      'uploadName': "${uploadName}",
+      'uploadDescription': "${uploadDescription}",
     });
     print(file!.path.toString());
     request.files.add(await http.MultipartFile.fromPath('uploadImage', file!.path.toString()));
@@ -165,6 +165,7 @@ class _postUploadState extends State<postUpload> {
                   setState(() {
                     uploadName = value;
                   });
+                  print(uploadName);
                 },
                 cursorColor: const Color(0xFF4EDB86),
                 decoration: InputDecoration(
@@ -189,8 +190,9 @@ class _postUploadState extends State<postUpload> {
               child: TextField(
                 onChanged: (value) {
                   setState(() {
-                    UserFormFields.userEmail = value;
+                    uploadDescription = value;
                   });
+                  print(uploadDescription);
                 },
                 cursorColor: const Color(0xFF4EDB86),
                 decoration: InputDecoration(

@@ -4,6 +4,7 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
+import '../../../controller/graphQL/queries/queries.dart';
 
 class savedRecipes extends StatefulWidget {
   const savedRecipes({Key? key}) : super(key: key);
@@ -13,24 +14,6 @@ class savedRecipes extends StatefulWidget {
 }
 
 class _savedRecipesState extends State<savedRecipes> {
-  final String getSavedRecipe = '''
-    query {
-      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-          dishCategoryDietary
-        }
-        recipeSaved
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +68,7 @@ class _savedRecipesState extends State<savedRecipes> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipe),
+          document: gql(SavedRecipes.getSavedRecipe),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

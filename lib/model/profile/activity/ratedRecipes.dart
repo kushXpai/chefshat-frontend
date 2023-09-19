@@ -1,3 +1,4 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:flutter/material.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
@@ -14,22 +15,6 @@ class ratedRecipes extends StatefulWidget {
 }
 
 class _ratedRecipesState extends State<ratedRecipes> {
-  final String getRatedRecipe = '''
-    query {
-      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
-        id
-        userId{
-          username
-        }
-        dishId{
-          dishName
-          dishImage
-        }
-        rating
-        recipeRated
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +87,7 @@ class _ratedRecipesState extends State<ratedRecipes> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getRatedRecipe),
+          document: gql(RatedRecipes.getRatedRecipes),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

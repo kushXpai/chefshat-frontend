@@ -14,24 +14,6 @@ class community extends StatefulWidget {
 
 class _communityState extends State<community> {
 
-  final String getAllUserUploads = Uploads.getAllUserUploads;
-
-  // final String getAllUserUploads = '''
-  //   query {
-  //     displayUserUpload{
-  //       userId{
-  //         username
-  //         profilePhoto
-  //       }
-  //       uploadName
-  //       uploadImage
-  //       uploadDescription
-  //       uploadLikes
-  //       creationTime
-  //     }
-  //   }
-  // ''';
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -85,7 +67,7 @@ class _communityState extends State<community> {
       height: 783,
       child: Query(
         options: QueryOptions(
-          document: gql(getAllUserUploads),
+          document: gql(Uploads.getAllUserUploads),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

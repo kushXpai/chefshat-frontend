@@ -1,3 +1,4 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -14,23 +15,6 @@ class savedRecipeCourse extends StatefulWidget {
 }
 
 class _savedRecipeCourseState extends State<savedRecipeCourse> {
-  final String getSavedRecipeCourse = '''
-    query {
-      displayUserSavedRecipeByCourse(userId: ${otpVerification.userId}, userSavedRecipeCategory: "${cookbooks.savedRecipeCourse}") {
-        id
-        userId {
-          id
-          username
-        }
-        dishId {
-          id
-          dishName
-          dishImage
-        }
-        recipeSaved
-      }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +70,7 @@ class _savedRecipeCourseState extends State<savedRecipeCourse> {
     return SizedBox(
       child: Query(
         options: QueryOptions(
-          document: gql(getSavedRecipeCourse),
+          document: gql(SavedRecipes.getSavedRecipeCourse),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {

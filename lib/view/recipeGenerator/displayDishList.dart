@@ -1,4 +1,5 @@
 import 'package:chefs_hat/constants/colors/Colors.dart';
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -17,35 +18,6 @@ class displayDishList extends StatefulWidget {
 class _displayDishListState extends State<displayDishList> {
   List<String> ingredientsList = recipeGenerator.selectedIngredients;
 
-  final String searchDishesByIngredientsQuery = r'''
-  query SearchDishesByIngredients($ingredients: [String!]!) {
-    searchDishesByIngredients(ingredients: $ingredients) {
-      id
-      dishName
-      dishVisits
-      dishCategoryCourse
-      dishCategoryCuisine
-      dishCategoryDietary
-      dishCategoryAllergen
-      dishCategorySpicenessLevel
-      dishCategorySeason
-      dishImage
-      dishDescription
-      dishRating
-      dishTotalTime
-      dishPreparationTime
-      dishCookingTime
-      dishCalories
-      dishProteins
-      dishFats
-      dishCarbohydrates
-      dishFibres
-      dishSugar
-      dishSodium
-      dishLastUpdate
-    }
-  }
-''';
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +135,7 @@ class _displayDishListState extends State<displayDishList> {
   Widget _buildRecipe(double width) {
     return Query(
       options: QueryOptions(
-        document: gql(searchDishesByIngredientsQuery),
+        document: gql(RecipeGenerator.searchDishesByIngredientsQuery),
         variables: {'ingredients': ingredientsList},
       ),
       builder: (QueryResult result, {fetchMore, refetch}) {
