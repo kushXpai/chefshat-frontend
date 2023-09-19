@@ -26,59 +26,25 @@ class _pantryState extends State<pantry> {
     return Scaffold(
         backgroundColor: CustomColors.black,
 
+        appBar: AppBar(
+          title: Text('Basket',
+            style:  TextStyle(
+                fontFamily: 'Georgia',
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: CustomColors.white
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+
         body: Container(
           height: height,
           width: width,
 
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 10),
-
-                child: Column(
-                  children: [
-                    const SizedBox(height: 50,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Basket',
-                          style:  TextStyle(
-                              fontFamily: 'Georgia',
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: CustomColors.white
-                          ),
-                        ),
-                        SizedBox(
-                          width: 30,
-
-                          child: ElevatedButton(
-                            onPressed: (){},
-
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(0),
-                            ),
-
-                            child: const Icon(Icons.more_vert_rounded, color: CustomColors.white, size: 30,),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10,),
-                  ],
-                ),
-              ),
-
-              const Divider(
-                color: CustomColors.grey,
-                thickness: 1.5,
-              ),
-              const SizedBox(height: 10,),
 
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),

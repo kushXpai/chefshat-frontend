@@ -524,8 +524,7 @@ class _cookbooksState extends State<cookbooks> {
         options: QueryOptions(
           document: gql(getSavedRecipeCourse),
           variables: {
-            'userSavedRecipeCategory':
-                'APPETIZERS', // Replace with your desired category
+            'userSavedRecipeCategory': 'APPETIZERS', // Replace with your desired category
           },
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {

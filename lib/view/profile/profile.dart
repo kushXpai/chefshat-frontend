@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:chefs_hat/model/profile/activity/activity.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
-import 'package:chefs_hat/model/profile/photos/photos.dart';
+import 'package:chefs_hat/model/profile/photos/uploadsGrid.dart';
 import 'package:chefs_hat/model/profile/profile.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,6 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
-
 //   XFile? _imageFile;
 //
 // // Function to pick an image from the gallery.
@@ -94,15 +93,46 @@ class _profileState extends State<profile> {
     }
   ''';
 
-  double conpad = 100;
+  final String getSavedRecipeById = '''
+    query {
+      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
+        id
+        userId {
+          id
+          username
+        }
+        dishId {
+          id
+          dishName
+          dishImage
+          dishCategoryDietary
+        }
+        recipeSaved
+      }
+    }
+  ''';
+
+  final String getAllUserUploadsById = '''
+    query {
+      displayUserUploadById(userId: ${otpVerification.userId}){
+        userId{
+          username
+          profilePhoto
+        }
+        uploadName
+        uploadImage
+        uploadDescription
+        uploadLikes
+        creationTime
+      }
+    }
+  ''';
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
-
-
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -111,28 +141,7 @@ class _profileState extends State<profile> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-              width: 40,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'pantry');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.only(
-                      left: 5, right: 5, top: 5, bottom: 5),
-                ),
-                child: const Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Container(
+            SizedBox(
               width: 40,
               child: ElevatedButton(
                 onPressed: () {
@@ -151,14 +160,15 @@ class _profileState extends State<profile> {
                 child: const Icon(
                   Icons.add_a_photo_outlined,
                   color: Colors.white,
+                  size: 27,
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '');
+                  Navigator.pushNamed(context, 'pantry');
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.transparent,
@@ -167,11 +177,12 @@ class _profileState extends State<profile> {
                   shadowColor: Colors.transparent,
                   minimumSize: Size.zero,
                   padding: const EdgeInsets.only(
-                      left: 0, right: 0, top: 0, bottom: 0),
+                      left: 5, right: 5, top: 5, bottom: 5),
                 ),
                 child: const Icon(
-                  Icons.menu_sharp,
+                  Icons.shopping_cart,
                   color: Colors.white,
+                  size: 27,
                 ),
               ),
             ),
@@ -183,260 +194,235 @@ class _profileState extends State<profile> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Opacity(
-              opacity: 0.5,
-              child: SizedBox(
-                height: height,
-                width: width,
-                child: const Image(
-                  image: AssetImage(
-                    'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
-                  ),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
             Column(
               children: [
-                SizedBox(height: 20,),
-                Container(
-                  height: height * 0.265,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 80, bottom: 10),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 80, bottom: 20),
+                  child: SizedBox(
+                    height: height * 0.165,
+                    // decoration: BoxDecoration(color: Colors.red),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         GraphQLProvider(
                           client: client,
                           child: _buildUserProfileNameImage(width),
                         ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                GraphQLProvider(
-                                  client: client,
-                                  child: _buildUserRatings(width),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.transparent,
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                    shadowColor: Colors.transparent,
-                                    minimumSize: Size.zero,
-                                    padding: const EdgeInsets.all(10),
-                                  ),
-                                  child: const Column(
-                                    children: [
-                                      Text(
-                                        '0',
-                                        style: TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        'comments',
-                                        style: TextStyle(
-                                            fontFamily: 'Georgia',
-                                            fontSize: 15,
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.transparent,
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                    shadowColor: Colors.transparent,
-                                    minimumSize: Size.zero,
-                                    padding: const EdgeInsets.all(10),
-                                  ),
-                                  child: const Column(
-                                    children: [
-                                      Text(
-                                        '0',
-                                        style: TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        'photos',
-                                        style: TextStyle(
-                                          fontFamily: 'Georgia',
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Expanded(child: SizedBox())
-                          ],
-                        )
+                        GraphQLProvider(
+                          client: client,
+                          child: _buildUserUploads(width),
+                        ),
+                        GraphQLProvider(
+                          client: client,
+                          child: _buildUserRatings(width),
+                        ),
+                        GraphQLProvider(
+                          client: client,
+                          child: _buildUserSavedRecipes(width),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Stack(
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 0, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        width: width / 1.254,
+                        height: width / 10,
+                        decoration: const BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            minimumSize: Size.zero,
+                            padding: const EdgeInsets.all(0),
+                          ),
+                          child: const Text(
+                            'Edit Profile',
+                            style: TextStyle(
+                              fontFamily: 'Georgia',
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: width / 10,
+                        height: width / 10,
+                        decoration: const BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            minimumSize: Size.zero,
+                            padding: const EdgeInsets.all(5),
+                          ),
+                          child: const Column(
+                            children: [
+                              Text(
+                                '',
+                                style: TextStyle(
+                                  fontFamily: 'Georgia',
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: width / 3,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                profileStatics.profileIndexTabs = 0;
-                                conpad = width / 3;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(10),
-                            ),
-                            child: const Column(
-                              children: [
-                                Text(
-                                  'Photos',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
+                    SizedBox(
+                      width: width / 3,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            profileStatics.profileIndexTabs = 0;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        child: const Text(
+                          'Photos',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-                        SizedBox(
-                          width: width / 3,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                profileStatics.profileIndexTabs = 1;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(10),
-                            ),
-                            child: const Column(
-                              children: [
-                                Text(
-                                  'Cookbooks',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: width / 3,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                profileStatics.profileIndexTabs = 2;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shadowColor: Colors.transparent,
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.all(10),
-                            ),
-                            child: const Column(
-                              children: [
-                                Text(
-                                  'Activity',
-                                  style: TextStyle(
-                                    fontFamily: 'Georgia',
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                    AnimatedAlign(
-                      alignment: profileStatics.profileIndexTabs == 0
-                          ? Alignment.centerLeft
-                          : profileStatics.profileIndexTabs == 1
-                          ? Alignment.center
-                          : Alignment.centerRight,
-                      duration: const Duration(milliseconds: 350),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: Container(
-                          width: conpad - 10,
-                          height: 45,
-                          decoration: const BoxDecoration(
-                            color: Colors.white38,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                    SizedBox(
+                      width: width / 3,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            profileStatics.profileIndexTabs = 1;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        child: const Text(
+                          'Cookbooks',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: width / 3,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            profileStatics.profileIndexTabs = 2;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        child: const Text(
+                          'Activity',
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ],
-
                 ),
-                // const Divider(
-                //   color: CustomColors.white,
-                //   thickness: 1,
+                Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 0, right: 0, top: 6, bottom: 0),
+                          child: AnimatedAlign(
+                            alignment: profileStatics.profileIndexTabs == 0
+                                ? Alignment.centerLeft
+                                : profileStatics.profileIndexTabs == 1
+                                    ? Alignment.center
+                                    : Alignment.centerRight,
+                            duration: const Duration(milliseconds: 350),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 0, right: 0),
+                              child: Container(
+                                width: width / 3,
+                                height: 1,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      color: CustomColors.white,
+                      thickness: 0.4,
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: height - 322,
                   width: width,
                   child: SingleChildScrollView(
                     child: profileStatics.profileIndexTabs == 0
-                        ? const photos()
+                        ? const uploadsGrid()
                         : profileStatics.profileIndexTabs == 1
                             ? const cookbooks()
                             : const activity(),
@@ -512,6 +498,115 @@ class _profileState extends State<profile> {
               ),
             ],
           );
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserUploads(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getAllUserUploadsById),
+          variables: {'userId': '${otpVerification.userId}'},
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> data = result.data?['displayUserUploadById'];
+          int numberOfRatedRecipies = 0;
+          numberOfRatedRecipies = data.length;
+
+          if (data.isEmpty) {
+            return ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  profileStatics.profileIndexTabs == 0;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: const Column(
+                children: [
+                  Text(
+                    '0',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'photos',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'photosList');
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "$numberOfRatedRecipies",
+                    style: const TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    'photos',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
         },
       ),
     );
@@ -607,6 +702,111 @@ class _profileState extends State<profile> {
                   ),
                   const Text(
                     'ratings',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserSavedRecipes(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(getSavedRecipeById),
+          variables: {'userId': '${otpVerification.userId}'},
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<dynamic> data = result.data?['displayUserSavedRecipeById'];
+          int numberOfRatedRecipies = 0;
+          numberOfRatedRecipies = data.length;
+
+          if (data.isEmpty) {
+            return ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: const Column(
+                children: [
+                  Text(
+                    '0',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'saved',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'savedRecipes');
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "$numberOfRatedRecipies",
+                    style: const TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    'saved',
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontSize: 15,

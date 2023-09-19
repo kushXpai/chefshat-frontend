@@ -18,6 +18,8 @@ class homePage extends StatefulWidget {
   State<homePage> createState() => _homePageState();
 }
 
+
+
 class _homePageState extends State<homePage> {
   final String getDishesQuery = r'''
     query{
@@ -143,22 +145,22 @@ class _homePageState extends State<homePage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: CustomColors.backgroundBlack,
       body: Stack(
         children: [
-          Opacity(
-            opacity: 0.5,
-            child: SizedBox(
-              height: height,
-              width: width,
-              child: const Image(
-                image: AssetImage(
-                  'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
-                ),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
+          // Opacity(
+          //   opacity: 0.4,
+          //   child: SizedBox(
+          //     height: height,
+          //     width: width,
+          //     child: const Image(
+          //       image: AssetImage(
+          //         'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
+          //       ),
+          //       fit: BoxFit.fill,
+          //     ),
+          //   ),
+          // ),
           SingleChildScrollView(
             child: Column(
               children: [
@@ -329,14 +331,14 @@ class _homePageState extends State<homePage> {
                       fontFamily: 'Georgia',
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: CustomColors.textWhite,
                     ),
                     maxLines: 3,
                   ),
                 ),
                 const Padding(
                   padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 100),
+                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 100),
                   child: Row(
                     children: [
                       Text(
@@ -370,6 +372,7 @@ class _homePageState extends State<homePage> {
           ),
         ],
       ),
+
     );
   }
 

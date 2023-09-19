@@ -87,168 +87,180 @@ class _postUploadState extends State<postUpload> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
 
+      appBar: AppBar(
+        title: _buildSectionHeader("Upload Photos"),
+        backgroundColor: Colors.black,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+      ),
 
-      body: Stack(
-        children: [
-          SizedBox(
-            height: height,
-            child: Image.asset(
-              'assets/backgroundPhotos/woodenBackgroundBlack.jpg',
-              fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 50, bottom: 10),
+              child: Center(
+                child: Text('Upload Post',
+                  style:  TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 25,
+                      color: Colors.white
+                  ),
+                ),
+              ),
             ),
-          ),
 
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                const Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 50, bottom: 10),
-                  child: Center(
-                    child: Text('Upload Post',
-                      style:  TextStyle(
-                          fontFamily: 'Georgia',
-                          fontSize: 25,
-                          color: Colors.white
-                      ),
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 40),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: SizedBox(
-                          width: width / 10 * 8,
-                          height: width / 10 * 8,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _showBottomSheet(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              padding: const EdgeInsets.all(0),
+            Padding(
+              padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: width / 10 * 8,
+                      height: width / 10 * 8,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _showBottomSheet(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: const BorderSide(
+                              color: Colors.white,
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: file == null
-                                  ? Image(
-                                image: const NetworkImage(
-                                    'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
-                                ),
-                                fit: BoxFit.fill,
-                                width: width / 10 * 8,
-                                height: width / 10 * 8,
-                              )
-                                  : Image.file(
-                                file!,
-                                fit: BoxFit.cover,
-                                width: width / 10 * 8,
-                                height: width / 10 * 8,
-                              ),
+                          ),
+                          padding: const EdgeInsets.all(0),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: file == null
+                              ? Image(
+                            image: const NetworkImage(
+                                'https://i.pinimg.com/originals/f0/6b/c6/f06bc6fe8412a5abe9af28a808d1ede2.png',
                             ),
+                            fit: BoxFit.fill,
+                            width: width / 10 * 8,
+                            height: width / 10 * 8,
+                          )
+                              : Image.file(
+                            file!,
+                            fit: BoxFit.cover,
+                            width: width / 10 * 8,
+                            height: width / 10 * 8,
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        uploadName = value;
-                      });
-                    },
-                    cursorColor: const Color(0xFF4EDB86),
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      labelText: 'Dish Name',
-                      errorText: validate_uploadName ? 'Dish name is Required' : null,
-                      border: const UnderlineInputBorder(),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.white,
-                        ),
-                      ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    uploadName = value;
+                  });
+                },
+                cursorColor: const Color(0xFF4EDB86),
+                decoration: InputDecoration(
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  labelText: 'Dish Name',
+                  errorText: validate_uploadName ? 'Dish name is Required' : null,
+                  border: const UnderlineInputBorder(),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
                     ),
                   ),
                 ),
+              ),
+            ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        UserFormFields.userEmail = value;
-                      });
-                    },
-                    cursorColor: const Color(0xFF4EDB86),
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      labelText: 'Description',
-                      errorText: validate_uploadDescription ? 'Description is Required' : null,
-                      border: const UnderlineInputBorder(),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.white,
-                        ),
-                      ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    UserFormFields.userEmail = value;
+                  });
+                },
+                cursorColor: const Color(0xFF4EDB86),
+                decoration: InputDecoration(
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  labelText: 'Description',
+                  errorText: validate_uploadDescription ? 'Description is Required' : null,
+                  border: const UnderlineInputBorder(),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
                     ),
                   ),
                 ),
+              ),
+            ),
 
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 45,
-                    width: width,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        _createUserUpload();
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 45,
+                width: width,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    _createUserUpload();
 
-                        Navigator.pushNamed(context, 'entryPoint');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          side: const BorderSide(
-                            color: Colors.lime,
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        'Upload',
-                        style: TextStyle(
-                          fontFamily: 'Georgia',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
+                    Navigator.pushNamed(context, 'entryPoint');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lime,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      side: const BorderSide(
+                        color: Colors.lime,
                       ),
                     ),
                   ),
+                  child: const Text(
+                    'Upload',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 10),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Georgia',
+              fontSize: 20,
+              color: Colors.white,
             ),
           ),
         ],

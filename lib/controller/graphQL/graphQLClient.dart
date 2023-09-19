@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 
+// Local Host
+// final HttpLink httpLink = HttpLink('http://127.0.0.1:8000/graphql/');
+// final httpLinkC = 'http://127.0.0.1:8000';
+// final httpLinkImage = 'http://127.0.0.1:8000/media/';
+
 // PP
 // final HttpLink httpLink = HttpLink('http://192.168.0.200:8000/graphql/');
 // final httpLinkC = 'http://192.168.0.200:8000';
@@ -10,6 +15,11 @@ import 'package:graphql/client.dart';
 final HttpLink httpLink = HttpLink('http://192.168.251.104:8000/graphql/');
 final httpLinkC = 'http://192.168.251.104:8000';
 final httpLinkImage = 'http://192.168.251.104:8000/media/';
+
+// Rajesh
+// final HttpLink httpLink = HttpLink('http://192.168.1.20:8000/graphql/');
+// final httpLinkC = 'http://192.168.1.20:8000';
+// final httpLinkImage = 'http://192.168.1.20:8000/media/';
 
 // A Oppo F11 Pro
 // final HttpLink httpLink = HttpLink('http://192.168.187.104:8000/graphql/');

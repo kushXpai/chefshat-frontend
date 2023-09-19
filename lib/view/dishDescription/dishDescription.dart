@@ -155,7 +155,6 @@ class _dishDescriptionState extends State<dishDescription> {
     setState(() {
       isLiked = !isLiked;
     });
-    print(isLiked);
 
     final userId = otpVerification.userId;
     final dishId = homePage.dishId;
@@ -163,7 +162,7 @@ class _dishDescriptionState extends State<dishDescription> {
 
     final GraphQLClient _client = GraphQLClient(
       cache: GraphQLCache(),
-      link: HttpLink(httpLinkC),
+      link: httpLink,
     );
 
     try {
@@ -287,6 +286,9 @@ class _dishDescriptionState extends State<dishDescription> {
                       ),
                       child: LikeButton(
                         onTap: (bool isLiked) async {
+                          print(otpVerification.userId);
+                          print(homePage.dishId);
+                          print(homePage.dishCourse);
                           toggleLike();
                         },
                         isLiked: isLiked, // Replace 'isLiked' with your own variable that represents the liked state
@@ -1931,8 +1933,29 @@ class _dishDescriptionState extends State<dishDescription> {
 
     final GraphQLClient client = GraphQLClient(
       cache: GraphQLCache(),
-      link: HttpLink(httpLinkC), // Replace with your GraphQL API endpoint
+      link: httpLink, // Replace with your GraphQL API endpoint
     );
+
+    // try {
+    //   final QueryResult result = await client.mutate(
+    //     MutationOptions(
+    //       document: gql(addDishToRatedRecipeMutation),
+    //       variables: variables,
+    //     ),
+    //   );
+    //
+    //   if (result.hasException) {
+    //     // Handle error here
+    //     print("Mutation error: ${result.exception}");
+    //   } else {
+    //     // Mutation was successful, you can access data here if needed
+    //     final Map<String, dynamic>? responseData = result.data?['addDishToRatedRecipe']['ratedRecipe'];
+    //     print('Dish added to rated recipe.');
+    //     // You can access fields from responseData, e.g., responseData['id']
+    //   }
+    // } catch (error) {
+    //   print("An error occurred: $error");
+    // }
 
     try {
       final QueryResult result = await client.mutate(
@@ -1945,9 +1968,17 @@ class _dishDescriptionState extends State<dishDescription> {
       if (result.hasException) {
         // Handle error here
         print("Mutation error: ${result.exception}");
+
+        // Check if it's an HttpException
+        if (result.exception is HttpLinkServerException) {
+          final HttpLinkServerException httpException = result.exception as HttpLinkServerException;
+          final response = httpException.response;
+          print("Response Status Code: ${response?.statusCode}");
+          print("Response Body: ${response?.body}");
+        }
       } else {
         // Mutation was successful, you can access data here if needed
-        final Map<String, dynamic>? responseData = result.data?['addDishToRatedRecipe']['ratedRecipe'];
+        final Map<String, dynamic>? responseData = result.data?['addDishToRatedRecipe']['ratingRecipe'];
         print('Dish added to rated recipe.');
         // You can access fields from responseData, e.g., responseData['id']
       }

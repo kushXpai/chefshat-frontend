@@ -6,7 +6,8 @@ import 'package:chefs_hat/model/profile/activity/ratedRecipes.dart';
 import 'package:chefs_hat/model/profile/cookbooks/cookbooks.dart';
 import 'package:chefs_hat/model/profile/cookbooks/savedRecipeCourse.dart';
 import 'package:chefs_hat/model/profile/cookbooks/savedRecipes.dart';
-import 'package:chefs_hat/model/profile/photos/photos.dart';
+import 'package:chefs_hat/model/profile/photos/uploadsGrid.dart';
+import 'package:chefs_hat/model/profile/photos/uploadsList.dart';
 import 'package:chefs_hat/test.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
@@ -58,7 +59,8 @@ void main() {
       'profile' : (context) => const profile(),
       'postUpload' : (context) => const postUpload(),
       // MODELS - PROFILE - PHOTOS
-      'photos' : (context) => const photos(),
+      'uploadsGrid' : (context) => const uploadsGrid(),
+      'uploadsList' : (context) => const uploadsList(),
       // MODELS - PROFILE - COOKBOOKS
       'cookbooks' : (context) => const cookbooks(),
       'savedRecipeCourse' : (context) => const savedRecipeCourse(),

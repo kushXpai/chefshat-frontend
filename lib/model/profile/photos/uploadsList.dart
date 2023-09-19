@@ -1,32 +1,37 @@
+import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../constants/colors/Colors.dart';
-import '../../controller/graphQL/graphQLClient.dart';
+import '../../../constants/colors/Colors.dart';
+import '../../../controller/graphQL/graphQLClient.dart';
 
-class community extends StatefulWidget {
-  const community({Key? key}) : super(key: key);
+class uploadsList extends StatefulWidget {
+  const uploadsList({Key? key}) : super(key: key);
 
   @override
-  State<community> createState() => _communityState();
+  State<uploadsList> createState() => _uploadsListState();
 }
 
-class _communityState extends State<community> {
-  final String getAllUserUploads = '''
-    query {
-      displayUserUpload{
-        userId{
-          username
-          profilePhoto
-        }
-        uploadName
-        uploadImage
-        uploadDescription
-        uploadLikes
-        creationTime
-      }
-    }
-  ''';
+class _uploadsListState extends State<uploadsList> {
+
+  final String getUserUploadsById = Uploads.getUserUploadsById;
+  // final String getUserUploadsById = '''
+  //   query {
+  //     displayUserUploadById(userId: ${otpVerification.userId}){
+  //       id
+  //       userId{
+  //         username
+  //         profilePhoto
+  //       }
+  //       uploadName
+  //       uploadImage
+  //       uploadDescription
+  //       uploadLikes
+  //       creationTime
+  //     }
+  //   }
+  // ''';
 
   @override
   Widget build(BuildContext context) {
@@ -36,37 +41,29 @@ class _communityState extends State<community> {
     return Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
+
+      appBar: AppBar(
+        title: _buildSectionHeader("Our Community"),
+        backgroundColor: Colors.black,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SizedBox(
         height: height,
         width: width,
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 0, right: 0, top: 50, bottom: 10),
-                child: Center(
-                  child: Text(
-                    'Our Community',
-                    style: TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 25,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 0,
                   right: 0,
-                  top: 0,
+                  top: 10,
                   bottom: 0,
                 ),
                 child: GraphQLProvider(
                   client: client,
-                  child: _buildAllUserUploads(width),
+                  child: _buildAllUserUploads(width, height),
                 ),
               ),
             ),
@@ -76,12 +73,30 @@ class _communityState extends State<community> {
     );
   }
 
-  Widget _buildAllUserUploads(double width) {
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 10),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Georgia',
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAllUserUploads(double width, double height) {
     return SizedBox(
-      height: 783,
+      height: height,
       child: Query(
         options: QueryOptions(
-          document: gql(getAllUserUploads),
+          document: gql(getUserUploadsById),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -97,7 +112,7 @@ class _communityState extends State<community> {
             );
           }
 
-          final List<dynamic> savedRecipes = result.data?['displayUserUpload'];
+          final List<dynamic> savedRecipes = result.data?['displayUserUploadById'];
 
           if (savedRecipes.isEmpty) {
             return const CircularProgressIndicator();
@@ -143,7 +158,7 @@ class _communityState extends State<community> {
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
                                 backgroundImage:
-                                    NetworkImage(httpLinkImage + userImage),
+                                NetworkImage(httpLinkImage + userImage),
                               ),
                             ),
                             Padding(
@@ -221,16 +236,16 @@ class _communityState extends State<community> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15, right: 15, top: 10, bottom: 0),
-                      child: Text(
-                        '$uploadLikes likes',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Georgia',
-                          fontSize: 15,
-                        ),
-                      )
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, top: 10, bottom: 0),
+                        child: Text(
+                          '$uploadLikes likes',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Georgia',
+                            fontSize: 15,
+                          ),
+                        )
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
