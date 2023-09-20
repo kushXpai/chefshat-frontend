@@ -24,23 +24,6 @@ class _ratedRecipesState extends State<ratedRecipes> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: false,
       appBar: AppBar(
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(0),
-          ),
-          child: const Icon(
-            Icons.arrow_back_ios_new_sharp,
-            color: Colors.white,
-          ),
-        ),
         title: _buildSectionHeader("My Ratings"),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,

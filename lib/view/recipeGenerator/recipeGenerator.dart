@@ -2833,7 +2833,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                                     onPressed: () {
                                       if (recipeGenerator.ingredientsSelected > 0){
                                         // Navigator.pushNamed(context, 'displayDishList');
-                                        Navigator.pushNamed(context, 'test');
+                                        Navigator.pushNamed(context, 'displayDishList');
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

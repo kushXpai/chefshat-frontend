@@ -773,7 +773,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: 10,
                                         ),
                                         Text(
-                                          '${data['dishProteins']} g',
+                                          '${data['dishProteins']}',
                                           style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 20,
@@ -816,7 +816,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: 10,
                                         ),
                                         Text(
-                                          '${data['dishFats']} g',
+                                          '${data['dishFats']}',
                                           style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 20,
@@ -859,7 +859,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: 10,
                                         ),
                                         Text(
-                                          '${data['dishCarbohydrates']} g',
+                                          '${data['dishCarbohydrates']}',
                                           style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 20,
@@ -902,7 +902,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: 10,
                                         ),
                                         Text(
-                                          '${data['dishFibres']} g',
+                                          '${data['dishFibres']}',
                                           style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 20,
@@ -945,7 +945,7 @@ class _dishDescriptionState extends State<dishDescription> {
                                           width: 10,
                                         ),
                                         Text(
-                                          '${data['dishSugar']} g',
+                                          '${data['dishSugar']}',
                                           style: const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 20,

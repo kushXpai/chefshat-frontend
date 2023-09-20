@@ -17,6 +17,7 @@ class dishTile extends StatefulWidget {
 class _dishTileState extends State<dishTile> {
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       height: 210,
       child: ListView.builder(
@@ -34,7 +35,7 @@ class _dishTileState extends State<dishTile> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: Image.asset(
-                  'assets/landingPagePhotos/${widget.images[index]}',
+                  '${widget.images[index]}',
                   width: 145,
                   fit: BoxFit.cover,
                 ),

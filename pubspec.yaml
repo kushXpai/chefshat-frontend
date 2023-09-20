@@ -47,6 +47,8 @@ dependencies:
   # Entry Point
   rive: ^0.11.5
 
+  # Homepage
+
   # Authentication
   pinput: ^2.2.31
   firebase_auth: ^4.7.0

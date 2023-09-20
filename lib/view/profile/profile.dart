@@ -130,7 +130,9 @@ class _profileState extends State<profile> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'editProfile');
+                          },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.transparent,
                             backgroundColor: Colors.transparent,

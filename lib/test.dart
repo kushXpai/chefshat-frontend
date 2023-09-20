@@ -290,7 +290,7 @@ class _testState extends State<test> {
   // }
 
 
-Widget _buildRecipe(double width, double height) {
+  Widget _buildRecipe(double width, double height) {
     return Query(
       options: QueryOptions(
         document: gql(RecipeGenerator.searchDishesByIngredientsQuery),

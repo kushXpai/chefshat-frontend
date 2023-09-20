@@ -1,10 +1,13 @@
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:chefs_hat/constants/colors/Colors.dart';
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
+import 'package:chefs_hat/model/homepage/homepageTile.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import '../../constants/homepagePhotos.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 
 class homePage extends StatefulWidget {
@@ -18,6 +21,48 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  final ScrollController _scrollController1 = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      double maxScrollExtent1 = _scrollController1.position.maxScrollExtent;
+      double minScrollExtent1 = _scrollController1.position.minScrollExtent;
+
+      animateToMaxMin(
+        maxScrollExtent1,
+        minScrollExtent1,
+        1,
+        10,
+        _scrollController1,
+      );
+    });
+  }
+
+  void animateToMaxMin(
+    double max,
+    double min,
+    double direction,
+    int seconds,
+    ScrollController scrollController,
+  ) async {
+    while (true) {
+      await Future.delayed(Duration(seconds: seconds));
+      scrollController.animateTo(
+        direction == 1 ? max : min,
+        duration: Duration(seconds: seconds),
+        curve: Curves.linear,
+      );
+      direction = 1 - direction; // Toggle between 0 and 1 to change direction
+    }
+  }
+
+  final List<String> listImages1 = [
+    'assets/general/1.png',
+    'assets/general/2.png',
+    'assets/general/3.png',
+  ];
 
   void addToRecentlyViewed(BuildContext context, String dishId) async {
     final String addRecipeMutation = """
@@ -76,28 +121,37 @@ class _homePageState extends State<homePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            GraphQLProvider(
+              client: client,
+              child: _buildUserProfileNameImage(width),
+            ),
+
+            const Divider(
+              color: Colors.white,
+              thickness: 0.3,
+            ),
             // What are we loving now
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 50,
-                bottom: 0,
-              ),
-              child: _buildSectionHeader("What are we loving now"),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 0,
-                bottom: 20,
-              ),
-              child: GraphQLProvider(
-                client: client,
-                child: _buildLastDishView(width),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     left: 20,
+            //     right: 20,
+            //     top: 50,
+            //     bottom: 0,
+            //   ),
+            //   child: _buildSectionHeader("What are we loving now"),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     left: 20,
+            //     right: 20,
+            //     top: 0,
+            //     bottom: 20,
+            //   ),
+            //   child: GraphQLProvider(
+            //     client: client,
+            //     child: _buildLastDishView(width),
+            //   ),
+            // ),
 
             // Trending
             Padding(
@@ -127,7 +181,7 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 0,
+                top: 10,
                 bottom: 0,
               ),
               child: _buildSectionHeader("What's our community cooking"),
@@ -194,7 +248,7 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 0,
+                top: 10,
                 bottom: 0,
               ),
               child: _buildSectionHeader('Recommended for you'),
@@ -217,7 +271,7 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 0,
+                top: 10,
                 bottom: 0,
               ),
               child: _buildSectionHeader('Popular recipes this week'),
@@ -237,8 +291,8 @@ class _homePageState extends State<homePage> {
 
             // Footer
             const Padding(
-              padding: EdgeInsets.only(
-                  left: 20, right: 20, top: 100, bottom: 20),
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 20),
               child: Text(
                 "Unleash Your Culinary Creativity!",
                 style: TextStyle(
@@ -251,8 +305,7 @@ class _homePageState extends State<homePage> {
               ),
             ),
             const Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 100),
+              padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 60),
               child: Row(
                 children: [
                   Text(
@@ -282,8 +335,119 @@ class _homePageState extends State<homePage> {
               ),
             ),
 
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 60,
+              ),
+              child: homepageTile(
+                scrollController: _scrollController1,
+                images: listImages,
+              ),
+            ),
+
+            // List
+            const Padding(
+              padding:
+                  EdgeInsets.only(left: 20, right: 0, top: 0, bottom: 0),
+              child: Row(
+                children: [
+                  Text(
+                    'Recent',
+                    style: TextStyle(
+                      fontFamily: 'Georgia',
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GraphQLProvider(
+              client: client,
+              child: _buildDishes(width, height),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildUserProfileNameImage(double width) {
+    return SizedBox(
+      child: Query(
+        options: QueryOptions(
+          document: gql(Profile.getUserById),
+          variables: {'id': '${otpVerification.userId}'},
+        ),
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            print(result.exception.toString());
+            return Center(
+              child: Text(
+                'Error fetching dishes: ${result.exception.toString()}',
+              ),
+            );
+          }
+
+          if (result.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final Map<String, dynamic>? data = result.data?['displayUserById'];
+
+          if (data == null) {
+            return const Text('No dishes found');
+          }
+
+          return SizedBox(
+            width: width,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 5),
+              child: Row(
+                children: [
+                  Text(
+                    "Welcome, ",
+                    style: GoogleFonts.playfairDisplay(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                  Text(
+                    "${data['username']}",
+                    style: GoogleFonts.abrilFatface(
+                      color: Colors.white,
+                      fontSize: 21,
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, right: 0, top: 0, bottom: 0),
+                    child: Center(
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 1)),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage:
+                          NetworkImage(httpLinkImage + data['profilePhoto']),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -295,10 +459,9 @@ class _homePageState extends State<homePage> {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontFamily: 'Georgia',
-              fontSize: 20,
+            style: GoogleFonts.playfairDisplay(
               color: Colors.white,
+              fontSize: 20,
             ),
           ),
         ],
@@ -2557,4 +2720,160 @@ class _homePageState extends State<homePage> {
     );
   }
 
+  Widget _buildDishes(double width, double height) {
+    return Query(
+      options: QueryOptions(
+        document: gql(Homepage.getDishesQuery),
+      ),
+      builder: (QueryResult result, {fetchMore, refetch}) {
+        if (result.hasException) {
+          print(result.exception.toString());
+          return Center(
+            child: Text(
+              'Error fetching dishes: ${result.exception.toString()}',
+            ),
+          );
+        }
+
+        if (result.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final List<dynamic>? dishes = result.data?['displayDish'];
+
+        if (dishes == null || dishes.isEmpty) {
+          return const Text('No dishes found');
+        }
+
+        return GridView.builder(
+          itemCount: dishes.length,
+          shrinkWrap: true, // Added this
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.72, // Adjust this value
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            final dish = dishes[index];
+
+            final String dishName = dish['dishName'];
+            final String dishImage = dish['dishImage'];
+            final String dishTotalTime = dish['dishTotalTime'];
+
+            return ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  print(dish['id']);
+                  homePage.dishId = dish['id'];
+                  print('Value set');
+                });
+                Navigator.pushNamed(context, 'dishDescription');
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent,
+                onPrimary: Colors.transparent,
+                onSurface: Colors.transparent,
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                minimumSize: Size.zero,
+                padding: const EdgeInsets.all(0),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                child: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: width / 4),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: (width / 2) - 54,
+                                      child: Text(
+                                        dishName,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'Georgia'),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.timelapse_rounded,
+                                    color: Colors.lime,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    dishTotalTime,
+                                    style: const TextStyle(
+                                        color: Colors.lime,
+                                        fontSize: 15,
+                                        fontFamily: 'Georgia'),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 140,
+                            width: 140,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: ClipOval(
+                              child: Image(
+                                image: NetworkImage(
+                                  httpLinkImage + dishImage,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
