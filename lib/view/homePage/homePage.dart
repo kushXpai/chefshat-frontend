@@ -419,9 +419,10 @@ class _homePageState extends State<homePage> {
                   ),
                   Text(
                     "${data['username']}",
-                    style: GoogleFonts.abrilFatface(
+                    style: GoogleFonts.playfairDisplay(
                       color: Colors.white,
                       fontSize: 21,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                   const Expanded(child: SizedBox()),

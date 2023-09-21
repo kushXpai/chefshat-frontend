@@ -291,7 +291,7 @@ class _activityState extends State<activity> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
+                                        padding: const EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
                                         child: Text(
                                           dishName,
                                           style:  const TextStyle(
@@ -305,10 +305,10 @@ class _activityState extends State<activity> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
+                                        padding: const EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
                                         child: Text(
                                           '${formatTimeDifference(dishRecipeRated)}',
-                                          style:  TextStyle(
+                                          style:  const TextStyle(
                                             fontFamily: 'Georgia',
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,

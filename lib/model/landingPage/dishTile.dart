@@ -35,7 +35,7 @@ class _dishTileState extends State<dishTile> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: Image.asset(
-                  '${widget.images[index]}',
+                  'assets/landingPagePhotos/${widget.images[index]}',
                   width: 145,
                   fit: BoxFit.cover,
                 ),

@@ -1,6 +1,11 @@
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql/client.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../constants/colors/Colors.dart';
+import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/registration/registration.dart';
+import 'package:http/http.dart' as http;
 
 class editProfile extends StatefulWidget {
   const editProfile({Key? key}) : super(key: key);
@@ -18,6 +23,146 @@ class _editProfileState extends State<editProfile> {
   bool _isFemaleSelected = false;
 
   bool _isSelectedTextBox = false;
+
+  updateUserProfile() async {
+
+    const String updateUserProfile = r'''
+      mutation UpdateUser(
+        $userId: Int!,
+        $username: String,
+        $sex: String,
+        $address: String,
+        $emailAddress: String,
+        $dateOfBirth: String
+      ) {
+        updateUser(
+          userId: $userId,
+          username: $username,
+          sex: $sex,
+          address: $address,
+          emailAddress: $emailAddress,
+          dateOfBirth: $dateOfBirth
+        ) {
+          user {
+            id
+            username
+            sex
+            address
+            emailAddress
+            dateOfBirth
+          }
+        }
+      }
+  ''';
+
+    // Your variables
+    // final Map<String, dynamic> variables = {
+    //   'userId': otpVerification.userId, // Replace with the user's ID
+    //   'username': UserFormFields.userName,
+    //   'sex': UserFormFields.userSex,
+    //   'address': UserFormFields.userAddress,
+    //   'email': UserFormFields.userEmail,
+    //   'dateOfBirth': UserFormFields.userDateOfBirth,
+    // };
+
+    final Map<String, dynamic> variables = {
+      'userId': 1, // Convert the String to an int
+      'username': UserFormFields.userName,
+      'sex': UserFormFields.userSex,
+      'address': UserFormFields.userAddress,
+      'emailAddress': UserFormFields.userEmail,
+      'dateOfBirth': UserFormFields.userDateOfBirth,
+    };
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink, // Replace with your GraphQL API endpoint
+    );
+
+    try {
+      final QueryResult result = await client.mutate(
+        MutationOptions(
+          document: gql(updateUserProfile),
+          variables: variables,
+        ),
+      );
+
+      if (result.hasException) {
+        // Handle error here
+        print("Mutation error: ${result.exception}");
+
+        // Check if it's an HttpException
+        if (result.exception is HttpLinkServerException) {
+          final HttpLinkServerException httpException =
+          result.exception as HttpLinkServerException;
+          final response = httpException.response;
+          print("Response Status Code: ${response?.statusCode}");
+          print("Response Body: ${response?.body}");
+        }
+      } else {
+        // Mutation was successful, you can access data here if needed
+        final Map<String, dynamic>? responseData =
+        result.data?['addDishToRatedRecipe']['ratingRecipe'];
+        print('Dish added to rated recipe.');
+        // You can access fields from responseData, e.g., responseData['id']
+      }
+    } catch (error) {
+      print("An error occurred: $error");
+    }
+  }
+
+  // Future<void> updateUserProfile1() async {
+  //   const String updateUser = r'''
+  //     mutation UpdateUser(
+  //       $userId: ID!,
+  //       $username: String,
+  //       $sex: String,
+  //       $address: String,
+  //       $emailAddress: String,
+  //       $dateOfBirth: String
+  //     ) {
+  //       updateUser(
+  //         userId: $userId,
+  //         username: $username,
+  //         sex: $sex,
+  //         address: $address,
+  //         emailAddress: $emailAddress,
+  //         dateOfBirth: $dateOfBirth
+  //       ) {
+  //         user {
+  //           id
+  //           username
+  //           sex
+  //           address
+  //           emailAddress
+  //           dateOfBirth
+  //         }
+  //       }
+  //     }
+  // ''';
+  //
+  //   final MutationOptions options = MutationOptions(
+  //     document: gql(updateUser),
+  //     variables: {
+  //       'id': otpVerification.userId, // Replace with the user's ID
+  //       'username': UserFormFields.userName,
+  //       'sex': UserFormFields.userSex,
+  //       'address': UserFormFields.userAddress,
+  //       'email': UserFormFields.userEmail,
+  //       'dateOfBirth': UserFormFields.userDateOfBirth,
+  //     },
+  //   );
+  //
+  //   final QueryResult result = await GraphQLProvider.of(context).value.mutate(options);
+  //
+  //   if (result.hasException) {
+  //     print('Error updating user: ${result.exception.toString()}');
+  //     // Handle error, e.g., show an error message to the user
+  //   } else {
+  //     print('User updated successfully.');
+  //     // Optionally, you can show a success message or navigate to another screen
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +317,7 @@ class _editProfileState extends State<editProfile> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: _isFemaleSelected
+                                    backgroundColor: _isFemaleSelected || UserFormFields.userSex == 'FEMALE'
                                         ? Colors.lime
                                         : Colors.transparent,
                                     shadowColor: Colors.transparent,
@@ -210,6 +355,7 @@ class _editProfileState extends State<editProfile> {
                       ),
                     ],
                   )),
+
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Text(
@@ -287,6 +433,7 @@ class _editProfileState extends State<editProfile> {
                   textAlign: TextAlign.center,
                 ),
               ),
+
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Text(
@@ -354,6 +501,7 @@ class _editProfileState extends State<editProfile> {
                   ),
                 ),
               ),
+
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Text(
@@ -421,6 +569,7 @@ class _editProfileState extends State<editProfile> {
                   ),
                 ),
               ),
+
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Text(
@@ -488,6 +637,7 @@ class _editProfileState extends State<editProfile> {
                   ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.only(
                     left: 0, right: 0, top: 0, bottom: 30),
@@ -502,7 +652,9 @@ class _editProfileState extends State<editProfile> {
                       print(UserFormFields.userEmail);
                       print(UserFormFields.userSex);
 
-                      Navigator.pushNamed(context, '');
+                      await updateUserProfile();
+
+                      Navigator.pushNamed(context, 'profile');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lime,
@@ -515,7 +667,7 @@ class _editProfileState extends State<editProfile> {
                       ),
                     ),
                     child: const Text(
-                      'Finish',
+                      'Update',
                       style: TextStyle(
                         fontFamily: 'Georgia',
                         fontWeight: FontWeight.bold,
