@@ -9,6 +9,7 @@ import 'package:chefs_hat/model/profile/cookbooks/savedRecipes.dart';
 import 'package:chefs_hat/model/profile/photos/uploadsGrid.dart';
 import 'package:chefs_hat/model/profile/photos/uploadsList.dart';
 import 'package:chefs_hat/test.dart';
+import 'package:chefs_hat/utils/sharedPreferences.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:chefs_hat/view/community/community.dart';
@@ -26,16 +27,20 @@ import 'package:chefs_hat/view/registration/registrationStep2.dart';
 import 'package:chefs_hat/view/registration/registrationStep3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  print(isLoggedIn);
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    // initialRoute: 'landingPage',
-    initialRoute: 'entryPoint',
+    initialRoute: isLoggedIn ? 'entryPoint' : 'landingPage',
+    // initialRoute: 'entryPoint',
     // initialRoute: 'test',
 
     routes: {
@@ -54,29 +59,29 @@ void main() {
       // VIEWS - DESCRIPTION
       'dishDescription': (context) => const dishDescription(),
       // VIEWS - PROFILE
-      'profile' : (context) => const profile(),
-      'editProfile' : (context) => const editProfile(),
-      'postUpload' : (context) => const postUpload(),
+      'profile': (context) => const profile(),
+      'editProfile': (context) => const editProfile(),
+      'postUpload': (context) => const postUpload(),
       // MODELS - PROFILE - PHOTOS
-      'uploadsGrid' : (context) => const uploadsGrid(),
-      'uploadsList' : (context) => const uploadsList(),
+      'uploadsGrid': (context) => const uploadsGrid(),
+      'uploadsList': (context) => const uploadsList(),
       // MODELS - PROFILE - COOKBOOKS
-      'cookbooks' : (context) => const cookbooks(),
-      'savedRecipeCourse' : (context) => const savedRecipeCourse(),
-      'savedRecipes' : (context) => const savedRecipes(),
+      'cookbooks': (context) => const cookbooks(),
+      'savedRecipeCourse': (context) => const savedRecipeCourse(),
+      'savedRecipes': (context) => const savedRecipes(),
       // MODELS - PROFILE - ACTIVITY
-      'activity' : (context) => const activity(),
-      'ratedRecipes' : (context) => const ratedRecipes(),
+      'activity': (context) => const activity(),
+      'ratedRecipes': (context) => const ratedRecipes(),
       // VIEWS - RECIPE GENERATOR
-      'recipeGenerator' : (context) => const recipeGenerator(),
-      'displayDishList' : (context) => const displayDishList(),
+      'recipeGenerator': (context) => const recipeGenerator(),
+      'displayDishList': (context) => const displayDishList(),
       // VIEWS - PANTRY
-      'pantry' : (context) => const pantry(),
+      'pantry': (context) => const pantry(),
       // MODELS - PANTRY
-      'pantryCategory' : (context) => const pantryCategory(),
-      'pantryDishes' : (context) => const pantryDishes(),
+      'pantryCategory': (context) => const pantryCategory(),
+      'pantryDishes': (context) => const pantryDishes(),
       // VIEWS - COMMUNITY
-      'community' : (context) => const community(),
+      'community': (context) => const community(),
 
       'entryPoint': (context) => const entryPoint(),
       'test': (context) => const test(),

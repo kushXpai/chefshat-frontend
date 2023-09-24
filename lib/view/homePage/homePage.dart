@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../constants/homepagePhotos.dart';
 import '../../controller/graphQL/graphQLClient.dart';
+import '../../utils/sharedPreferences.dart';
 
 class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
@@ -21,10 +22,21 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+
+  Future<void> _loadUserId() async {
+    final int? storedUserId = await SharedPreferencesUtil.getInt('userId');
+    setState(() {
+      otpVerification.userId = storedUserId ?? 0;
+    });
+  }
+
+
   final ScrollController _scrollController1 = ScrollController();
 
   @override
   void initState() {
+    _loadUserId();
+
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       double maxScrollExtent1 = _scrollController1.position.maxScrollExtent;

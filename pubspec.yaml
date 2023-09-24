@@ -43,6 +43,7 @@ dependencies:
   http: ^1.1.0
   google_fonts: ^5.1.0
   image_cropper: ^5.0.0
+  shared_preferences: ^2.2.1
 
   # Entry Point
   rive: ^0.11.5

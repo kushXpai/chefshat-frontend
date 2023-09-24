@@ -6,10 +6,12 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/graphQL/queries/queries.dart';
+import '../../utils/sharedPreferences.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -19,6 +21,18 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _logOut() async {
+    await SharedPreferencesUtil.clearUserId();
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+
+    Navigator.pushReplacementNamed(context, 'landingPage');
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +86,28 @@ class _profileState extends State<profile> {
                 ),
                 child: const Icon(
                   Icons.shopping_cart,
+                  color: Colors.white,
+                  size: 27,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 40,
+              child: ElevatedButton(
+                onPressed: () {
+                  _showBottomSheet(context, width);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.only(
+                      left: 5, right: 5, top: 5, bottom: 5),
+                ),
+                child: const Icon(
+                  Icons.menu_rounded,
                   color: Colors.white,
                   size: 27,
                 ),
@@ -712,6 +748,78 @@ class _profileState extends State<profile> {
           }
         },
       ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context, double width) {
+    Scaffold.of(context)?.showBottomSheet<void>(
+      backgroundColor: Colors.black,
+      (BuildContext context) {
+        return Container(
+          width: width,
+          decoration: BoxDecoration(
+            color: Colors.grey[800], // Dark grey background
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min, // Column size will be as small as needed
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: width,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle the "Settings" action here
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent, // Transparent background
+                    onPrimary: Colors.white, // White text color
+                    elevation: 0, // No elevation
+                    alignment: Alignment.centerLeft, // Align text to the left
+                  ),
+                  icon: const Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Settings',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: width,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _logOut();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent, // Transparent background
+                    onPrimary: Colors.white, // White text color
+                    elevation: 0, // No elevation
+                    alignment: Alignment.centerLeft, // Align text to the left
+                  ),
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Logout',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

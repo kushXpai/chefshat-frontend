@@ -1,5 +1,6 @@
 import 'package:chefs_hat/controller/graphQL/graphQLClient.dart';
 import 'package:chefs_hat/controller/registration/registration.dart';
+import 'package:chefs_hat/utils/sharedPreferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
@@ -11,13 +12,23 @@ import '../../constants/colors/Colors.dart';
 class otpVerification extends StatefulWidget {
   const otpVerification({Key? key}) : super(key: key);
 
-  static int userId = 1;
+  static int userId = 0;
 
   @override
   State<otpVerification> createState() => _otpVerificationState();
 }
 
 class _otpVerificationState extends State<otpVerification> {
+
+  Future<void> _storeUserId(int userId) async {
+    try {
+      // Use your shared preferences utility to store the user ID
+      await SharedPreferencesUtil.setInt('userId', userId);
+    } catch (error) {
+      // Handle any errors that might occur during storage
+      print('Error storing user ID: $error');
+    }
+  }
 
   static Future<int> getUsersCountByMobileNumber(String mobileNumber) async {
     print("getUsersCountByMobileNumber");
@@ -51,13 +62,10 @@ class _otpVerificationState extends State<otpVerification> {
 
       final dynamic user = result.data?['displayUserByMobileNumber'];
       if (user == null) {
-        print("0");
         return 0; // User not found
       } else if (user is List<dynamic>) {
-        print(user.length);
         return user.length; // Return the count of users
       } else {
-        print("1");
         return 1; // Single user found
       }
     } catch (error) {
@@ -260,7 +268,11 @@ class _otpVerificationState extends State<otpVerification> {
 
                     if (len == 1){
                       int userId = await _getUserId();
-                      // Get.offAll(entryPoint());
+
+                      // Store the user ID in shared preferences
+                      await _storeUserId(userId);
+                      await SharedPreferencesUtil.setBool('isLoggedIn', true);
+
                       setState(() {
                         otpVerification.userId = userId;
                       });
