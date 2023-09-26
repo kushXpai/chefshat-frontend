@@ -2,6 +2,7 @@ import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:intl/intl.dart';
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/registration/registration.dart';
@@ -15,7 +16,6 @@ class editProfile extends StatefulWidget {
 }
 
 class _editProfileState extends State<editProfile> {
-  bool _isSelectedTextBox1 = false;
   bool _isSelectedTextBox2 = false;
   bool _isSelectedTextBox3 = false;
 
@@ -24,24 +24,33 @@ class _editProfileState extends State<editProfile> {
 
   bool _isSelectedTextBox = false;
 
-  updateUserProfile() async {
+  Future<void> updateUserProfile({
+    required int userId,
+    String? username,
+    String? sex,
+    String? address,
+    String? emailAddress,
+  }) async {
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink, // Replace with your GraphQL API endpoint
+    );
 
-    const String updateUserProfile = r'''
+    final MutationOptions options = MutationOptions(
+      document: gql('''
       mutation UpdateUser(
-        $userId: Int!,
-        $username: String,
-        $sex: String,
-        $address: String,
-        $emailAddress: String,
-        $dateOfBirth: String
+        \$userId: Int!,
+        \$username: String,
+        \$sex: String,
+        \$address: String,
+        \$emailAddress: String,
       ) {
         updateUser(
-          userId: $userId,
-          username: $username,
-          sex: $sex,
-          address: $address,
-          emailAddress: $emailAddress,
-          dateOfBirth: $dateOfBirth
+          userId: \$userId,
+          username: \$username,
+          sex: \$sex,
+          address: \$address,
+          emailAddress: \$emailAddress,
         ) {
           user {
             id
@@ -53,57 +62,27 @@ class _editProfileState extends State<editProfile> {
           }
         }
       }
-  ''';
-
-    // Your variables
-    // final Map<String, dynamic> variables = {
-    //   'userId': otpVerification.userId, // Replace with the user's ID
-    //   'username': UserFormFields.userName,
-    //   'sex': UserFormFields.userSex,
-    //   'address': UserFormFields.userAddress,
-    //   'email': UserFormFields.userEmail,
-    //   'dateOfBirth': UserFormFields.userDateOfBirth,
-    // };
-
-    final Map<String, dynamic> variables = {
-      'userId': 1, // Convert the String to an int
-      'username': UserFormFields.userName,
-      'sex': UserFormFields.userSex,
-      'address': UserFormFields.userAddress,
-      'emailAddress': UserFormFields.userEmail,
-      'dateOfBirth': UserFormFields.userDateOfBirth,
-    };
-
-    final GraphQLClient client = GraphQLClient(
-      cache: GraphQLCache(),
-      link: httpLink, // Replace with your GraphQL API endpoint
+    '''),
+      variables: {
+        'userId': userId,
+        'username': username,
+        'sex': sex,
+        'address': address,
+        'emailAddress': emailAddress,
+      },
     );
 
     try {
-      final QueryResult result = await client.mutate(
-        MutationOptions(
-          document: gql(updateUserProfile),
-          variables: variables,
-        ),
-      );
+      final QueryResult result = await client.mutate(options);
 
       if (result.hasException) {
-        // Handle error here
         print("Mutation error: ${result.exception}");
-
-        // Check if it's an HttpException
-        if (result.exception is HttpLinkServerException) {
-          final HttpLinkServerException httpException =
-          result.exception as HttpLinkServerException;
-          final response = httpException.response;
-          print("Response Status Code: ${response?.statusCode}");
-          print("Response Body: ${response?.body}");
-        }
+        // Handle the error as needed
       } else {
         // Mutation was successful, you can access data here if needed
         final Map<String, dynamic>? responseData =
-        result.data?['addDishToRatedRecipe']['ratingRecipe'];
-        print('Dish added to rated recipe.');
+        result.data?['updateUser']['user'];
+        print('User profile updated.');
         // You can access fields from responseData, e.g., responseData['id']
       }
     } catch (error) {
@@ -111,58 +90,7 @@ class _editProfileState extends State<editProfile> {
     }
   }
 
-  // Future<void> updateUserProfile1() async {
-  //   const String updateUser = r'''
-  //     mutation UpdateUser(
-  //       $userId: ID!,
-  //       $username: String,
-  //       $sex: String,
-  //       $address: String,
-  //       $emailAddress: String,
-  //       $dateOfBirth: String
-  //     ) {
-  //       updateUser(
-  //         userId: $userId,
-  //         username: $username,
-  //         sex: $sex,
-  //         address: $address,
-  //         emailAddress: $emailAddress,
-  //         dateOfBirth: $dateOfBirth
-  //       ) {
-  //         user {
-  //           id
-  //           username
-  //           sex
-  //           address
-  //           emailAddress
-  //           dateOfBirth
-  //         }
-  //       }
-  //     }
-  // ''';
-  //
-  //   final MutationOptions options = MutationOptions(
-  //     document: gql(updateUser),
-  //     variables: {
-  //       'id': otpVerification.userId, // Replace with the user's ID
-  //       'username': UserFormFields.userName,
-  //       'sex': UserFormFields.userSex,
-  //       'address': UserFormFields.userAddress,
-  //       'email': UserFormFields.userEmail,
-  //       'dateOfBirth': UserFormFields.userDateOfBirth,
-  //     },
-  //   );
-  //
-  //   final QueryResult result = await GraphQLProvider.of(context).value.mutate(options);
-  //
-  //   if (result.hasException) {
-  //     print('Error updating user: ${result.exception.toString()}');
-  //     // Handle error, e.g., show an error message to the user
-  //   } else {
-  //     print('User updated successfully.');
-  //     // Optionally, you can show a success message or navigate to another screen
-  //   }
-  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -434,73 +362,73 @@ class _editProfileState extends State<editProfile> {
                 ),
               ),
 
-              const Padding(
-                padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
-                child: Text(
-                  "Enter your date of birth",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
-                    fontFamily: "Georgia",
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 0, right: 0, top: 0, bottom: 30),
-                child: Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: _isSelectedTextBox1
-                          ? Colors.transparent
-                          : Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextFormField(
-                    initialValue: UserFormFields.userDateOfBirth,
-                    onTap: () {
-                      _isSelectedTextBox1 = true;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        UserFormFields.userDateOfBirth = value;
-                      });
-                      if (UserFormFields.userDateOfBirth != "" &&
-                          UserFormFields.userEmail != "" &&
-                          UserFormFields.userAddress != "") {
-                      } else if (UserFormFields.userDateOfBirth != "" &&
-                          UserFormFields.userEmail != "" &&
-                          UserFormFields.userAddress != "") {}
-                    },
-                    keyboardType: TextInputType.datetime,
-                    style: const TextStyle(
-                      color: Colors.white, // Set text color to white
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Date of Birth',
-                      labelStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.white, // Set border color to grey
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors
-                              .grey, // Set border color to white when focused
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
+              //   child: Text(
+              //     "Enter your date of birth",
+              //     style: TextStyle(
+              //       color: Colors.grey,
+              //       fontSize: 15,
+              //       fontFamily: "Georgia",
+              //     ),
+              //     textAlign: TextAlign.center,
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //       left: 0, right: 0, top: 0, bottom: 30),
+              //   child: Container(
+              //     height: 55,
+              //     decoration: BoxDecoration(
+              //       border: Border.all(
+              //         color: _isSelectedTextBox1
+              //             ? Colors.transparent
+              //             : Colors.grey,
+              //       ),
+              //       borderRadius: BorderRadius.circular(15),
+              //     ),
+              //     child: TextFormField(
+              //       initialValue: UserFormFields.userDateOfBirth,
+              //       onTap: () {
+              //         _isSelectedTextBox1 = true;
+              //       },
+              //       onChanged: (value) {
+              //         setState(() {
+              //           UserFormFields.userDateOfBirth = value;
+              //         });
+              //         if (UserFormFields.userDateOfBirth != "" &&
+              //             UserFormFields.userEmail != "" &&
+              //             UserFormFields.userAddress != "") {
+              //         } else if (UserFormFields.userDateOfBirth != "" &&
+              //             UserFormFields.userEmail != "" &&
+              //             UserFormFields.userAddress != "") {}
+              //       },
+              //       keyboardType: TextInputType.datetime,
+              //       style: const TextStyle(
+              //         color: Colors.white, // Set text color to white
+              //       ),
+              //       decoration: InputDecoration(
+              //         labelText: 'Date of Birth',
+              //         labelStyle: const TextStyle(
+              //           color: Colors.white,
+              //         ),
+              //         border: OutlineInputBorder(
+              //           borderSide: const BorderSide(
+              //             color: Colors.white, // Set border color to grey
+              //           ),
+              //           borderRadius: BorderRadius.circular(15),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderSide: const BorderSide(
+              //             color: Colors
+              //                 .grey, // Set border color to white when focused
+              //           ),
+              //           borderRadius: BorderRadius.circular(15),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
@@ -652,10 +580,17 @@ class _editProfileState extends State<editProfile> {
                       print(UserFormFields.userEmail);
                       print(UserFormFields.userSex);
 
-                      await updateUserProfile();
+                      await updateUserProfile(
+                        userId: otpVerification.userId, // Pass the userId here
+                        username: UserFormFields.userName,
+                        sex: UserFormFields.userSex,
+                        address: UserFormFields.userAddress,
+                        emailAddress: UserFormFields.userEmail,
+                      );
 
                       Navigator.pushNamed(context, 'profile');
                     },
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lime,
                       shadowColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chefs_hat/controller/entryPoint/entryPoint.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -9,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/registration/registration.dart';
+import '../../utils/sharedPreferences.dart';
 
 class registrationStep3 extends StatefulWidget {
   const registrationStep3({Key? key}) : super(key: key);
@@ -20,9 +22,10 @@ class registrationStep3 extends StatefulWidget {
 }
 
 class _registrationStep3State extends State<registrationStep3> {
+
   String profilePhoto = "";
 
-  File? file = File("");
+  File? file;
   final ImagePicker _imagePicker = ImagePicker();
 
   Future<void> getImageFromGallery() async {
@@ -67,12 +70,12 @@ class _registrationStep3State extends State<registrationStep3> {
       print(response);
     }
     else {
+      print("ERROR");
       print(response.reasonPhrase);
     }
   }
 
   Future<int> _getUserId() async {
-    final HttpLink httpLink = HttpLink('http://192.168.68.105:8000/graphql/');
 
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
       GraphQLClient(
@@ -106,12 +109,11 @@ class _registrationStep3State extends State<registrationStep3> {
       if (user == null) {
         return 0; // User not found
       } else if (user is List<dynamic>) {
-        // Since you mentioned that the query should return a list, let's access the first item.
-        // If you expect multiple users, you may need to change this logic.
         final int userId = user.isNotEmpty ? int.parse(user[0]['id']) : 0;
         return userId; // Return the user ID
       } else {
         final int userId = int.parse(user['id']);
+        print("\n\nUser Id on call inde _getUserId " + userId.toString() + "\n\n");
         return userId; // Single user found
       }
     } catch (error) {
@@ -165,7 +167,7 @@ class _registrationStep3State extends State<registrationStep3> {
           height: height,
           width: width,
           padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 90, bottom: 20),
+          const EdgeInsets.only(left: 20, right: 20, top: 90, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -285,19 +287,19 @@ class _registrationStep3State extends State<registrationStep3> {
                                     borderRadius: BorderRadius.circular(20),
                                     child: file == null
                                         ? Image(
-                                            image: AssetImage(
-                                              profilePhoto,
-                                            ),
-                                            fit: BoxFit.fill,
-                                            width: width / 1.5,
-                                            height: width / 1.5,
-                                          )
+                                      image: AssetImage(
+                                        profilePhoto,
+                                      ),
+                                      fit: BoxFit.fill,
+                                      width: width / 1.5,
+                                      height: width / 1.5,
+                                    )
                                         : Image.file(
-                                            file!,
-                                            fit: BoxFit.fill,
-                                            width: width / 1.5,
-                                            height: width / 1.5,
-                                          ),
+                                      file!,
+                                      fit: BoxFit.fill,
+                                      width: width / 1.5,
+                                      height: width / 1.5,
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -343,12 +345,15 @@ class _registrationStep3State extends State<registrationStep3> {
                     print(UserFormFields.userAddress);
                     print(UserFormFields.userEmail);
                     print(UserFormFields.userSex);
-                    int userId = await _getUserId(); // Call the _ge
+
+                    int userId = await _getUserId();
+                    print("User Id on call " + userId.toString());
                     setState(() {
                       otpVerification.userId = userId;
                     });
-                    print(UserFormFields.userMobileNumber);
-                    print(otpVerification.userId);
+
+                    await SharedPreferencesUtil.setLoginState(true);
+                    entryPointStatics.indexBottomNavigationBar = 3;
 
                     Navigator.pushNamed(context, 'entryPoint');
                   },

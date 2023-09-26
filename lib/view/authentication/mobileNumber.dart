@@ -17,7 +17,6 @@ class _mobileNumberState extends State<mobileNumber> {
 
   @override
   void initState() {
-    // TODO: implement initState
     countryCode.text = "+91";
     super.initState();
   }
@@ -149,8 +148,7 @@ class _mobileNumberState extends State<mobileNumber> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
-                        color:
-                            Colors.grey, // Set border color to white when focused
+                        color: Colors.grey, // Set border color to white when focused
                       ),
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -163,33 +161,24 @@ class _mobileNumberState extends State<mobileNumber> {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'otpVerification');
+                    if (userMobileNumber.length == 10) {
+                      Navigator.pushNamed(context, 'otpVerification');
+                    } else {
+                      // Show an error message or toast indicating that the mobile number is invalid.
+                    }
                   },
-                  // onPressed: () async {
-                  //   Navigator.pushNamed(context, 'otp');
-                  //   await FirebaseAuth.instance.verifyPhoneNumber(
-                  //     phoneNumber: '${countrycode.text+phone}',
-                  //     verificationCompleted: (PhoneAuthCredential credential) {},
-                  //     verificationFailed: (FirebaseAuthException e) {},
-                  //     codeSent: (String verificationId, int? resendToken) {
-                  //       MyPhone.verify = verificationId;
-                  //       Navigator.pushNamed(context, "otp");
-                  //     },
-                  //     codeAutoRetrievalTimeout: (String verificationId) {},
-                  //   );
-                  // },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lime,
+                    backgroundColor: userMobileNumber.length == 10 ? Colors.lime : Colors.grey,
                     shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: const BorderSide(
-                        color: Colors.lime,
+                      side: BorderSide(
+                        color: userMobileNumber.length == 10 ? Colors.lime : Colors.grey,
                       ),
                     ),
                   ),
                   child: const Text(
-                    'Send me the code',
+                    'Enter Password',
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontWeight: FontWeight.bold,

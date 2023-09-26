@@ -20,9 +20,12 @@ class otpVerification extends StatefulWidget {
 
 class _otpVerificationState extends State<otpVerification> {
 
+  bool _isSelectedTextBox = false;
+
   Future<void> _storeUserId(int userId) async {
     try {
       // Use your shared preferences utility to store the user ID
+      print("OTP ${userId}");
       await SharedPreferencesUtil.setInt('userId', userId);
     } catch (error) {
       // Handle any errors that might occur during storage
@@ -219,7 +222,7 @@ class _otpVerificationState extends State<otpVerification> {
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 10),
                 child: Text(
-                  "Confirm your number",
+                  "Enter your password",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30,
@@ -228,34 +231,94 @@ class _otpVerificationState extends State<otpVerification> {
                   ),
                 ),
               ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 50),
+              //   child: Text(
+              //     "Enter the code we sent you to your number ending XXXXXX${(UserFormFields.userMobileNumber % 10000).toString()}",
+              //     style: const TextStyle(
+              //       color: Colors.grey,
+              //       fontSize: 15,
+              //       fontFamily: "Georgia",
+              //     ),
+              //   ),
+              // ),
+              // Pinput(
+              //   onChanged: (value) {
+              //     setState(() {
+              //       code = value;
+              //     });
+              //   },
+              //   length: 6,
+              //   defaultPinTheme: defaultPinTheme,
+              //   // focusedPinTheme: focusedPinTheme,
+              //   // submittedPinTheme: submittedPinTheme,
+              //   validator: (s) {
+              //     return s == code ? null : 'Pin is incorrect';
+              //   },
+              //   pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+              //   showCursor: true,
+              //   onCompleted: (pin) => print(pin),
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 50),
+                padding: const EdgeInsets.only(
+                    left: 0, right: 0, top: 0, bottom: 10),
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color:
+                      _isSelectedTextBox ? Colors.transparent : Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: TextFormField(
+                    onTap: () {
+                      _isSelectedTextBox = true;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        UserFormFields.userPassword = value;
+                      });
+                    },
+                    keyboardType: TextInputType.text,
+                    obscureText: true, // This makes it a password field
+                    style: const TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.white, // Set border color to grey
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors
+                              .grey, // Set border color to white when focused
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 50),
                 child: Text(
-                  "Enter the code we sent you to your number ending XXXXXX${(UserFormFields.userMobileNumber % 10000).toString()}",
-                  style: const TextStyle(
+                  "Must be at least eight characters",
+                  style: TextStyle(
                     color: Colors.grey,
                     fontSize: 15,
                     fontFamily: "Georgia",
                   ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              Pinput(
-                onChanged: (value) {
-                  setState(() {
-                    code = value;
-                  });
-                },
-                length: 6,
-                defaultPinTheme: defaultPinTheme,
-                // focusedPinTheme: focusedPinTheme,
-                // submittedPinTheme: submittedPinTheme,
-                validator: (s) {
-                  return s == code ? null : 'Pin is incorrect';
-                },
-                pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                showCursor: true,
-                onCompleted: (pin) => print(pin),
               ),
               const Expanded(child: SizedBox()),
               SizedBox(
@@ -266,40 +329,49 @@ class _otpVerificationState extends State<otpVerification> {
                     var len = await getUsersCountByMobileNumber(UserFormFields.userMobileNumber.toString());
                     print(len);
 
-                    if (len == 1){
-                      int userId = await _getUserId();
+                    // Check if the password is not empty and has at least 8 characters
+                    if (UserFormFields.userPassword.isNotEmpty && UserFormFields.userPassword.length >= 8) {
+                      if (len == 1) {
+                        int userId = await _getUserId();
 
-                      // Store the user ID in shared preferences
-                      await _storeUserId(userId);
-                      await SharedPreferencesUtil.setBool('isLoggedIn', true);
+                        // Store the user ID in shared preferences
 
-                      setState(() {
-                        otpVerification.userId = userId;
-                      });
-                      print(UserFormFields.userMobileNumber);
-                      print(otpVerification.userId);
-                      Navigator.pushNamed(context, 'entryPoint');
-
-                      // Navigator.pushNamed(context, 'homePage');
-
-                    } else if (len == 0) {
-                      print("XXX");
-                      Navigator.pushNamed(context, 'registrationStep1');
+                        setState(() {
+                          otpVerification.userId = userId;
+                        });
+                        _storeUserId(otpVerification.userId);
+                        print(UserFormFields.userMobileNumber);
+                        print(otpVerification.userId);
+                        await SharedPreferencesUtil.setLoginState(true);
+                        Navigator.pushNamed(context, 'entryPoint');
+                      } else if (len == 0) {
+                        print("XXX");
+                        Navigator.pushNamed(context, 'registrationStep1');
+                      }
+                    } else if (UserFormFields.userPassword.isEmpty || UserFormFields.userPassword.length <= 8) {
+                      // Password is empty or less than 8 characters
+                      // Display an error message in an AlertDialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Invalid Password"),
+                            content: Text("Password must be at least eight characters."),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     }
                   },
-                  // onPressed: () async {
-                  //   Navigator.pushNamed(context, 'otp');
-                  //   await FirebaseAuth.instance.verifyPhoneNumber(
-                  //     phoneNumber: '${countrycode.text+phone}',
-                  //     verificationCompleted: (PhoneAuthCredential credential) {},
-                  //     verificationFailed: (FirebaseAuthException e) {},
-                  //     codeSent: (String verificationId, int? resendToken) {
-                  //       MyPhone.verify = verificationId;
-                  //       Navigator.pushNamed(context, "otp");
-                  //     },
-                  //     codeAutoRetrievalTimeout: (String verificationId) {},
-                  //   );
-                  // },
+
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lime,
                     shadowColor: Colors.transparent,

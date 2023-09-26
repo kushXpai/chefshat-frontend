@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chefs_hat/view/authentication/otpVerification.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +50,7 @@ class _postUploadState extends State<postUpload> {
     var request = http.MultipartRequest('POST', Uri.parse('${httpLinkC}/userUpload/'));
     print("before send");
     request.fields.addAll({
-      'userId': "1",
+      'userId': "${otpVerification.userId}",
       'uploadLikes': "0",
       'uploadName': "${uploadName}",
       'uploadDescription': "${uploadDescription}",

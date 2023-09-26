@@ -12,6 +12,7 @@ import 'package:chefs_hat/test.dart';
 import 'package:chefs_hat/utils/sharedPreferences.dart';
 import 'package:chefs_hat/view/authentication/mobileNumber.dart';
 import 'package:chefs_hat/view/authentication/otpVerification.dart';
+import 'package:chefs_hat/view/authentication/signIn.dart';
 import 'package:chefs_hat/view/community/community.dart';
 import 'package:chefs_hat/view/dishDescription/dishDescription.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
@@ -40,7 +41,7 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: isLoggedIn ? 'entryPoint' : 'landingPage',
-    // initialRoute: 'entryPoint',
+    // initialRoute: 'signup',
     // initialRoute: 'test',
 
     routes: {
@@ -50,6 +51,7 @@ void main() async {
       // VIEWS - AUTHENTICATION
       'mobileNumber': (context) => const mobileNumber(),
       'otpVerification': (context) => const otpVerification(),
+      'signIn': (context) => const signIn(),
       // VIEWS - REGISTRATION
       'registrationStep1': (context) => const registrationStep1(),
       'registrationStep2': (context) => const registrationStep2(),

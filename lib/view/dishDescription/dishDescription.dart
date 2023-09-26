@@ -1228,8 +1228,8 @@ class _dishDescriptionState extends State<dishDescription> {
                                                 final String ingredientName =
                                                     ingredient['ingredientId']
                                                         ['ingredientName'];
-                                                final int quantity = ingredient[
-                                                    'dishIngredientQuantity'];
+                                                final double quantity = double.parse(ingredient[
+                                                    'dishIngredientQuantity']);
                                                 final String unit = ingredient[
                                                     'dishIngredientQuantityUnit'];
 

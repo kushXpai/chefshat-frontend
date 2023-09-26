@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 
-// Local Host
-// final HttpLink httpLink = HttpLink('http://192.168.1.19:8000/graphql/');
-// final httpLinkC = 'http://192.168.1.19:8000';
-// final httpLinkImage = 'http://192.168.1.19:8000/media/';
+// Xiaomi 11i - Jio
+// final HttpLink httpLink = HttpLink('http://192.168.143.104:8000/graphql/');
+// final httpLinkC = 'http://192.168.143.104:8000';
+// final httpLinkImage = 'http://192.168.143.104:8000/media/';
 
-// Xiaomi 11i
-final HttpLink httpLink = HttpLink('http://192.168.193.104:8000/graphql/');
-final httpLinkC = 'http://192.168.193.104:8000';
-final httpLinkImage = 'http://192.168.193.104:8000/media/';
+// Xiaomi 11i - Airtel
+// final HttpLink httpLink = HttpLink('http://192.168.143.104:8000/graphql/');
+// final httpLinkC = 'http://192.168.143.104:8000';
+// final httpLinkImage = 'http://192.168.143.104:8000/media/';
 
-// Deepak Black Airtel
+// Deepak - Black Airtel
 // final HttpLink httpLink = HttpLink('http://192.168.1.100:8000/graphql/');
 // final httpLinkC = 'http://192.168.1.100:8000';
 // final httpLinkImage = 'http://192.168.1.100:8000/media/';
@@ -22,9 +22,9 @@ final httpLinkImage = 'http://192.168.193.104:8000/media/';
 // final httpLinkImage = 'http://192.168.1.19:8000/media/';
 
 // PP
-// final HttpLink httpLink = HttpLink('http://192.168.0.200:8000/graphql/');
-// final httpLinkC = 'http://192.168.0.200:8000';
-// final httpLinkImage = 'http://192.168.0.200:8000/media/';
+final HttpLink httpLink = HttpLink('http://192.168.0.126:8000/graphql/');
+final httpLinkC = 'http://192.168.0.126:8000';
+final httpLinkImage = 'http://192.168.0.126:8000/media/';
 
 // Rajesh
 // final HttpLink httpLink = HttpLink('http://192.168.1.20:8000/graphql/');

@@ -56,91 +56,93 @@ class _landingPageState extends State<landingPage> {
       body: SizedBox(
         height: height,
         width: width,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            dishTile(
-              scrollController: _scrollController1,
-              images: row1,
-            ),
-            dishTile(
-              scrollController: _scrollController2,
-              images: row2,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 40, bottom: 20),
-              child: RichText(
-                text: const TextSpan(
-                  text: 'Find the perfect recipes ',
-                  style: TextStyle(
-                    fontFamily: 'Georgia',
-                    fontSize: 39,
-                    color: Colors.white,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: 'everyday ',
-                      style: TextStyle(
-                        color: Colors.lime,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 3,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 00, bottom: 0),
-              child: Text(
-                'Elevate your home cooking with our expertly curated recipies!',
-                style: TextStyle(
-                  fontFamily: 'Georgia',
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 3,
+              dishTile(
+                scrollController: _scrollController1,
+                images: row1,
               ),
-            ),
-            const Expanded(child: SizedBox()),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 10, bottom: 20),
-              child: SizedBox(
-                width: width,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'mobileNumber');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lime,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      side: const BorderSide(
-                        color: Colors.lime,
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    'Get Started',
+              dishTile(
+                scrollController: _scrollController2,
+                images: row2,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 30, right: 30, top: 40, bottom: 20),
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Find the perfect recipes ',
                     style: TextStyle(
                       fontFamily: 'Georgia',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.black,
+                      fontSize: 39,
+                      color: Colors.white,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'everyday ',
+                        style: TextStyle(
+                          color: Colors.lime,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 100),
+                child: Text(
+                  'Elevate your home cooking with our expertly curated recipes!',
+                  style: TextStyle(
+                    fontFamily: 'Georgia',
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                ),
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 10, bottom: 20),
+                child: SizedBox(
+                  width: width,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'signIn');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lime,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(
+                          color: Colors.lime,
+                        ),
+                      ),
+                    ),
+                    child: const Text(
+                      'Get Started',
+                      style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

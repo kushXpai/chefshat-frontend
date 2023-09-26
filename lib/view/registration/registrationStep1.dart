@@ -51,14 +51,12 @@ class _registrationStep1State extends State<registrationStep1> {
         child: Container(
           height: height,
           width: width,
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 90, bottom: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 90, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 0, right: 0, top: 0, bottom: 10),
+                padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 10),
                 child: RichText(
                   text: const TextSpan(
                     text: 'Step ',
@@ -82,49 +80,46 @@ class _registrationStep1State extends State<registrationStep1> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, right: 0, top: 0, bottom: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 10, top: 0, bottom: 0),
-                        child: Container(
-                          height: 4,
-                          width: width / 3 - 20,
-                          decoration: BoxDecoration(
-                            color: Colors.lime,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 10, top: 0, bottom: 0),
+                      child: Container(
+                        height: 4,
+                        width: width / 3 - 20,
+                        decoration: BoxDecoration(
+                          color: Colors.lime,
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 10, top: 0, bottom: 0),
-                        child: Container(
-                          height: 2,
-                          width: width / 3 - 20,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 10, top: 0, bottom: 0),
+                      child: Container(
+                        height: 2,
+                        width: width / 3 - 20,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 0, top: 0, bottom: 0),
-                        child: Container(
-                          height: 2,
-                          width: width / 3 - 20,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      child: Container(
+                        height: 2,
+                        width: width / 3 - 20,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Text(
@@ -138,182 +133,12 @@ class _registrationStep1State extends State<registrationStep1> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, right: 0, top: 0, bottom: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 0, top: 0, bottom: 0),
-                        child: Container(
-                            width: width / 2 - 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _isMaleSelected = !_isMaleSelected;
-                                      _isFemaleSelected = false;
-                                    });
-                                    if (_isMaleSelected = true) {
-                                      setState(() {
-                                        UserFormFields.userSex = "MALE";
-                                      });
-                                    } else if (_isMaleSelected = false) {
-                                      setState(() {
-                                        UserFormFields.userSex = "";
-                                      });
-                                    }
-                                    if (UserFormFields.userSex != "" &&
-                                        UserFormFields.userName != "") {
-                                      setState(() {
-                                        _canProceedToNextPage = true;
-                                      });
-                                    } else if (UserFormFields.userSex != "" &&
-                                        UserFormFields.userName != "") {
-                                      setState(() {
-                                        _canProceedToNextPage = false;
-                                      });
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: _isMaleSelected
-                                        ? Colors.lime
-                                        : Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      side: const BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(0),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: const Image(
-                                      image: AssetImage(
-                                          'assets/registrationPagePhotos/Male.png'),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 0, right: 0, top: 10, bottom: 0),
-                                  child: Text(
-                                    "Male",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontFamily: "Georgia",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 0, top: 0, bottom: 0),
-                        child: Container(
-                            width: width / 2 - 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _isFemaleSelected = !_isFemaleSelected;
-                                      _isMaleSelected = false;
-                                    });
-                                    if (_isFemaleSelected = true) {
-                                      setState(() {
-                                        UserFormFields.userSex = "FEMALE";
-                                      });
-                                    } else if (_isFemaleSelected = false) {
-                                      setState(() {
-                                        UserFormFields.userSex = "";
-                                      });
-                                    }
-                                    if (UserFormFields.userSex != "" &&
-                                        UserFormFields.userName != "") {
-                                      setState(() {
-                                        _canProceedToNextPage = true;
-                                      });
-                                    } else if (UserFormFields.userSex != "" &&
-                                        UserFormFields.userName != "") {
-                                      setState(() {
-                                        _canProceedToNextPage = false;
-                                      });
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: _isFemaleSelected
-                                        ? Colors.lime
-                                        : Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      side: const BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(0),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: const Image(
-                                      image: AssetImage(
-                                          'assets/registrationPagePhotos/Female.png'),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 0, right: 0, top: 10, bottom: 0),
-                                  child: Text(
-                                    "Female",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontFamily: "Georgia",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ],
-                  )),
-              const Padding(
-                padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
-                child: Text(
-                  "Create your perfect profile, first choose a gender and come up with your nickname",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
-                    fontFamily: "Georgia",
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 0, right: 0, top: 0, bottom: 30),
+                padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
                 child: Container(
                   height: 55,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color:
-                          _isSelectedTextBox ? Colors.transparent : Colors.grey,
+                      color: _isSelectedTextBox ? Colors.transparent : Colors.grey,
                     ),
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -325,13 +150,17 @@ class _registrationStep1State extends State<registrationStep1> {
                       setState(() {
                         UserFormFields.userName = value;
                       });
-                      if (UserFormFields.userSex != "" &&
-                          UserFormFields.userName != "") {
-                        setState(() {
-                          _canProceedToNextPage = true;
-                        });
-                      } else if (UserFormFields.userSex != "" &&
-                          UserFormFields.userName != "") {
+                      if (_isMaleSelected || _isFemaleSelected) {
+                        if (UserFormFields.userName.length >= 4) {
+                          setState(() {
+                            _canProceedToNextPage = true;
+                          });
+                        } else {
+                          setState(() {
+                            _canProceedToNextPage = false;
+                          });
+                        }
+                      } else {
                         setState(() {
                           _canProceedToNextPage = false;
                         });
@@ -339,7 +168,7 @@ class _registrationStep1State extends State<registrationStep1> {
                     },
                     keyboardType: TextInputType.text,
                     style: const TextStyle(
-                      color: Colors.white, // Set text color to white
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                       labelText: 'Username',
@@ -348,14 +177,13 @@ class _registrationStep1State extends State<registrationStep1> {
                       ),
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(
-                          color: Colors.white, // Set border color to grey
+                          color: Colors.white,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
-                          color: Colors
-                              .grey, // Set border color to white when focused
+                          color: Colors.grey,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -375,26 +203,147 @@ class _registrationStep1State extends State<registrationStep1> {
                   textAlign: TextAlign.center,
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 30),
+                child: Text(
+                  "Select your gender",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: "Georgia",
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: width / 2 - 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _isMaleSelected = true;
+                              _isFemaleSelected = false;
+                            });
+                            UserFormFields.userSex = "MALE";
+                            if (_isMaleSelected && UserFormFields.userName.length >= 4) {
+                              _canProceedToNextPage = true;
+                            } else {
+                              _canProceedToNextPage = false;
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: _isMaleSelected ? Colors.lime : Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side: const BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(0),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: const Image(
+                              image: AssetImage('assets/registrationPagePhotos/Male.png'),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
+                          child: Text(
+                            "Male",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: "Georgia",
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: width / 2 - 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _isFemaleSelected = true;
+                              _isMaleSelected = false;
+                            });
+                            UserFormFields.userSex = "FEMALE";
+                            if (_isFemaleSelected && UserFormFields.userName.length >= 4) {
+                              _canProceedToNextPage = true;
+                            } else {
+                              _canProceedToNextPage = false;
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: _isFemaleSelected ? Colors.lime : Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side: const BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(0),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: const Image(
+                              image: AssetImage('assets/registrationPagePhotos/Female.png'),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
+                          child: Text(
+                            "Female",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: "Georgia",
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               const Expanded(child: SizedBox()),
               SizedBox(
                 height: 45,
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (UserFormFields.userSex != "" &&
-                        UserFormFields.userName != "") {
+                    if (_canProceedToNextPage) {
                       Navigator.pushNamed(context, 'registrationStep2');
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        _canProceedToNextPage ? Colors.lime : Colors.grey,
+                    backgroundColor: _canProceedToNextPage ? Colors.lime : Colors.grey,
                     shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                       side: BorderSide(
-                        color:
-                            _canProceedToNextPage ? Colors.lime : Colors.grey,
+                        color: _canProceedToNextPage ? Colors.lime : Colors.grey,
                       ),
                     ),
                   ),
@@ -404,8 +353,7 @@ class _registrationStep1State extends State<registrationStep1> {
                       fontFamily: 'Georgia',
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      color:
-                          _canProceedToNextPage ? Colors.black : Colors.white,
+                      color: _canProceedToNextPage ? Colors.black : Colors.white,
                     ),
                   ),
                 ),
@@ -417,3 +365,4 @@ class _registrationStep1State extends State<registrationStep1> {
     );
   }
 }
+

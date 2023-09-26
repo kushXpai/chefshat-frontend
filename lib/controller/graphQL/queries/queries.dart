@@ -128,7 +128,6 @@ class DishDescription {
           ingredientId {
             id
             ingredientName
-            ingredientImage
           }
         }
       }

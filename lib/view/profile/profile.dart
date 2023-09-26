@@ -127,10 +127,11 @@ class _profileState extends State<profile> {
                   padding: const EdgeInsets.only(
                       left: 20, right: 20, top: 80, bottom: 20),
                   child: SizedBox(
-                    height: height * 0.165,
+                    // height: height * 0.165,
                     // decoration: BoxDecoration(color: Colors.red),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GraphQLProvider(
                           client: client,
@@ -367,6 +368,7 @@ class _profileState extends State<profile> {
 
   Widget _buildUserProfileNameImage(double width) {
     return SizedBox(
+      width: width / 3,
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getUserById),
@@ -423,6 +425,9 @@ class _profileState extends State<profile> {
                     color: Colors.white,
                     fontSize: 23,
                   ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

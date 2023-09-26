@@ -22,14 +22,13 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-
   Future<void> _loadUserId() async {
     final int? storedUserId = await SharedPreferencesUtil.getInt('userId');
+    print("Homepage ${storedUserId}");
     setState(() {
       otpVerification.userId = storedUserId ?? 0;
     });
   }
-
 
   final ScrollController _scrollController1 = ScrollController();
 
@@ -362,8 +361,7 @@ class _homePageState extends State<homePage> {
 
             // List
             const Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 0, top: 0, bottom: 0),
+              padding: EdgeInsets.only(left: 20, right: 0, top: 0, bottom: 0),
               child: Row(
                 children: [
                   Text(
@@ -419,7 +417,8 @@ class _homePageState extends State<homePage> {
           return SizedBox(
             width: width,
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 5),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 40, bottom: 5),
               child: Row(
                 children: [
                   Text(
@@ -432,10 +431,9 @@ class _homePageState extends State<homePage> {
                   Text(
                     "${data['username']}",
                     style: GoogleFonts.playfairDisplay(
-                      color: Colors.white,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold
-                    ),
+                        color: Colors.white,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold),
                   ),
                   const Expanded(child: SizedBox()),
                   Padding(
@@ -450,8 +448,8 @@ class _homePageState extends State<homePage> {
                             border: Border.all(color: Colors.white, width: 1)),
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          backgroundImage:
-                          NetworkImage(httpLinkImage + data['profilePhoto']),
+                          backgroundImage: NetworkImage(
+                              httpLinkImage + data['profilePhoto']),
                         ),
                       ),
                     ),
@@ -2110,7 +2108,10 @@ class _homePageState extends State<homePage> {
 
           return ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: 5, // Use the length of the saved recipes list
+            itemCount: savedRecipes.length > 5
+                ? 5
+                : savedRecipes
+                    .length, // Use the length of the saved recipes list
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(height: 10);
             },
