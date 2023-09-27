@@ -13,12 +13,52 @@ class signIn extends StatefulWidget {
 }
 
 class _signInState extends State<signIn> {
-  String userMobileNumber = "";
-  String userPassword = "";
 
-  // Track if both conditions are met for enabling the button.
   bool isMobileValid = false;
   bool isPasswordValid = false;
+
+  static Future<int> _getUsersCountByMobileNumber(String mobileNumber) async {
+    print("getUsersCountByMobileNumber");
+
+    final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
+      GraphQLClient(
+        cache: GraphQLCache(),
+        link: httpLink,
+      ),
+    );
+
+    final String getUsersCountQuery = '''
+    query GetUsersCount(\$mobileNumber: String!) {
+      displayUserByMobileNumber(mobileNumber: \$mobileNumber) {
+        id
+      }
+    }
+  ''';
+
+    final QueryOptions options = QueryOptions(
+      document: gql(getUsersCountQuery),
+      variables: {'mobileNumber': mobileNumber},
+    );
+
+    try {
+      final QueryResult result = await client.value.query(options);
+
+      if (result.hasException) {
+        throw result.exception!;
+      }
+
+      final dynamic user = result.data?['displayUserByMobileNumber'];
+      if (user == null) {
+        return 0; // User not found
+      } else if (user is List<dynamic>) {
+        return user.length; // Return the count of users
+      } else {
+        return 1; // Single user found
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
   static Future<int> _getUsersCountByMobileNumberAndPassword(String mobileNumber, String password) async {
     final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
@@ -67,6 +107,7 @@ class _signInState extends State<signIn> {
         displayUserByMobileNumberAndPassword(mobileNumber: \$mobileNumber, password: \$password) {
           id
           username
+          password
         }
       }
     ''';
@@ -84,6 +125,7 @@ class _signInState extends State<signIn> {
       }
 
       final dynamic user = result.data?['displayUserByMobileNumberAndPassword'];
+      UserFormFields.userPassword = user['password'];
       if (user == null) {
         return 0; // User not found
       } else if (user is List<dynamic>) {
@@ -109,13 +151,13 @@ class _signInState extends State<signIn> {
     }
   }
 
+  String checkPassword = "";
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    // Determine if the button should be enabled based on input validation.
     bool isButtonEnabled = isMobileValid && isPasswordValid;
 
     return Scaffold(
@@ -190,7 +232,6 @@ class _signInState extends State<signIn> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
-                        userMobileNumber = value;
                         UserFormFields.userMobileNumber = int.parse(value);
 
                         isMobileValid = value.length == 10;
@@ -233,7 +274,7 @@ class _signInState extends State<signIn> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 10,
                   right: 0,
                   top: 0,
@@ -241,7 +282,7 @@ class _signInState extends State<signIn> {
                 ),
                 child: Text(
                   isMobileValid ? "" : "Enter correct mobile number",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12,
                     fontFamily: "Georgia",
@@ -250,7 +291,7 @@ class _signInState extends State<signIn> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 0,
                   right: 0,
                   top: 0,
@@ -267,7 +308,7 @@ class _signInState extends State<signIn> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
-                        userPassword = value;
+                        checkPassword = value;
                         UserFormFields.userPassword = value;
 
                         // Add your password validation logic here
@@ -308,7 +349,7 @@ class _signInState extends State<signIn> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 0,
                   right: 10,
                   top: 0,
@@ -318,7 +359,7 @@ class _signInState extends State<signIn> {
                   isPasswordValid
                       ? ""
                       : "Enter correct password", // Empty string for valid password
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12,
                     fontFamily: "Georgia",
@@ -336,22 +377,46 @@ class _signInState extends State<signIn> {
                           print(UserFormFields.userMobileNumber);
                           print(UserFormFields.userPassword);
 
-                          int userCount = await _getUsersCountByMobileNumberAndPassword(UserFormFields.userMobileNumber.toString(), UserFormFields.userPassword);
-                          print("Number of users " + userCount.toString());
+                          int userCountMobile = await _getUsersCountByMobileNumber(UserFormFields.userMobileNumber.toString());
+                          print("Number of users $userCountMobile");
 
-                          if (userCount == 1) {
-                            int userId = await _getUserId(UserFormFields.userMobileNumber.toString(), UserFormFields.userPassword);
-                            setState(() {
-                              UserFormFields.userId = userId;
-                            });
-                            print("User ID " + UserFormFields.userId.toString() + "\n\n\n\n\n\n\n\n");
+                          if (userCountMobile == 1) {
+                            int userCountPassword = await _getUsersCountByMobileNumberAndPassword(UserFormFields.userMobileNumber.toString(), UserFormFields.userPassword);
+                            print("Number of users $userCountPassword");
 
-                            await SharedPreferencesUtil.setLoginState(true);
-                            await _storeUserId(UserFormFields.userId);
+                            if (userCountPassword == 1) {
+                              int userId = await _getUserId(UserFormFields.userMobileNumber.toString(), UserFormFields.userPassword);
+                              setState(() {
+                                UserFormFields.userId = userId;
+                              });
+                              print("User ID ${UserFormFields.userId}\n\n\n\n\n\n\n\n");
 
-                            Navigator.pushReplacementNamed(context, 'entryPoint');
+                              await SharedPreferencesUtil.setLoginState(true);
+                              await _storeUserId(UserFormFields.userId);
+
+                              Navigator.pushReplacementNamed(context, 'entryPoint');
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Alert'),
+                                    content: const Text('Check your password.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          // Close the dialog when the "OK" button is pressed.
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           } else {
-                            Navigator.pushNamed(context, 'registrationStep1');
+                            Navigator.pushNamed(context, 'registrationStep3');
                           }
 
                     // Navigator.pushNamed(context, 'otpVerification');
@@ -369,7 +434,7 @@ class _signInState extends State<signIn> {
                     ),
                   ),
                   child: const Text(
-                    'Send me the code',
+                    'Submit',
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontWeight: FontWeight.bold,

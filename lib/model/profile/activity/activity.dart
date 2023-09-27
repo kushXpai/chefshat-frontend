@@ -6,6 +6,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../constants/colors/Colors.dart';
 import '../../../controller/graphQL/graphQLClient.dart';
+import '../../../controller/registration/registration.dart';
 
 // import 'constants.dart';
 
@@ -41,7 +42,7 @@ class _activityState extends State<activity> {
     print("Entered Recentlt viewed");
     // Define variables for the mutation (assuming you have the user ID)
     final String userId =
-        otpVerification.userId.toString(); // Replace with the actual user ID
+        UserFormFields.userId.toString(); // Replace with the actual user ID
     final Map<String, dynamic> variables = {
       'userId': userId,
       'dishId': dishId,

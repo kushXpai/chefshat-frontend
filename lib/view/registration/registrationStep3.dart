@@ -23,7 +23,7 @@ class registrationStep3 extends StatefulWidget {
 
 class _registrationStep3State extends State<registrationStep3> {
 
-  String profilePhoto = "";
+  String profilePhoto = "assets/registrationPagePhotos/profileMale1.png";
 
   File? file;
   final ImagePicker _imagePicker = ImagePicker();
@@ -53,11 +53,8 @@ class _registrationStep3State extends State<registrationStep3> {
     print("before send");
     request.fields.addAll({
       'username': "${UserFormFields.userName}",
-      'sex': "${UserFormFields.userSex}",
+      'password': "${UserFormFields.userPassword}",
       'mobileNumber': "${UserFormFields.userMobileNumber}",
-      'emailAddress': "${UserFormFields.userEmail}",
-      'dateOfBirth': "${UserFormFields.userDateOfBirth}",
-      'address': "${UserFormFields.userAddress}",
     });
     print(file!.path.toString());
     request.files.add(await http.MultipartFile.fromPath('profilePhoto', file!.path.toString()));
@@ -121,22 +118,25 @@ class _registrationStep3State extends State<registrationStep3> {
     }
   }
 
+  Future<void> _storeUserId(int userId) async {
+    try {
+      // Use your shared preferences utility to store the user ID
+      print("OTP ${userId}");
+      await SharedPreferencesUtil.setInt('userId', userId);
+    } catch (error) {
+      // Handle any errors that might occur during storage
+      print('Error storing user ID: $error');
+    }
+  }
 
+  bool isUsernameValid = false;
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    if (UserFormFields.userSex == "MALE") {
-      setState(() {
-        profilePhoto = "assets/registrationPagePhotos/profileMale1.png";
-      });
-    } else if (UserFormFields.userSex == "FEMALE") {
-      setState(() {
-        profilePhoto = "assets/registrationPagePhotos/profileFemale1.png";
-      });
-    }
+    bool isButtonEnabled = isUsernameValid;
 
     return Scaffold(
       backgroundColor: CustomColors.black,
@@ -252,6 +252,85 @@ class _registrationStep3State extends State<registrationStep3> {
                   ),
                 ),
               ),
+
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 10,
+                ),
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        UserFormFields.userName = value;
+
+                        isUsernameValid = value.length > 4;
+
+                        isButtonEnabled = isUsernameValid;
+                      });
+                    },
+                    onSubmitted: (value) {
+// Check if the submitted value has exactly 10 digits.
+                      if (value.length < 4) {
+                        setState(() {
+                          isUsernameValid = false;
+                        });
+                      }
+                    },
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      labelStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color:
+                          Colors.white, // Set border color to grey
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors
+                              .grey, // Set border color to white when focused
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 0,
+                  top: 0,
+                  bottom: 50,
+                ),
+                child: Text(
+                  isUsernameValid ? "" : "Enter correct username",
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                    fontFamily: "Georgia",
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
               Padding(
                   padding: const EdgeInsets.only(
                       left: 0, right: 0, top: 0, bottom: 30),
@@ -331,6 +410,7 @@ class _registrationStep3State extends State<registrationStep3> {
                   textAlign: TextAlign.center,
                 ),
               ),
+
               const Expanded(child: SizedBox()),
               SizedBox(
                 height: 45,
@@ -340,22 +420,18 @@ class _registrationStep3State extends State<registrationStep3> {
                     _createUser();
 
                     print(UserFormFields.userName);
-                    print(UserFormFields.userDateOfBirth);
                     print(UserFormFields.userMobileNumber);
-                    print(UserFormFields.userAddress);
-                    print(UserFormFields.userEmail);
-                    print(UserFormFields.userSex);
 
                     int userId = await _getUserId();
-                    print("User Id on call " + userId.toString());
                     setState(() {
-                      otpVerification.userId = userId;
+                      UserFormFields.userId = userId;
                     });
+                    print("User ID ${UserFormFields.userId}\n\n\n\n\n\n\n\n");
 
                     await SharedPreferencesUtil.setLoginState(true);
-                    entryPointStatics.indexBottomNavigationBar = 3;
+                    await _storeUserId(UserFormFields.userId);
 
-                    Navigator.pushNamed(context, 'entryPoint');
+                    Navigator.pushReplacementNamed(context, 'signIn');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lime,

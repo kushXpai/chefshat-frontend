@@ -23,6 +23,7 @@ import 'package:chefs_hat/view/profile/postUpload.dart';
 import 'package:chefs_hat/view/profile/profile.dart';
 import 'package:chefs_hat/view/recipeGenerator/displayDishList.dart';
 import 'package:chefs_hat/view/recipeGenerator/recipeGenerator.dart';
+import 'package:chefs_hat/view/registration/registration.dart';
 import 'package:chefs_hat/view/registration/registrationStep1.dart';
 import 'package:chefs_hat/view/registration/registrationStep2.dart';
 import 'package:chefs_hat/view/registration/registrationStep3.dart';
@@ -50,12 +51,13 @@ void main() async {
       'landingPage': (context) => const landingPage(),
       // VIEWS - AUTHENTICATION
       'mobileNumber': (context) => const mobileNumber(),
-      'otpVerification': (context) => const otpVerification(),
+      // 'otpVerification': (context) => const otpVerification(),
       'signIn': (context) => const signIn(),
       // VIEWS - REGISTRATION
       'registrationStep1': (context) => const registrationStep1(),
       'registrationStep2': (context) => const registrationStep2(),
       'registrationStep3': (context) => const registrationStep3(),
+      // 'registration': (context) => const registration(),
       // VIEWS - HOMEPAGE
       'homePage': (context) => const homePage(),
       // VIEWS - DESCRIPTION

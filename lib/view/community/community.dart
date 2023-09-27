@@ -22,6 +22,27 @@ class _communityState extends State<community> {
     return Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        leading: ElevatedButton(
+          onPressed: () {
+            // Navigator.popAndPushNamed(context, 'entryPoint');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+              side: const BorderSide(
+                color: Colors.transparent,
+              ),
+            ),
+            padding: const EdgeInsets.all(0),
+          ),
+          child: const Icon(Icons.arrow_back),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SizedBox(
         height: height,
         width: width,
@@ -30,7 +51,7 @@ class _communityState extends State<community> {
             const SliverToBoxAdapter(
               child: Padding(
                 padding:
-                    EdgeInsets.only(left: 0, right: 0, top: 50, bottom: 10),
+                    EdgeInsets.only(left: 0, right: 0, top: 45, bottom: 0),
                 child: Center(
                   child: Text(
                     'Our Community',
@@ -64,7 +85,7 @@ class _communityState extends State<community> {
 
   Widget _buildAllUserUploads(double width) {
     return SizedBox(
-      height: 783,
+      height: 790,
       child: Query(
         options: QueryOptions(
           document: gql(Uploads.getAllUserUploads),

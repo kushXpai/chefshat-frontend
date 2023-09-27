@@ -1,5 +1,4 @@
-import 'package:chefs_hat/view/authentication/otpVerification.dart';
-import 'package:chefs_hat/view/homePage/homePage.dart';
+import '../../registration/registration.dart';
 
 class Uploads {
   static String getAllUserUploads = '''
@@ -20,7 +19,7 @@ class Uploads {
 
   static String getUserUploadsById = '''
     query {
-      displayUserUploadById(userId: ${otpVerification.userId}){
+      displayUserUploadById(userId: ${UserFormFields.userId}){
         id
         userId{
           username
@@ -216,7 +215,7 @@ class Profile {
 
   static String getRatedRecipeById = '''
     query {
-      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
+      displayUserRatedRecipeById(userId: ${UserFormFields.userId}) {
         id
         userId{
           username
@@ -232,7 +231,7 @@ class Profile {
 
   static String getSavedRecipeById = '''
     query {
-      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
+      displayUserSavedRecipeById(userId: ${UserFormFields.userId}) {
         id
         userId {
           id
@@ -251,7 +250,7 @@ class Profile {
 
   static String getAllUserUploadsById = '''
     query {
-      displayUserUploadById(userId: ${otpVerification.userId}){
+      displayUserUploadById(userId: ${UserFormFields.userId}){
         userId{
           username
           profilePhoto
@@ -269,7 +268,7 @@ class Profile {
 class SavedRecipes {
   static String getSavedRecipe = '''
     query {
-      displayUserSavedRecipeById(userId: ${otpVerification.userId}) {
+      displayUserSavedRecipeById(userId: ${UserFormFields.userId}) {
         id
         userId {
           id
@@ -288,7 +287,7 @@ class SavedRecipes {
 
   static String getSavedRecipeCourse = '''
     query displayUserSavedRecipeByCourse(\$userSavedRecipeCategory : String!) {
-      displayUserSavedRecipeByCourse(userId: ${otpVerification.userId}, userSavedRecipeCategory: \$userSavedRecipeCategory) {
+      displayUserSavedRecipeByCourse(userId: ${UserFormFields.userId}, userSavedRecipeCategory: \$userSavedRecipeCategory) {
         id
         userId {
           id
@@ -308,7 +307,7 @@ class SavedRecipes {
 class RatedRecipes {
   static String getRatedRecipes = '''
     query {
-      displayUserRatedRecipeById(userId: ${otpVerification.userId}) {
+      displayUserRatedRecipeById(userId: ${UserFormFields.userId}) {
         id
         userId {
           id
@@ -329,7 +328,7 @@ class RatedRecipes {
 class Tips {
   static String getTips = '''
     query {
-      displayUserTipById(userId: ${otpVerification.userId}) {
+      displayUserTipById(userId: ${UserFormFields.userId}) {
         id
         userId {
           id
@@ -351,7 +350,7 @@ class Tips {
 class RecentlyViewedRecipes {
   static String getRecentlyViewedRecipes = '''
     query {
-      displayUserRecentlyViewed(userId: ${otpVerification.userId}){
+      displayUserRecentlyViewed(userId: ${UserFormFields.userId}){
         id
         userId{
           id

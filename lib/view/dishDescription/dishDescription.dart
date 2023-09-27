@@ -10,6 +10,7 @@ import 'package:like_button/like_button.dart';
 
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
+import '../../controller/registration/registration.dart';
 
 class dishDescription extends StatefulWidget {
   const dishDescription({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class _dishDescriptionState extends State<dishDescription> {
       isLiked = !isLiked;
     });
 
-    final userId = otpVerification.userId;
+    final userId = UserFormFields.userId;
     final dishId = homePage.dishId;
     final userSavedRecipeCategory = homePage.dishCourse;
 
@@ -1699,12 +1700,12 @@ class _dishDescriptionState extends State<dishDescription> {
                         setState(() {
                           dishDescription.rating = "THUMBSUP";
                         });
-                        print("User ID: ${otpVerification.userId}");
+                        print("User ID: ${UserFormFields.userId}");
                         print("Dish ID: ${homePage.dishId}");
                         print("Rating: ${dishDescription.rating}");
                         addDishToRatedRecipe(
                             context,
-                            otpVerification.userId.toString(),
+                            UserFormFields.userId.toString(),
                             homePage.dishId.toString(),
                             dishDescription.rating.toString());
                         Navigator.of(context).pop();
@@ -1740,12 +1741,12 @@ class _dishDescriptionState extends State<dishDescription> {
                         setState(() {
                           dishDescription.rating = "THUMBSDOWN";
                         });
-                        print("User ID: ${otpVerification.userId}");
+                        print("User ID: ${UserFormFields.userId}");
                         print("Dish ID: ${homePage.dishId}");
                         print("Rating: ${dishDescription.rating}");
                         addDishToRatedRecipe(
                             context,
-                            otpVerification.userId.toString(),
+                            UserFormFields.userId.toString(),
                             homePage.dishId,
                             dishDescription.rating);
                         Navigator.of(context).pop();
@@ -1804,7 +1805,7 @@ class _dishDescriptionState extends State<dishDescription> {
 
     // Your variables
     final Map<String, dynamic> variables = {
-      'userId': otpVerification.userId.toString(),
+      'userId': UserFormFields.userId.toString(),
       'dishId': homePage.dishId.toString(),
       'rating': dishDescription.rating.toString(),
     };

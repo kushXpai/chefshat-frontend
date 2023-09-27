@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../controller/graphQL/graphQLClient.dart';
+import '../../controller/registration/registration.dart';
 
 class postUpload extends StatefulWidget {
   const postUpload({Key? key}) : super(key: key);
@@ -50,7 +51,7 @@ class _postUploadState extends State<postUpload> {
     var request = http.MultipartRequest('POST', Uri.parse('${httpLinkC}/userUpload/'));
     print("before send");
     request.fields.addAll({
-      'userId': "${otpVerification.userId}",
+      'userId': "${UserFormFields.userId}",
       'uploadLikes': "0",
       'uploadName': "${uploadName}",
       'uploadDescription': "${uploadDescription}",

@@ -27,9 +27,6 @@ class _editProfileState extends State<editProfile> {
   Future<void> updateUserProfile({
     required int userId,
     String? username,
-    String? sex,
-    String? address,
-    String? emailAddress,
   }) async {
     final GraphQLClient client = GraphQLClient(
       cache: GraphQLCache(),
@@ -41,24 +38,14 @@ class _editProfileState extends State<editProfile> {
       mutation UpdateUser(
         \$userId: Int!,
         \$username: String,
-        \$sex: String,
-        \$address: String,
-        \$emailAddress: String,
       ) {
         updateUser(
           userId: \$userId,
           username: \$username,
-          sex: \$sex,
-          address: \$address,
-          emailAddress: \$emailAddress,
         ) {
           user {
             id
             username
-            sex
-            address
-            emailAddress
-            dateOfBirth
           }
         }
       }
@@ -66,9 +53,6 @@ class _editProfileState extends State<editProfile> {
       variables: {
         'userId': userId,
         'username': username,
-        'sex': sex,
-        'address': address,
-        'emailAddress': emailAddress,
       },
     );
 
@@ -575,17 +559,10 @@ class _editProfileState extends State<editProfile> {
                   child: ElevatedButton(
                     onPressed: () async {
                       print(UserFormFields.userName);
-                      print(UserFormFields.userDateOfBirth);
-                      print(UserFormFields.userAddress);
-                      print(UserFormFields.userEmail);
-                      print(UserFormFields.userSex);
 
                       await updateUserProfile(
-                        userId: otpVerification.userId, // Pass the userId here
+                        userId: UserFormFields.userId, // Pass the userId here
                         username: UserFormFields.userName,
-                        sex: UserFormFields.userSex,
-                        address: UserFormFields.userAddress,
-                        emailAddress: UserFormFields.userEmail,
                       );
 
                       Navigator.pushNamed(context, 'profile');

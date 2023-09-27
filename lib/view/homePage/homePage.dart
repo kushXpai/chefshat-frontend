@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../constants/homepagePhotos.dart';
 import '../../controller/graphQL/graphQLClient.dart';
+import '../../controller/registration/registration.dart';
 import '../../utils/sharedPreferences.dart';
 
 class homePage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _homePageState extends State<homePage> {
     final int? storedUserId = await SharedPreferencesUtil.getInt('userId');
     print("Homepage ${storedUserId}");
     setState(() {
-      otpVerification.userId = storedUserId ?? 0;
+      UserFormFields.userId = storedUserId ?? 0;
     });
   }
 
@@ -94,7 +95,7 @@ class _homePageState extends State<homePage> {
     }
   """;
 
-    final String userId = otpVerification.userId.toString();
+    final String userId = UserFormFields.userId.toString();
     final Map<String, dynamic> variables = {
       'userId': userId,
       'dishId': dishId,
@@ -221,7 +222,7 @@ class _homePageState extends State<homePage> {
                   setState(() {
                     entryPointStatics.indexBottomNavigationBar == 2;
                   });
-                  Navigator.pushNamed(context, "entryPoint");
+                  Navigator.pushNamed(context, 'community');
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.transparent,
@@ -390,7 +391,7 @@ class _homePageState extends State<homePage> {
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getUserById),
-          variables: {'id': '${otpVerification.userId}'},
+          variables: {'id': '${UserFormFields.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -477,229 +478,6 @@ class _homePageState extends State<homePage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLastDishView(double width) {
-    return Query(
-      options: QueryOptions(
-        document: gql(Homepage.getLastDishesQuery),
-      ),
-      builder: (QueryResult result, {fetchMore, refetch}) {
-        if (result.hasException) {
-          print(result.exception.toString());
-          return Center(
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                  child: RotatedBox(
-                    quarterTurns:
-                        1, // Rotate 90 degrees clockwise (left to right)
-                    child: AnimateGradient(
-                      primaryColors: const [
-                        Colors.black,
-                        Colors.grey,
-                        Colors.white,
-                      ],
-                      secondaryColors: const [
-                        Colors.white,
-                        Colors.grey,
-                        Colors.black,
-                      ],
-                      duration: const Duration(milliseconds: 1500),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: SizedBox(
-                          height: width,
-                          width: 337,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  child: RotatedBox(
-                    quarterTurns:
-                        1, // Rotate 90 degrees clockwise (left to right)
-                    child: AnimateGradient(
-                      primaryColors: const [
-                        Colors.black,
-                        Colors.grey,
-                        Colors.white,
-                      ],
-                      secondaryColors: const [
-                        Colors.white,
-                        Colors.grey,
-                        Colors.black,
-                      ],
-                      duration: const Duration(milliseconds: 1500),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: SizedBox(
-                          height: width,
-                          width: 70,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
-        if (result.isLoading) {
-          return Center(
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                  child: RotatedBox(
-                    quarterTurns:
-                        1, // Rotate 90 degrees clockwise (left to right)
-                    child: AnimateGradient(
-                      primaryColors: const [
-                        Colors.black,
-                        Colors.grey,
-                        Colors.white,
-                      ],
-                      secondaryColors: const [
-                        Colors.white,
-                        Colors.grey,
-                        Colors.black,
-                      ],
-                      duration: const Duration(milliseconds: 1500),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: SizedBox(
-                          height: width,
-                          width: 337,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  child: RotatedBox(
-                    quarterTurns:
-                        1, // Rotate 90 degrees clockwise (left to right)
-                    child: AnimateGradient(
-                      primaryColors: const [
-                        Colors.black,
-                        Colors.grey,
-                        Colors.white,
-                      ],
-                      secondaryColors: const [
-                        Colors.white,
-                        Colors.grey,
-                        Colors.black,
-                      ],
-                      duration: const Duration(milliseconds: 1500),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: SizedBox(
-                          height: width,
-                          width: 70,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
-        final Map<String, dynamic> data = result.data?['displayLastAddedDish'];
-
-        if (data == null) {
-          return const Text('No dishes found');
-        }
-
-        // final String id = data['id'];
-        final String dishName = data['dishName'];
-
-        return ElevatedButton(
-          onPressed: () {
-            setState(() {
-              homePage.dishId = data['id'];
-            });
-            addToRecentlyViewed(context, data['id']);
-            Navigator.pushNamed(context, 'dishDescription');
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(0),
-          ),
-          child: SizedBox(
-            child: Container(
-              width: width - 40,
-              decoration: BoxDecoration(
-                color: Colors.white38,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: width - 40,
-                    height: width - 40,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
-                      child: Image(
-                        image: NetworkImage(
-                          httpLinkImage + data['dishImage'],
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 10,
-                      bottom: 20,
-                    ),
-                    child: Text(
-                      dishName,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        fontFamily: 'Georgia',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: CustomColors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 

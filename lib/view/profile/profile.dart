@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/colors/Colors.dart';
 import '../../controller/graphQL/graphQLClient.dart';
 import '../../controller/graphQL/queries/queries.dart';
+import '../../controller/registration/registration.dart';
 import '../../utils/sharedPreferences.dart';
 
 class profile extends StatefulWidget {
@@ -372,7 +373,7 @@ class _profileState extends State<profile> {
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getUserById),
-          variables: {'id': '${otpVerification.userId}'},
+          variables: {'id': '${UserFormFields.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -442,7 +443,7 @@ class _profileState extends State<profile> {
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getAllUserUploadsById),
-          variables: {'userId': '${otpVerification.userId}'},
+          variables: {'userId': '${UserFormFields.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -551,7 +552,7 @@ class _profileState extends State<profile> {
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getRatedRecipeById),
-          variables: {'id': '${otpVerification.userId}'},
+          variables: {'id': '${UserFormFields.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
@@ -656,7 +657,7 @@ class _profileState extends State<profile> {
       child: Query(
         options: QueryOptions(
           document: gql(Profile.getSavedRecipeById),
-          variables: {'userId': '${otpVerification.userId}'},
+          variables: {'userId': '${UserFormFields.userId}'},
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
