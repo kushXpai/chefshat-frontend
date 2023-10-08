@@ -131,6 +131,8 @@ class _registrationStep3State extends State<registrationStep3> {
 
   bool isUsernameValid = false;
 
+  bool isUsernameVisible = false;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -271,6 +273,7 @@ class _registrationStep3State extends State<registrationStep3> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
+                        isUsernameVisible = true;
                         UserFormFields.userName = value;
 
                         isUsernameValid = value.length > 4;
@@ -313,20 +316,23 @@ class _registrationStep3State extends State<registrationStep3> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 0,
-                  top: 0,
-                  bottom: 50,
-                ),
-                child: Text(
-                  isUsernameValid ? "" : "Enter correct username",
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 12,
-                    fontFamily: "Georgia",
-                    fontWeight: FontWeight.bold,
+              Visibility(
+                visible: isUsernameVisible,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 0,
+                    top: 0,
+                    bottom: 50,
+                  ),
+                  child: Text(
+                    isUsernameValid ? "" : "Enter correct username\nThe username should contain atlest 4 characters",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontFamily: "Georgia",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -431,7 +437,7 @@ class _registrationStep3State extends State<registrationStep3> {
                     await SharedPreferencesUtil.setLoginState(true);
                     await _storeUserId(UserFormFields.userId);
 
-                    Navigator.pushReplacementNamed(context, 'signIn');
+                    Navigator.pushReplacementNamed(context, 'signIn ');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lime,

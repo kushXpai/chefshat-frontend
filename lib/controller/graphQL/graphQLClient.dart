@@ -1,15 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 
+// iPhone 15 - Jio
+final HttpLink httpLink = HttpLink('http://172.20.10.2:8000/graphql/');
+final httpLinkC = 'http://172.20.10.2:8000';
+final httpLinkImage = 'http://172.20.10.2:8000/media/';
+
+final ValueNotifier<GraphQLClient> client = ValueNotifier(
+  GraphQLClient(
+    cache: GraphQLCache(),
+    link: httpLink,
+  ),
+);
+
+
 // Xiaomi 11i - Jio
 // final HttpLink httpLink = HttpLink('http://192.168.143.104:8000/graphql/');
 // final httpLinkC = 'http://192.168.143.104:8000';
 // final httpLinkImage = 'http://192.168.143.104:8000/media/';
 
 // Xiaomi 11i - Airtel
-final HttpLink httpLink = HttpLink('http://192.168.143.104:8000/graphql/');
-final httpLinkC = 'http://192.168.143.104:8000';
-final httpLinkImage = 'http://192.168.143.104:8000/media/';
+// final HttpLink httpLink = HttpLink('http://192.168.143.104:8000/graphql/');
+// final httpLinkC = 'http://192.168.143.104:8000';
+// final httpLinkImage = 'http://192.168.143.104:8000/media/';
 
 // Deepak - Black Airtel
 // final HttpLink httpLink = HttpLink('http://192.168.1.100:8000/graphql/');
@@ -45,10 +58,3 @@ final httpLinkImage = 'http://192.168.143.104:8000/media/';
 // final HttpLink httpLink = HttpLink('http://192.168.43.104:8000/graphql/');
 // final httpLinkC = 'http://192.168.43.104:8000';
 // final httpLinkImage = 'http://192.168.43.104:8000/media/';
-
-final ValueNotifier<GraphQLClient> client = ValueNotifier(
-  GraphQLClient(
-    cache: GraphQLCache(),
-    link: httpLink,
-  ),
-);

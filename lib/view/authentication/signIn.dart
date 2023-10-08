@@ -153,6 +153,9 @@ class _signInState extends State<signIn> {
 
   String checkPassword = "";
 
+  bool isMobileVisible = false;
+  bool isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -230,6 +233,11 @@ class _signInState extends State<signIn> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
+                    onTap: (){
+                      setState(() {
+                        isMobileVisible = true;
+                      });
+                    },
                     onChanged: (value) {
                       setState(() {
                         UserFormFields.userMobileNumber = int.parse(value);
@@ -273,20 +281,23 @@ class _signInState extends State<signIn> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 0,
-                  top: 0,
-                  bottom: 50,
-                ),
-                child: Text(
-                  isMobileValid ? "" : "Enter correct mobile number",
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 12,
-                    fontFamily: "Georgia",
-                    fontWeight: FontWeight.bold,
+              Visibility(
+                visible: isMobileVisible,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 0,
+                    top: 0,
+                    bottom: 50,
+                  ),
+                  child: Text(
+                    isMobileValid ? "" : "Enter 10 digit correct mobile number",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 13,
+                      fontFamily: "Georgia",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -306,6 +317,11 @@ class _signInState extends State<signIn> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
+                    onTap: (){
+                      setState(() {
+                        isPasswordVisible = true;
+                      });
+                    },
                     onChanged: (value) {
                       setState(() {
                         checkPassword = value;
@@ -348,22 +364,25 @@ class _signInState extends State<signIn> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 0,
-                  right: 10,
-                  top: 0,
-                  bottom: 50,
-                ),
-                child: Text(
-                  isPasswordValid
-                      ? ""
-                      : "Enter correct password", // Empty string for valid password
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 12,
-                    fontFamily: "Georgia",
-                    fontWeight: FontWeight.bold,
+              Visibility(
+                visible: isPasswordVisible,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 0,
+                    right: 10,
+                    top: 0,
+                    bottom: 50,
+                  ),
+                  child: Text(
+                    isPasswordValid
+                        ? ""
+                        : "Enter correct password\nThe password should contain :\natlest 1 special case charecter (!, @, #, ...) \natlest 1 upper case letter\natlest 1 lower case letter\natlest 1 number", // Empty string for valid password
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 13,
+                      fontFamily: "Georgia",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -29,6 +29,7 @@ import 'package:chefs_hat/view/registration/registrationStep2.dart';
 import 'package:chefs_hat/view/registration/registrationStep3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -44,6 +45,13 @@ void main() async {
     initialRoute: isLoggedIn ? 'entryPoint' : 'landingPage',
     // initialRoute: 'signup',
     // initialRoute: 'test',
+
+    builder: (context, child) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+      return child!;
+    },
 
     routes: {
       // VIEWS

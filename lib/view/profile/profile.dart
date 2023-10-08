@@ -70,28 +70,28 @@ class _profileState extends State<profile> {
                 ),
               ),
             ),
-            SizedBox(
-              width: 40,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'pantry');
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  minimumSize: Size.zero,
-                  padding: const EdgeInsets.only(
-                      left: 5, right: 5, top: 5, bottom: 5),
-                ),
-                child: const Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                  size: 27,
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   width: 40,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.pushNamed(context, 'pantry');
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       foregroundColor: Colors.transparent,
+            //       backgroundColor: Colors.transparent,
+            //       elevation: 0,
+            //       shadowColor: Colors.transparent,
+            //       minimumSize: Size.zero,
+            //       padding: const EdgeInsets.only(
+            //           left: 5, right: 5, top: 5, bottom: 5),
+            //     ),
+            //     child: const Icon(
+            //       Icons.shopping_cart,
+            //       color: Colors.white,
+            //       size: 27,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               width: 40,
               child: ElevatedButton(

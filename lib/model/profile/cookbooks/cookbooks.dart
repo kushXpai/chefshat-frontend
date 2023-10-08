@@ -223,7 +223,7 @@ class _cookbooksState extends State<cookbooks> {
                   return ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        homePage.dishId = savedRecipe['id'];
+                        homePage.dishId = savedRecipe['dishId']['id'];
                       });
                       Navigator.pushNamed(context, 'dishDescription');
                     },

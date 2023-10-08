@@ -142,28 +142,6 @@ class _homePageState extends State<homePage> {
               color: Colors.white,
               thickness: 0.3,
             ),
-            // What are we loving now
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     left: 20,
-            //     right: 20,
-            //     top: 50,
-            //     bottom: 0,
-            //   ),
-            //   child: _buildSectionHeader("What are we loving now"),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     left: 20,
-            //     right: 20,
-            //     top: 0,
-            //     bottom: 20,
-            //   ),
-            //   child: GraphQLProvider(
-            //     client: client,
-            //     child: _buildLastDishView(width),
-            //   ),
-            // ),
 
             // Trending
             Padding(
