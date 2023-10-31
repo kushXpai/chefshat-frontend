@@ -109,23 +109,23 @@ class _activityState extends State<activity> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 0,
-                top: 20,
-                bottom: 0,
-              ),
-              child: _buildSectionHeader("My Tips"),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: GraphQLProvider(
-              client: client,
-              child: _buildUserTips(width),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(
+          //       left: 20,
+          //       right: 0,
+          //       top: 20,
+          //       bottom: 0,
+          //     ),
+          //     child: _buildSectionHeader("My Tips"),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: GraphQLProvider(
+          //     client: client,
+          //     child: _buildUserTips(width),
+          //   ),
+          // ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(

@@ -32,8 +32,7 @@ class _landingPageState extends State<landingPage> {
     });
   }
 
-  animateToMaxMin(double max, double min, double direction, int seconds,
-      ScrollController scrollController) {
+  animateToMaxMin(double max, double min, double direction, int seconds, ScrollController scrollController) {
     scrollController
         .animateTo(
       direction,

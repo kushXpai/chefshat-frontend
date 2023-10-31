@@ -487,7 +487,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
+                                        BorderRadius.all(Radius.circular(25)),
                                     borderSide: BorderSide(
                                       width: 1,
                                       color: Colors.grey,
@@ -495,21 +495,22 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    borderSide:
-                                    BorderSide(width: 1, color: Colors.lime),
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.lime),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(20)),
                                     borderSide: BorderSide(
                                         width: 1,
-                                        color: Color.fromARGB(255, 66, 125, 145)),
+                                        color:
+                                            Color.fromARGB(255, 66, 125, 145)),
                                   ),
                                   fillColor: Colors.transparent,
                                   border: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(20)),
                                     borderSide: BorderSide(
                                       color: Colors
                                           .blue, // Set the border color here
@@ -524,2347 +525,2453 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                       ),
                     ],
                   ),
+                  Stack(children: [
+                    Container(
+                      width: size.width,
+                      height: size.height - 380,
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: size.width,
+                      height: size.height - 380,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            // Display filtered ingredients
+                            Visibility(
+                                visible: _isShowSearch,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20, top: 15, bottom: 5),
+                                  child: buildButtons(filteredIngredients),
+                                )),
 
-                  Stack(
-                      children: [
-                        Container(
-                          width: size.width,
-                          height: size.height - 380,
-                          decoration: const BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30)),
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: size.width,
-                          height: size.height - 380,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                // Display filtered ingredients
-                                Visibility(
-                                    visible: _isShowSearch,
-                                    child: Padding(
+                            // Pantry Essentials
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 20, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 20, right: 20, top: 15, bottom: 5),
-                                      child: buildButtons(filteredIngredients),
-                                    )),
-
-                                // Pantry Essentials
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 20, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Pantry Essentials',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedPantryEssentials / ${pantryEssentials.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              const Text(
-                                                'Pantry Essentials',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedPantryEssentials / ${pantryEssentials.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
                                                       !_isShowPantryEssentials;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                    },
-                                                  );
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowPantryEssentials == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowPantryEssentials,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsPantryEssentials(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Vegetables
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Vegetables',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedVegetables / ${vegetables.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowPantryEssentials ==
+                                                    true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowPantryEssentials,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsPantryEssentials(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Vegetables
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Vegetables',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedVegetables / ${vegetables.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables =
                                                       !_isShowVegetables;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                    },
-                                                  );
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowVegetables == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowVegetables,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsVegetables(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Mushroom
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Mushrooms',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedMushrooms / ${mushrooms.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowVegetables == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowVegetables,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsVegetables(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Mushroom
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Mushrooms',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedMushrooms / ${mushrooms.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms =
                                                       !_isShowMushrooms;
-                                                      _isShowFruits = false;
-                                                    },
-                                                  );
+                                                  _isShowFruits = false;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowMushrooms == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowMushrooms,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsMushrooms(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Fruits
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Fruits',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedFruits / ${fruits.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowMushrooms == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowMushrooms,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsMushrooms(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Fruits
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Fruits',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedFruits / ${fruits.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = !_isShowFruits;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits =
+                                                      !_isShowFruits;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowFruits == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowFruits,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsFruits(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Berries
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Berries',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedBerries / ${berries.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowFruits == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowFruits,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsFruits(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Berries
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Berries',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedBerries / ${berries.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries =
                                                       !_isShowBerries;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowBerries == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowBerries,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsBerries(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Nuts and Seeds
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Nuts & Seeds',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedNutsSeeds / ${nutsSeeds.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowBerries == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowBerries,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsBerries(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Nuts and Seeds
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Nuts & Seeds',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedNutsSeeds / ${nutsSeeds.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds =
                                                       !_isShowNutsSeeds;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowNutsSeeds == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowNutsSeeds,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsNutsSeeds(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Cheeses
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Cheeses',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedCheeses / ${cheeses.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowNutsSeeds == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowNutsSeeds,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsNutsSeeds(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Cheeses
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Cheeses',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedCheeses / ${cheeses.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses =
                                                       !_isShowCheeses;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowCheeses == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowCheeses,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsCheeses(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Dairy
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Dairy',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedDairy / ${dairy.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowCheeses == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowCheeses,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsCheeses(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Dairy
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Dairy',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedDairy / ${dairy.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = !_isShowDairy;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = !_isShowDairy;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowDairy == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowDairy,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsDairy(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Eggs
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Eggs',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedEggs / ${eggs.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowDairy == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowDairy,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsDairy(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Eggs
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Eggs',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedEggs / ${eggs.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = !_isShowEggs;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = !_isShowEggs;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowEggs == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowEggs,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsEggs(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Pasta
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Pasta',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedPasta / ${pasta.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowEggs == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowEggs,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsEggs(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Pasta
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Pasta',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedPasta / ${pasta.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = !_isShowPasta;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = !_isShowPasta;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowPasta == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowPasta,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsPasta(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Meat
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Meat',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedMeat / ${meat.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowPasta == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowPasta,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsPasta(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Meat
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Meat',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedMeat / ${meat.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = !_isShowMeat;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = !_isShowMeat;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowMeat == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowMeat,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsMeat(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Poultry
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Poultry',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedPoultry / ${poultry.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowMeat == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowMeat,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsMeat(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Poultry
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Poultry',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedPoultry / ${poultry.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry =
                                                       !_isShowPoultry;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowPoultry == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowPoultry,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsPoultry(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Fish
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Fish',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedFish / ${fish.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowPoultry == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowPoultry,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsPoultry(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Fish
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Fish',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedFish / ${fish.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = !_isShowFish;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = !_isShowFish;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowFish == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowFish,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsFish(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Shellfish
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'ShellFish',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedShellfish / ${shellfish.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowFish == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowFish,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsFish(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Shellfish
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'ShellFish',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedShellfish / ${shellfish.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish =
                                                       !_isShowShellfish;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowShellfish == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowShellfish,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsShellfish(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Herbs N Spices
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Herbs N Spices',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedHerbsNSpices / ${herbsNSpices.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowShellfish == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowShellfish,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsShellfish(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Herbs N Spices
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Herbs N Spices',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedHerbsNSpices / ${herbsNSpices.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish = false;
-                                                      _isShowHerbsNSpices =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices =
                                                       !_isShowHerbsNSpices;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowHerbsNSpices == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowHerbsNSpices,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsHerbsNSpices(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Sweets N Sweetners
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Sweets N Sweetners',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedSweetsNSweetners / ${sweetsNSweetners.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowHerbsNSpices == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowHerbsNSpices,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsHerbsNSpices(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Sweets N Sweetners
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Sweets N Sweetners',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedSweetsNSweetners / ${sweetsNSweetners.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish = false;
-                                                      _isShowHerbsNSpices = false;
-                                                      _isShowSweetsNSweetners =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices = false;
+                                                  _isShowSweetsNSweetners =
                                                       !_isShowSweetsNSweetners;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowSweetsNSweetners == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowSweetsNSweetners,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsSweetsNSweetners(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Seasonings
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Seasonings',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedSeasonings / ${seasonings.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowSweetsNSweetners ==
+                                                    true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowSweetsNSweetners,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
                                                 ),
+                                                buildButtonsSweetsNSweetners(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Seasonings
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Seasonings',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedSeasonings / ${seasonings.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish = false;
-                                                      _isShowHerbsNSpices = false;
-                                                      _isShowSweetsNSweetners = false;
-                                                      _isShowSeasonings =
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices = false;
+                                                  _isShowSweetsNSweetners =
+                                                      false;
+                                                  _isShowSeasonings =
                                                       !_isShowSeasonings;
-                                                    },
-                                                  );
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowSeasonings == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowSeasonings,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsSeasonings(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Baking
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                'Baking',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedBaking / ${baking.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowSeasonings == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
                                                   ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish = false;
-                                                      _isShowHerbsNSpices = false;
-                                                      _isShowSweetsNSweetners = false;
-                                                      _isShowSeasonings = false;
-                                                      _isShowBaking = !_isShowBaking;
-                                                    },
-                                                  );
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowBaking == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowBaking,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsBaking(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowSeasonings,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
+                                                ),
+                                                buildButtonsSeasonings(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
                                 ),
+                              ),
+                            ),
 
-                                // Grains
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius:
+                            // Baking
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 0),
-                                          child: Row(
-                                            crossAxisAlignment:
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(
-                                                width: 10,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Baking',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedBaking / ${baking.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
                                               ),
-                                              const Text(
-                                                'Grains',
-                                                style: TextStyle(
-                                                  fontFamily: 'Georgia',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white70,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  '($selectedGrains / ${grains.length})',
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Georgia',
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  setState(
-                                                        () {
-                                                      _isShowPantryEssentials = false;
-                                                      _isShowVegetables = false;
-                                                      _isShowMushrooms = false;
-                                                      _isShowFruits = false;
-                                                      _isShowBerries = false;
-                                                      _isShowNutsSeeds = false;
-                                                      _isShowCheeses = false;
-                                                      _isShowDairy = false;
-                                                      _isShowEggs = false;
-                                                      _isShowPasta = false;
-                                                      _isShowMeat = false;
-                                                      _isShowPoultry = false;
-                                                      _isShowFish = false;
-                                                      _isShowShellfish = false;
-                                                      _isShowHerbsNSpices = false;
-                                                      _isShowSweetsNSweetners = false;
-                                                      _isShowSeasonings = false;
-                                                      _isShowBaking = false;
-                                                      _isShowGrains = !_isShowGrains;
-                                                    },
-                                                  );
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices = false;
+                                                  _isShowSweetsNSweetners =
+                                                      false;
+                                                  _isShowSeasonings = false;
+                                                  _isShowBaking =
+                                                      !_isShowBaking;
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor: Colors.transparent,
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                  shadowColor: Colors.transparent,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.all(0),
-                                                ),
-                                                child: _isShowGrains == true
-                                                    ? const Icon(
-                                                  Icons.arrow_drop_up_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                )
-                                                    : const Icon(
-                                                  Icons.arrow_drop_down_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
-                                              ),
-                                            ],
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowBaking == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Visibility(
-                                            visible: _isShowGrains,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
-                                                child: Column(
-                                                  children: [
-                                                    const Divider(
-                                                      color: CustomColors.white,
-                                                      thickness: 1,
-                                                    ),
-                                                    buildButtonsGrains(),
-                                                  ],
-                                                )),
-                                          ),
-                                        )
-                                      ],
+                                        ],
+                                      ),
                                     ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowBaking,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
+                                                ),
+                                                buildButtonsBaking(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Grains
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Grains',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedGrains / ${grains.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                () {
+                                                  _isShowPantryEssentials =
+                                                      false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices = false;
+                                                  _isShowSweetsNSweetners =
+                                                      false;
+                                                  _isShowSeasonings = false;
+                                                  _isShowBaking = false;
+                                                  _isShowGrains =
+                                                      !_isShowGrains;
+                                                },
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                                  Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowGrains == true
+                                                ? const Icon(
+                                                    Icons.arrow_drop_up_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .arrow_drop_down_rounded,
+                                                    color: Colors.white,
+                                                    size: 30,
+                                                  ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowGrains,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
+                                                ),
+                                                buildButtonsGrains(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Display List
+                            Text(
+                              '${recipeGenerator.selectedIngredients}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]),
+                  Stack(children: [
+                    Container(
+                      width: size.width,
+                      height: 156,
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 0, bottom: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 0, top: 10, bottom: 0),
+                            child: Container(
+                              width: 130,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.amber,
+                                    width: 1), // Set the border color
+                                borderRadius: BorderRadius.circular(10),
+                                // Set the border radius
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.transparent,
+                                  backgroundColor: Colors.white10,
+                                  elevation: 0,
+                                  shadowColor: Colors.transparent,
+                                  minimumSize: Size.zero,
+                                  padding: const EdgeInsets.all(0),
+                                ),
+                                child: Text(
+                                  "My Pantry ( ${recipeGenerator.ingredientsSelected} )",
+                                  style: const TextStyle(
+                                    fontFamily: 'Georgia',
+                                    fontSize: 15,
+                                    color: Colors.amber,
                                   ),
                                 ),
-
-                                // Display List
-                                Text(
-                                  '${recipeGenerator.selectedIngredients}',
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ]
-                  ),
-                  Stack(
-                      children: [
-                        Container(
-                          width: size.width,
-                          height: 156,
-                          decoration: const BoxDecoration(
-                            color: Colors.black54,
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, top: 0, bottom: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 0, right: 0, top: 10, bottom: 0),
-                                child: Container(
-                                  width: 130,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.amber, width: 1), // Set the border color
-                                    borderRadius: BorderRadius.circular(10),
-                                    // Set the border radius
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '');
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: Colors.white10,
-                                      elevation: 0,
-                                      shadowColor: Colors.transparent,
-                                      minimumSize: Size.zero,
-                                      padding: const EdgeInsets.all(0),
-                                    ),
-                                    child: Text(
-                                      "My Pantry ( ${recipeGenerator.ingredientsSelected} )",
-                                      style: const TextStyle(
-                                        fontFamily: 'Georgia',
-                                        fontSize: 15,
-                                        color: Colors.amber,
-                                      ),
-                                    ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 0, top: 10, bottom: 0),
+                            child: Container(
+                              width: 210,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.lime,
+                                    width: 1), // Set the border color
+                                borderRadius: BorderRadius.circular(10),
+                                // Set the border radius
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (recipeGenerator.ingredientsSelected > 0) {
+                                    // Navigator.pushNamed(context, 'displayDishList');
+                                    Navigator.pushNamed(
+                                        context, 'displayDishList');
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.transparent,
+                                  backgroundColor:
+                                      recipeGenerator.ingredientsSelected > 0
+                                          ? Colors.lime
+                                          : Colors.transparent,
+                                  elevation: 0,
+                                  shadowColor: Colors.transparent,
+                                  minimumSize: Size.zero,
+                                  padding: const EdgeInsets.all(0),
+                                ),
+                                child: Text(
+                                  "See Recipes",
+                                  style: TextStyle(
+                                    fontFamily: 'Georgia',
+                                    fontSize: 15,
+                                    fontWeight:
+                                        recipeGenerator.ingredientsSelected > 0
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                    color:
+                                        recipeGenerator.ingredientsSelected > 0
+                                            ? Colors.black
+                                            : Colors.lime,
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 0, right: 0, top: 10, bottom: 0),
-                                child: Container(
-                                  width: 210,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.lime, width: 1), // Set the border color
-                                    borderRadius: BorderRadius.circular(10),
-                                    // Set the border radius
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (recipeGenerator.ingredientsSelected > 0){
-                                        // Navigator.pushNamed(context, 'displayDishList');
-                                        Navigator.pushNamed(context, 'displayDishList');
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.transparent,
-                                      backgroundColor: recipeGenerator.ingredientsSelected > 0 ? Colors.lime : Colors.transparent,
-                                      elevation: 0,
-                                      shadowColor: Colors.transparent,
-                                      minimumSize: Size.zero,
-                                      padding: const EdgeInsets.all(0),
-                                    ),
-                                    child: Text(
-                                      "See Recipes",
-                                      style: TextStyle(
-                                        fontFamily: 'Georgia',
-                                        fontSize: 15,
-                                        fontWeight: recipeGenerator.ingredientsSelected > 0 ? FontWeight.bold : FontWeight.normal,
-                                        color: recipeGenerator.ingredientsSelected > 0 ? Colors.black : Colors.lime,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ]
-                  ),
+                        ],
+                      ),
+                    ),
+                  ]),
                 ],
               ),
             ),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

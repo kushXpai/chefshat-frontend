@@ -23,6 +23,61 @@ class dishDescription extends StatefulWidget {
 
 class _dishDescriptionState extends State<dishDescription> {
 
+  void addToRecentlyViewed(BuildContext context, String dishId) async {
+    print("Recently viewed Dish\n\n\n");
+    final String addRecipeMutation = """
+    mutation AddRecipeToRecentlyViewed(\$userId: ID!, \$dishId: ID!) {
+      addRecipeToRecentlyViewed(userId: \$userId, dishId: \$dishId) {
+        recentlyViewed {
+          id
+          userId {
+            id
+            username
+          }
+          dishId {
+            id
+            dishName
+          }
+        }
+      }
+    }
+  """;
+
+    final String userId = UserFormFields.userId.toString();
+    final Map<String, dynamic> variables = {
+      'userId': userId,
+      'dishId': dishId,
+    };
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink, // Replace with your GraphQL API endpoint
+    );
+
+    final MutationOptions options = MutationOptions(
+      document: gql(addRecipeMutation),
+      variables: variables,
+    );
+
+    try {
+      final QueryResult result = await client.mutate(options);
+      if (result.hasException) {
+        print("Mutation error: ${result.exception.toString()}");
+      } else {
+        print("Mutation result: ${result.data.toString()}");
+      }
+    } catch (e) {
+      print("Mutation error: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    addToRecentlyViewed(context, homePage.dishId);
+
+    super.initState();
+  }
+
   List<int> selectedIngredientIndices = [];
 
   bool added = false;

@@ -16,6 +16,14 @@ class displayDishList extends StatefulWidget {
 }
 
 class _displayDishListState extends State<displayDishList> {
+
+  // @override
+  // void initState() {
+  //   _buildRecipe(10, 10);
+  //
+  //   super.initState();
+  // }
+
   List<String> ingredientsList = recipeGenerator.selectedIngredients;
 
   @override
@@ -23,91 +31,91 @@ class _displayDishListState extends State<displayDishList> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+
     return Scaffold(
       backgroundColor: CustomColors.black,
-      body: SingleChildScrollView(
-        // Wrap the Column with SingleChildScrollView
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Opacity(
-                  opacity: 0.15,
-                  child: SizedBox(
-                    width: width,
-                    height: 150,
-                    child: const Image(
-                      image: AssetImage(
-                          'assets/recipeGeneratorPhotos/recipeGeneratotBackground.png'),
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-                SizedBox(
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              Opacity(
+                opacity: 0.15,
+                child: SizedBox(
                   width: width,
                   height: 150,
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            left: 20, right: 20, top: 50, bottom: 5),
-                        child: Center(
-                          child: Text(
-                            'Recipes',
-                            style: TextStyle(
-                                fontFamily: 'Georgia',
-                                fontSize: 25,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 5, bottom: 30),
-                        child: Center(
-                          child: Text(
-                            'You can make ${displayDishList.recipesGenerated} recipes',
-                            style: const TextStyle(
-                                fontFamily: 'Georgia',
-                                fontSize: 14,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/recipeGeneratorPhotos/recipeGeneratotBackground.png'),
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-              ],
-            ),
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      width: width,
-                      height: height - 150,
-                      decoration: const BoxDecoration(
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
+              ),
+              GraphQLProvider(
+                client: client,
+                child: _buildRecipeCount(width, height),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  minimumSize: Size.zero,
+                  padding: const EdgeInsets.only(left: 20, right: 0, top: 30, bottom: 0),
+                ),
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: const BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_sharp,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: width,
+                    height: height - 150,
+                    decoration: const BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, right: 0, top: 0, bottom: 0),
-                  child: GraphQLProvider(
-                    client: client,
-                    child: _buildRecipe(width, height),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: width,
+                height: height - 150,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, right: 0, top: 0, bottom: 0),
+                    child: GraphQLProvider(
+                      client: client,
+                      child: _buildRecipe(width, height),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -205,7 +213,7 @@ class _displayDishListState extends State<displayDishList> {
                           padding: const EdgeInsets.all(15),
                           decoration: const BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20)),
+                                  BorderRadius.all(Radius.circular(20)),
                               color: Colors.white12),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -281,6 +289,74 @@ class _displayDishListState extends State<displayDishList> {
               ),
             );
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildRecipeCount(double width, double height) {
+    return Query(
+      options: QueryOptions(
+        document: gql(RecipeGenerator.searchDishesByIngredientsQuery),
+        variables: {'ingredients': ingredientsList},
+      ),
+      builder: (QueryResult result, {fetchMore, refetch}) {
+        if (result.hasException) {
+          print(result.exception.toString());
+          return Center(
+            child: Text(
+              'Error fetching dishes: ${result.exception.toString()}',
+            ),
+          );
+        }
+
+        if (result.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final List<dynamic>? dishes = result.data?['searchDishesByIngredients'];
+
+        if (dishes == null || dishes.isEmpty) {
+          return const Text('No dishes found');
+        }
+
+        displayDishList.recipesGenerated = dishes.length;
+
+        return SizedBox(
+          width: width,
+          height: 150,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(
+                    left: 20, right: 20, top: 50, bottom: 5),
+                child: Center(
+                  child: Text(
+                    'Recipes',
+                    style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 25,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 5, bottom: 30),
+                child: Center(
+                  child: Text(
+                    'You can make ${dishes.length} recipes',
+                    style: const TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 14,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

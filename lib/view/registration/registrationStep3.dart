@@ -186,7 +186,7 @@ class _registrationStep3State extends State<registrationStep3> {
                     ),
                     children: [
                       TextSpan(
-                        text: '3 of 3 ',
+                        text: '2 of 2 ',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -209,19 +209,7 @@ class _registrationStep3State extends State<registrationStep3> {
                             left: 0, right: 10, top: 0, bottom: 0),
                         child: Container(
                           height: 4,
-                          width: width / 3 - 20,
-                          decoration: BoxDecoration(
-                            color: Colors.lime,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, right: 10, top: 0, bottom: 0),
-                        child: Container(
-                          height: 4,
-                          width: width / 3 - 20,
+                          width: width / 2 - 20,
                           decoration: BoxDecoration(
                             color: Colors.lime,
                             borderRadius: BorderRadius.circular(20),
@@ -233,7 +221,7 @@ class _registrationStep3State extends State<registrationStep3> {
                             left: 0, right: 0, top: 0, bottom: 0),
                         child: Container(
                           height: 4,
-                          width: width / 3 - 20,
+                          width: width / 2 - 20,
                           decoration: BoxDecoration(
                             color: Colors.lime,
                             borderRadius: BorderRadius.circular(20),
@@ -282,7 +270,6 @@ class _registrationStep3State extends State<registrationStep3> {
                       });
                     },
                     onSubmitted: (value) {
-// Check if the submitted value has exactly 10 digits.
                       if (value.length < 4) {
                         setState(() {
                           isUsernameValid = false;
@@ -423,24 +410,61 @@ class _registrationStep3State extends State<registrationStep3> {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () async {
-                    _createUser();
+                    // _createUser();
+                    //
+                    // print(UserFormFields.userName);
+                    // print(UserFormFields.userMobileNumber);
+                    //
+                    // int userId = await _getUserId();
+                    // setState(() {
+                    //   UserFormFields.userId = userId;
+                    // });
+                    // print("User ID ${UserFormFields.userId}\n\n\n\n\n\n\n\n");
+                    //
+                    // await SharedPreferencesUtil.setLoginState(true);
+                    // await _storeUserId(UserFormFields.userId);
+                    //
+                    // Navigator.pushReplacementNamed(context, 'signIn');
 
-                    print(UserFormFields.userName);
-                    print(UserFormFields.userMobileNumber);
+                    if (isUsernameValid && file != null) { // Check both username and file
+                      _createUser();
 
-                    int userId = await _getUserId();
-                    setState(() {
-                      UserFormFields.userId = userId;
-                    });
-                    print("User ID ${UserFormFields.userId}\n\n\n\n\n\n\n\n");
+                      print(UserFormFields.userName);
+                      print(UserFormFields.userMobileNumber);
 
-                    await SharedPreferencesUtil.setLoginState(true);
-                    await _storeUserId(UserFormFields.userId);
+                      int userId = await _getUserId();
+                      setState(() {
+                        UserFormFields.userId = userId;
+                      });
+                      print("User ID ${UserFormFields.userId}\n\n\n\n\n\n\n\n");
 
-                    Navigator.pushReplacementNamed(context, 'signIn ');
+                      await SharedPreferencesUtil.setLoginState(true);
+                      await _storeUserId(UserFormFields.userId);
+
+                      Navigator.pushReplacementNamed(context, 'signIn');
+                    } else {
+                      // Show a pop-up (dialog) when the conditions are not met
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Please provide a valid username and upload a photo to finish registration.'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lime,
+                    backgroundColor: (isUsernameValid && file != null) ? Colors.lime : Colors.grey,
                     shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -449,13 +473,13 @@ class _registrationStep3State extends State<registrationStep3> {
                       ),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Finish',
                     style: TextStyle(
                       fontFamily: 'Georgia',
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      color: Colors.black,
+                      color: (isUsernameValid && file != null) ? Colors.black : Colors.white,
                     ),
                   ),
                 ),

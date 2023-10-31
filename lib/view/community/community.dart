@@ -25,7 +25,7 @@ class _communityState extends State<community> {
       appBar: AppBar(
         leading: ElevatedButton(
           onPressed: () {
-            // Navigator.popAndPushNamed(context, 'entryPoint');
+            Navigator.popAndPushNamed(context, 'entryPoint');
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,

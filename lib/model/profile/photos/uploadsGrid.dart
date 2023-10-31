@@ -53,32 +53,34 @@ class _uploadsGridState extends State<uploadsGrid> {
           final List<dynamic> savedRecipes = result.data?['displayUserUploadById'];
 
           if (savedRecipes.isEmpty) {
-            return Column(
-              children: [
-                SizedBox(
-                    height: 120,
-                    width: width,
-                    child: Image.asset(
-                      'assets/profilePagePhotos/savedRecipes.png',
-                      fit: BoxFit.fitWidth,
-                    )),
-                const Padding(
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
-                  child: Text(
-                    "You haven't liked any recipes yet. When you do they'll appear here.",
-                    style: TextStyle(
-                      fontFamily: 'Georgia',
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: CustomColors.white,
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                      height: 120,
+                      width: width,
+                      child: Image.asset(
+                        'assets/profilePagePhotos/savedRecipes.png',
+                        fit: BoxFit.fitWidth,
+                      )),
+                  const Padding(
+                    padding:
+                    EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                    child: Text(
+                      "You haven't uploaded any photos yet. When you do they'll appear here.",
+                      style: TextStyle(
+                        fontFamily: 'Georgia',
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColors.white,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           } else {
             return GridView.builder(

@@ -76,53 +76,6 @@ class _homePageState extends State<homePage> {
     'assets/general/3.png',
   ];
 
-  void addToRecentlyViewed(BuildContext context, String dishId) async {
-    final String addRecipeMutation = """
-    mutation AddRecipeToRecentlyViewed(\$userId: ID!, \$dishId: ID!) {
-      addRecipeToRecentlyViewed(userId: \$userId, dishId: \$dishId) {
-        recentlyViewed {
-          id
-          userId {
-            id
-            username
-          }
-          dishId {
-            id
-            dishName
-          }
-        }
-      }
-    }
-  """;
-
-    final String userId = UserFormFields.userId.toString();
-    final Map<String, dynamic> variables = {
-      'userId': userId,
-      'dishId': dishId,
-    };
-
-    final GraphQLClient client = GraphQLClient(
-      cache: GraphQLCache(),
-      link: httpLink, // Replace with your GraphQL API endpoint
-    );
-
-    final MutationOptions options = MutationOptions(
-      document: gql(addRecipeMutation),
-      variables: variables,
-    );
-
-    try {
-      final QueryResult result = await client.mutate(options);
-      if (result.hasException) {
-        print("Mutation error: ${result.exception.toString()}");
-      } else {
-        print("Mutation result: ${result.data.toString()}");
-      }
-    } catch (e) {
-      print("Mutation error: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -898,7 +851,6 @@ class _homePageState extends State<homePage> {
                         homePage.dishId = dish['id'];
                         homePage.dishCourse = dish['dishCategoryCourse'];
                       });
-                      addToRecentlyViewed(context, dish['id']);
                       Navigator.pushNamed(context, 'dishDescription');
                     },
                     style: ElevatedButton.styleFrom(
@@ -1395,7 +1347,6 @@ class _homePageState extends State<homePage> {
                         homePage.dishId = dish['id'];
                         homePage.dishCourse = dish['dishCategoryCourse'];
                       });
-                      addToRecentlyViewed(context, dish['id']);
                       Navigator.pushNamed(context, 'dishDescription');
                     },
                     style: ElevatedButton.styleFrom(
@@ -1906,7 +1857,7 @@ class _homePageState extends State<homePage> {
                       children: [
                         SizedBox(
                           width: width / 1.8,
-                          height: width / 2.5,
+                          height: width / 2.7,
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
@@ -2431,7 +2382,6 @@ class _homePageState extends State<homePage> {
                         homePage.dishId = dish['id'];
                         homePage.dishCourse = dish['dishCategoryCourse'];
                       });
-                      addToRecentlyViewed(context, dish['id']);
                       Navigator.pushNamed(context, 'dishDescription');
                     },
                     style: ElevatedButton.styleFrom(

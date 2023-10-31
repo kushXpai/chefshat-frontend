@@ -154,80 +154,80 @@ class _profileState extends State<profile> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 0, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: width / 1.254,
-                        height: width / 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'editProfile');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.transparent,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            shadowColor: Colors.transparent,
-                            minimumSize: Size.zero,
-                            padding: const EdgeInsets.all(0),
-                          ),
-                          child: const Text(
-                            'Edit Profile',
-                            style: TextStyle(
-                              fontFamily: 'Georgia',
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: width / 10,
-                        height: width / 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.transparent,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            shadowColor: Colors.transparent,
-                            minimumSize: Size.zero,
-                            padding: const EdgeInsets.all(5),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
-                                '',
-                                style: TextStyle(
-                                  fontFamily: 'Georgia',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //       left: 10, right: 10, top: 0, bottom: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       Container(
+                //         width: width / 1.254,
+                //         height: width / 10,
+                //         decoration: const BoxDecoration(
+                //           color: Colors.white24,
+                //           borderRadius: BorderRadius.all(Radius.circular(10)),
+                //         ),
+                //         child: ElevatedButton(
+                //           onPressed: () {
+                //             Navigator.pushNamed(context, 'editProfile');
+                //           },
+                //           style: ElevatedButton.styleFrom(
+                //             foregroundColor: Colors.transparent,
+                //             backgroundColor: Colors.transparent,
+                //             elevation: 0,
+                //             shadowColor: Colors.transparent,
+                //             minimumSize: Size.zero,
+                //             padding: const EdgeInsets.all(0),
+                //           ),
+                //           child: const Text(
+                //             'Edit Profile',
+                //             style: TextStyle(
+                //               fontFamily: 'Georgia',
+                //               fontSize: 15,
+                //               fontWeight: FontWeight.bold,
+                //               color: Colors.white,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //       Container(
+                //         width: width / 10,
+                //         height: width / 10,
+                //         decoration: const BoxDecoration(
+                //           color: Colors.white24,
+                //           borderRadius: BorderRadius.all(Radius.circular(10)),
+                //         ),
+                //         child: ElevatedButton(
+                //           onPressed: () {},
+                //           style: ElevatedButton.styleFrom(
+                //             foregroundColor: Colors.transparent,
+                //             backgroundColor: Colors.transparent,
+                //             elevation: 0,
+                //             shadowColor: Colors.transparent,
+                //             minimumSize: Size.zero,
+                //             padding: const EdgeInsets.all(5),
+                //           ),
+                //           child: const Column(
+                //             children: [
+                //               Text(
+                //                 '',
+                //                 style: TextStyle(
+                //                   fontFamily: 'Georgia',
+                //                   fontSize: 17,
+                //                   fontWeight: FontWeight.bold,
+                //                   color: Colors.white,
+                //                 ),
+                //               ),
+                //               SizedBox(
+                //                 height: 5,
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -758,71 +758,54 @@ class _profileState extends State<profile> {
   }
 
   void _showBottomSheet(BuildContext context, double width) {
-    Scaffold.of(context)?.showBottomSheet<void>(
-      backgroundColor: Colors.black,
-      (BuildContext context) {
-        return Container(
-          width: width,
-          decoration: BoxDecoration(
-            color: Colors.grey[800], // Dark grey background
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true, // To make sure the sheet takes up the full height of the screen
+      builder: (BuildContext context) {
+        return GestureDetector( // Wrap the sheet in GestureDetector
+          onTap: () {
+            Navigator.pop(context); // Close the bottom sheet when tapped outside
+          },
+          child: Container(
+            width: width,
+            decoration: BoxDecoration(
+              color: Colors.grey[800], // Dark grey background
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(0),
+                topRight: Radius.circular(0),
+              ),
             ),
-          ),
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min, // Column size will be as small as needed
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: width,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    // Handle the "Settings" action here
-                    Navigator.pop(context); // Close the bottom sheet
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent, // Transparent background
-                    onPrimary: Colors.white, // White text color
-                    elevation: 0, // No elevation
-                    alignment: Alignment.centerLeft, // Align text to the left
-                  ),
-                  icon: const Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Settings',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: width,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _logOut();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent, // Transparent background
-                    onPrimary: Colors.white, // White text color
-                    elevation: 0, // No elevation
-                    alignment: Alignment.centerLeft, // Align text to the left
-                  ),
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Logout',
-                    style: TextStyle(color: Colors.white),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: width,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      _logOut();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent, // Transparent background
+                      onPrimary: Colors.white, // White text color
+                      elevation: 0, // No elevation
+                      alignment: Alignment.centerLeft, // Align text to the left
+                    ),
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

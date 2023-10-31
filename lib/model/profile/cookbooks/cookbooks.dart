@@ -1,4 +1,5 @@
 import 'package:chefs_hat/controller/graphQL/queries/queries.dart';
+import 'package:chefs_hat/controller/registration/registration.dart';
 import 'package:chefs_hat/view/homePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -21,22 +22,13 @@ class _cookbooksState extends State<cookbooks> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    print(UserFormFields.userId);
+
     return SizedBox(
       width: width,
       height: height * 0.62,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 10,
-                top: 0,
-                bottom: 0,
-              ),
-              child: _buildSectionHeader("Recently Saved Recipes"),
-            ),
-          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -175,6 +167,7 @@ class _cookbooksState extends State<cookbooks> {
         if (savedRecipes.isEmpty) {
           return Column(
             children: [
+              _buildSectionHeader("Recently Saved Recipes"),
               Container(
                   height: 120,
                   width: width,
@@ -202,8 +195,9 @@ class _cookbooksState extends State<cookbooks> {
           );
         } else {
           int savedRecipesLength = savedRecipes.length.clamp(0, 3);
-          return Column(
+          return Stack(
             children: [
+              _buildSectionHeader("Recently Saved Recipes"),
               ListView.separated(
                 scrollDirection: Axis.vertical,
                 itemCount: savedRecipesLength,
@@ -351,41 +345,45 @@ class _cookbooksState extends State<cookbooks> {
                   // );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 0, right: 0, top: 10, bottom: 10),
-                child: Container(
-                  width: width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.lime,
-                        width: 2), // Set the border color
-                    borderRadius: BorderRadius.circular(10),
-                    // Set the border radius
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'savedRecipes');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.white10,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      minimumSize: Size.zero,
-                      padding: const EdgeInsets.all(0),
-                    ),
-                    child: const Text(
-                      "See more",
-                      style: TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 20,
-                        color: Colors.lime,
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, right: 0, top: 400, bottom: 10),
+                    child: Container(
+                      width: width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.lime,
+                            width: 2), // Set the border color
+                        borderRadius: BorderRadius.circular(10),
+                        // Set the border radius
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'savedRecipes');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.transparent,
+                          backgroundColor: Colors.white10,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.all(0),
+                        ),
+                        child: const Text(
+                          "See more",
+                          style: TextStyle(
+                            fontFamily: 'Georgia',
+                            fontSize: 20,
+                            color: Colors.lime,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           );

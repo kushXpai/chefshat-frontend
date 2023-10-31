@@ -105,7 +105,7 @@ class _postUploadState extends State<postUpload> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 40),
+              padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,7 +129,7 @@ class _postUploadState extends State<postUpload> {
                           padding: const EdgeInsets.all(0),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(30),
                           child: file == null
                               ? Image(
                             image: const NetworkImage(
@@ -153,27 +153,65 @@ class _postUploadState extends State<postUpload> {
               ),
             ),
 
+            const Padding(
+              padding: EdgeInsets.only(left: 50, right: 50, top: 0, bottom: 50),
+              child: Text(
+                "Click the above button to upload your recipes photo",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 15,
+                  fontFamily: "Georgia",
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    uploadName = value;
-                  });
-                  print(uploadName);
-                },
-                cursorColor: const Color(0xFF4EDB86),
-                decoration: InputDecoration(
-                  labelStyle: const TextStyle(
-                    color: Colors.white,
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 0,
+                bottom: 20,
+              ),
+              child: Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
                   ),
-                  labelText: 'Dish Name',
-                  errorText: validate_uploadName ? 'Dish name is Required' : null,
-                  border: const UnderlineInputBorder(),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      uploadName = value;
+                    });
+                  },
+                  onSubmitted: (value) {
+
+                  },
+                  keyboardType: TextInputType.text,
+                  style: const TextStyle(
+                    color: Colors.white, // Set text color to white
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Dish Name',
+                    labelStyle: const TextStyle(
                       color: Colors.white,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color:
+                        Colors.white, // Set border color to grey
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors
+                            .grey, // Set border color to white when focused
+                      ),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
@@ -181,35 +219,59 @@ class _postUploadState extends State<postUpload> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    uploadDescription = value;
-                  });
-                  print(uploadDescription);
-                },
-                cursorColor: const Color(0xFF4EDB86),
-                decoration: InputDecoration(
-                  labelStyle: const TextStyle(
-                    color: Colors.white,
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 20,
+              ),
+              child: Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
                   ),
-                  labelText: 'Description',
-                  errorText: validate_uploadDescription ? 'Description is Required' : null,
-                  border: const UnderlineInputBorder(),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      uploadDescription = value;
+                    });
+                  },
+                  onSubmitted: (value) {
+
+                  },
+                  keyboardType: TextInputType.text,
+                  style: const TextStyle(
+                    color: Colors.white, // Set text color to white
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Dish Description',
+                    labelStyle: const TextStyle(
                       color: Colors.white,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color:
+                        Colors.white, // Set border color to grey
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors
+                            .grey, // Set border color to white when focused
+                      ),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
               ),
             ),
-
-
+            
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: SizedBox(
                 height: 45,
                 width: width,
