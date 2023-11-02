@@ -33,120 +33,123 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   static int selectedPantryEssentials = 0;
   List<String> selectedIngredientsPantryEssentials = [];
   List<RecipeButton> pantryEssentials = [
-    RecipeButton('baking powder', false),
-    RecipeButton('baking soda', false),
-    RecipeButton('basil', false),
-    RecipeButton('bell pepper', false),
-    RecipeButton('bread', false),
-    RecipeButton('brown sugar', false),
-    RecipeButton('butter', false),
-    RecipeButton('carrot', false),
-    RecipeButton('cheddar', false),
-    RecipeButton('chicken breast', false),
-    RecipeButton('chilli powder', false),
-    RecipeButton('cinnamon', false),
-    RecipeButton('cumin', false),
-    RecipeButton('egg', false),
-    RecipeButton('flour', false),
-    RecipeButton('garlic', false),
-    RecipeButton('garlic powder', false),
-    RecipeButton('honey', false),
-    RecipeButton('italian seasoning', false),
-    RecipeButton('ketchup', false),
-    RecipeButton('mayonnaise', false),
-    RecipeButton('milk', false),
-    RecipeButton('Mustard', false),
-    RecipeButton('olive oil', false),
-    RecipeButton('onion', false),
-    RecipeButton('onion powder', false),
-    RecipeButton('oregano', false),
-    RecipeButton('paprika', false),
-    RecipeButton('parmesan', false),
-    RecipeButton('parsley', false),
-    RecipeButton('peanut butter', false),
-    RecipeButton('potato', false),
-    RecipeButton('rice', false),
-    RecipeButton('soy sauce', false),
-    RecipeButton('spaghetti', false),
-    RecipeButton('sugar', false),
-    RecipeButton('thyme', false),
-    RecipeButton('tomato', false),
-    RecipeButton('vanilla', false),
-    RecipeButton('vegetable oil', false),
+    // RecipeButton('baking powder', false),
+    // RecipeButton('baking soda', false),
+    // RecipeButton('basil', false),
+    // RecipeButton('bell pepper', false),
+    // RecipeButton('bread', false),
+    // RecipeButton('brown sugar', false),
+    // RecipeButton('butter', false),
+    // RecipeButton('carrot', false),
+    // RecipeButton('cheddar', false),
+    // RecipeButton('chicken breast', false),
+    // RecipeButton('chilli powder', false),
+    // RecipeButton('cinnamon', false),
+    // RecipeButton('cumin', false),
+    // RecipeButton('egg', false),
+    // RecipeButton('flour', false),
+    // RecipeButton('garlic', false),
+    // RecipeButton('garlic powder', false),
+    // RecipeButton('honey', false),
+    // RecipeButton('italian seasoning', false),
+    // RecipeButton('ketchup', false),
+    // RecipeButton('mayonnaise', false),
+    // RecipeButton('milk', false),
+    // RecipeButton('Mustard', false),
+    // RecipeButton('olive oil', false),
+    // RecipeButton('onion', false),
+    // RecipeButton('onion powder', false),
+    // RecipeButton('oregano', false),
+    // RecipeButton('paprika', false),
+    // RecipeButton('parmesan', false),
+    // RecipeButton('parsley', false),
+    // RecipeButton('peanut butter', false),
+    // RecipeButton('potato', false),
+    // RecipeButton('rice', false),
+    // RecipeButton('soy sauce', false),
+    // RecipeButton('spaghetti', false),
+    // RecipeButton('sugar', false),
+    // RecipeButton('thyme', false),
+    // RecipeButton('tomato', false),
+    // RecipeButton('vanilla', false),
+    // RecipeButton('vegetable oil', false),
   ];
 
   bool _isShowVegetables = false;
   static int selectedVegetables = 0;
   List<String> selectedIngredientsVegetables = [];
   List<RecipeButton> vegetables = [
-    RecipeButton('Artichoke', false),
-    RecipeButton('Asparagus', false),
-    RecipeButton('Baby Corn', false),
-    RecipeButton('Beetroot', false),
-    RecipeButton('Bell Pepper Green', false),
-    RecipeButton('Bell Pepper Red', false),
-    RecipeButton('Bell Pepper Yellow', false),
+    // RecipeButton('Artichoke', false),
+    // RecipeButton('Asparagus', false),
+    // RecipeButton('Baby Corn', false),
+    // RecipeButton('Beetroot', false),
+    // RecipeButton('Bell Pepper Green', false),
+    // RecipeButton('Bell Pepper Red', false),
+    // RecipeButton('Bell Pepper Yellow', false),
     RecipeButton('Bell Pepper', false),
-    RecipeButton('Broccoli', false),
-    RecipeButton('Brussels sprouts', false),
-    RecipeButton('cabbage', false),
-    RecipeButton('carrot', false),
-    RecipeButton('Cauliflower', false),
-    RecipeButton('Celery Stalk', false),
-    RecipeButton('Cucumber', false),
-    RecipeButton('Eggplant', false),
+    // RecipeButton('Broccoli', false),
+    // RecipeButton('Brussels sprouts', false),
+    RecipeButton('Cabbage', false),
+    RecipeButton('Carrot', false),
+    // RecipeButton('Cauliflower', false),
+    // RecipeButton('Celery Stalk', false),
+    // RecipeButton('Cucumber', false),
+    // RecipeButton('Eggplant', false),
     RecipeButton('Garlic', false),
-    RecipeButton('Ginger', false),
-    RecipeButton('Kale', false),
+    // RecipeButton('Ginger', false),
+    RecipeButton('Green Chilli', false),
+    // RecipeButton('Kale', false),
     RecipeButton('Lettuce', false),
-    RecipeButton('Okra', false),
+    // RecipeButton('Okra', false),
     RecipeButton('Onion Red', false),
     RecipeButton('Onion White', false),
     RecipeButton('Potato', false),
-    RecipeButton('Pumpkin', false),
-    RecipeButton('Radish', false),
-    RecipeButton('Spinach', false),
-    RecipeButton('Squash', false),
-    RecipeButton('Sweet Potato', false),
-    RecipeButton('Tomatoes Cherry Red', false),
-    RecipeButton('Tomatoes Cherry Yellow', false),
+    // RecipeButton('Pumpkin', false),
+    // RecipeButton('Radish', false),
+    // RecipeButton('Spinach', false),
+    // RecipeButton('Squash', false),
+    // RecipeButton('Sweet Potato', false),
+    // RecipeButton('Tomatoes Cherry Red', false),
+    // RecipeButton('Tomatoes Cherry Yellow', false),
     RecipeButton('Tomatoes', false),
-    RecipeButton('Turnip', false),
-    RecipeButton('Zucchini', false),
+    // RecipeButton('Turnip', false),
+    // RecipeButton('Zucchini', false),
+    RecipeButton('Mixed Vegetables', false),
   ];
 
   bool _isShowMushrooms = false;
   static int selectedMushrooms = 0;
   List<String> selectedIngredientsMushrooms = [];
   List<RecipeButton> mushrooms = [
-    RecipeButton('button', false),
-    RecipeButton('oyster', false),
+    RecipeButton('Button', false),
+    // RecipeButton('oyster', false),
     RecipeButton('Portabello', false),
-    RecipeButton('wild', false),
+    // RecipeButton('wild', false),
   ];
 
   bool _isShowFruits = false;
   static int selectedFruits = 0;
   List<String> selectedIngredientsFruits = [];
   List<RecipeButton> fruits = [
-    RecipeButton('Apple', false),
-    RecipeButton('Banana', false),
-    RecipeButton('Grapes Black', false),
-    RecipeButton('Grapes Green', false),
-    RecipeButton('Peach', false),
-    RecipeButton('Pineapple', false),
-    RecipeButton('Watermelon', false),
+    RecipeButton('Avacado', false),
+    // RecipeButton('Apple', false),
+    // RecipeButton('Banana', false),
+    // RecipeButton('Grapes Black', false),
+    // RecipeButton('Grapes Green', false),
+    // RecipeButton('Peach', false),
+    // RecipeButton('Pineapple', false),
+    // RecipeButton('Watermelon', false),
   ];
 
   bool _isShowBerries = false;
   static int selectedBerries = 0;
   List<String> selectedIngredientsBerries = [];
   List<RecipeButton> berries = [
-    RecipeButton('Blackberry', false),
-    RecipeButton('Blueberry', false),
-    RecipeButton('Mixed', false),
-    RecipeButton('Raspberry', false),
-    RecipeButton('Strawberry', false),
+    // RecipeButton('Blackberry', false),
+    // RecipeButton('Blueberry', false),
+    // RecipeButton('Mixed', false),
+    // RecipeButton('Raspberry', false),
+    // RecipeButton('Strawberry', false),
   ];
 
   bool _isShowNutsSeeds = false;
@@ -158,10 +161,12 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   static int selectedCheeses = 0;
   List<String> selectedIngredientsCheeses = [];
   List<RecipeButton> cheeses = [
-    RecipeButton('Blue', false),
+    // RecipeButton('Blue', false),
     RecipeButton('Cheddar', false),
     RecipeButton('Mozzarella', false),
-    RecipeButton('Parmesan', false),
+    // RecipeButton('Parmesan', false),
+    RecipeButton('Swiss', false),
+    RecipeButton('Cheese Slice', false),
   ];
 
   bool _isShowDairy = false;
@@ -170,39 +175,43 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   List<RecipeButton> dairy = [
     RecipeButton('Butter', false),
     RecipeButton('ButterMilk', false),
-    RecipeButton('Fresh Cream', false),
+    // RecipeButton('Fresh Cream', false),
     RecipeButton('Heavy Cream', false),
-    RecipeButton('Sour Cream', false),
+    // RecipeButton('Sour Cream', false),
     RecipeButton('Milk', false),
+    RecipeButton('Yogurt', false),
+    RecipeButton('Ghee', false),
+    RecipeButton('Paneer', false),
   ];
 
   bool _isShowEggs = false;
   static int selectedEggs = 0;
   List<String> selectedIngredientsEggs = [];
   List<RecipeButton> eggs = [
-    RecipeButton('Eggs Chicken', false),
+    // RecipeButton('Eggs Chicken', false),
   ];
 
   bool _isShowPasta = false;
   static int selectedPasta = 0;
   List<String> selectedIngredientsPasta = [];
   List<RecipeButton> pasta = [
-    RecipeButton('Egg Noodles', false),
-    RecipeButton('Fusilli', false),
-    RecipeButton('Gnocchi', false),
-    RecipeButton('Macaroni', false),
-    RecipeButton('Penne', false),
+    // RecipeButton('Egg Noodles', false),
+    // RecipeButton('Fusilli', false),
+    // RecipeButton('Gnocchi', false),
+    // RecipeButton('Macaroni', false),
+    // RecipeButton('Penne', false),
   ];
 
   bool _isShowMeat = false;
   static int selectedMeat = 0;
   List<String> selectedIngredientsMeat = [];
   List<RecipeButton> meat = [
-    RecipeButton('Bacon', false),
+    // RecipeButton('Bacon', false),
     RecipeButton('Beef Ground', false),
-    RecipeButton('Beef Sirloin', false),
+    // RecipeButton('Beef Sirloin', false),
     RecipeButton('Pork Ribs', false),
-    RecipeButton('Pork', false),
+    // RecipeButton('Pork', false),
+    RecipeButton('Lamb', false),
   ];
 
   bool _isShowPoultry = false;
@@ -210,8 +219,8 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   List<String> selectedIngredientsPoultry = [];
   List<RecipeButton> poultry = [
     RecipeButton('Chicken Breast', false),
-    RecipeButton('Chicken Drumsticks', false),
-    RecipeButton('Chicken Whole', false),
+    // RecipeButton('Chicken Drumsticks', false),
+    // RecipeButton('Chicken Whole', false),
     RecipeButton('Chicken Wings', false),
   ];
 
@@ -224,7 +233,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   static int selectedShellfish = 0;
   List<String> selectedIngredientsShellfish = [];
   List<RecipeButton> shellfish = [
-    RecipeButton('Calms', false),
+    // RecipeButton('Calms', false),
   ];
 
   bool _isShowHerbsNSpices = false;
@@ -232,16 +241,25 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   List<String> selectedIngredientsHerbsNSpices = [];
   List<RecipeButton> herbsNSpices = [
     RecipeButton('Chilli Flakes', false),
-    RecipeButton('Parsley', false),
+    // RecipeButton('Parsley', false),
     RecipeButton('Thyme', false),
     RecipeButton('Basil', false),
     RecipeButton('Chilli Powder', false),
-    RecipeButton('Cinnamon Powder', false),
+    RecipeButton('Turmeric Powder', false),
+    RecipeButton('Biryani Masala', false),
+    RecipeButton('Garam Masala', false),
+    RecipeButton('Coriander Powder', false),
+    RecipeButton('Coriander', false),
+    RecipeButton('Saffron', false),
+    // RecipeButton('Cinnamon Powder', false),
     RecipeButton('Garlic Powder', false),
     RecipeButton('Onion Powder', false),
-    RecipeButton('Cinnamon', false),
+    RecipeButton('Kasturi Methi', false),
+    // RecipeButton('Cinnamon', false),
     RecipeButton('Cumin', false),
     RecipeButton('Paprika', false),
+    RecipeButton('Cilantro', false),
+    RecipeButton('Mint', false),
   ];
 
   bool _isShowSweetsNSweetners = false;
@@ -258,7 +276,7 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   List<String> selectedIngredientsSeasonings = [];
   List<RecipeButton> seasonings = [
     RecipeButton('Salt N Pepper', false),
-    RecipeButton('Italian', false),
+    // RecipeButton('Italian', false),
   ];
 
   bool _isShowBaking = false;
@@ -266,13 +284,29 @@ class _recipeGeneratorState extends State<recipeGenerator> {
   List<String> selectedIngredientsBaking = [];
   List<RecipeButton> baking = [
     RecipeButton('Flour All Purpose', false),
+    RecipeButton('Bread', false),
+    RecipeButton('Burger Buns', false),
+    RecipeButton('Bread Baguette', false),
   ];
 
   bool _isShowGrains = false;
   static int selectedGrains = 0;
   List<String> selectedIngredientsGrains = [];
   List<RecipeButton> grains = [
-    RecipeButton('Corn', false),
+    // RecipeButton('Corn', false),
+    RecipeButton('Basmati Rice', false),
+  ];
+
+  bool _isShowSaucesAndSpreads = false;
+  static int selectedSaucesAndSpreads = 0;
+  List<String> selectedIngredientsSaucesAndSpreads = [];
+  List<RecipeButton> saucesAndSpreads = [
+    RecipeButton('Ketchup', false),
+    RecipeButton('Mustard', false),
+    RecipeButton('Barbeque', false),
+    RecipeButton('Mayonnaise', false),
+    RecipeButton('Tomato Puree', false),
+    RecipeButton('Balsamic', false),
   ];
 
   void filterIngredients(String query) {
@@ -388,6 +422,12 @@ class _recipeGeneratorState extends State<recipeGenerator> {
     }
 
     for (var ingredient in grains) {
+      if (ingredient.name.toLowerCase().contains(query)) {
+        filteredIngredients.add(ingredient);
+      }
+    }
+
+    for (var ingredient in saucesAndSpreads) {
       if (ingredient.name.toLowerCase().contains(query)) {
         filteredIngredients.add(ingredient);
       }
@@ -552,119 +592,119 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                                 )),
 
                             // Pantry Essentials
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 20, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Pantry Essentials',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedPantryEssentials / ${pantryEssentials.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      !_isShowPantryEssentials;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowPantryEssentials ==
-                                                    true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowPantryEssentials,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsPantryEssentials(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 20, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Pantry Essentials',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedPantryEssentials / ${pantryEssentials.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           !_isShowPantryEssentials;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowPantryEssentials ==
+                            //                         true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowPantryEssentials,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsPantryEssentials(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Vegetables
                             Padding(
@@ -1012,237 +1052,237 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                             ),
 
                             // Berries
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Berries',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedBerries / ${berries.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries =
-                                                      !_isShowBerries;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowBerries == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowBerries,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsBerries(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Berries',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedBerries / ${berries.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries =
+                            //                           !_isShowBerries;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowBerries == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowBerries,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsBerries(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Nuts and Seeds
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Nuts & Seeds',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedNutsSeeds / ${nutsSeeds.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries = false;
-                                                  _isShowNutsSeeds =
-                                                      !_isShowNutsSeeds;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowNutsSeeds == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowNutsSeeds,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsNutsSeeds(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Nuts & Seeds',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedNutsSeeds / ${nutsSeeds.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries = false;
+                            //                       _isShowNutsSeeds =
+                            //                           !_isShowNutsSeeds;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowNutsSeeds == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowNutsSeeds,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsNutsSeeds(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Cheeses
                             Padding(
@@ -1481,243 +1521,243 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                             ),
 
                             // Eggs
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Eggs',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedEggs / ${eggs.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries = false;
-                                                  _isShowNutsSeeds = false;
-                                                  _isShowCheeses = false;
-                                                  _isShowDairy = false;
-                                                  _isShowEggs = !_isShowEggs;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowEggs == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowEggs,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsEggs(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Eggs',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedEggs / ${eggs.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries = false;
+                            //                       _isShowNutsSeeds = false;
+                            //                       _isShowCheeses = false;
+                            //                       _isShowDairy = false;
+                            //                       _isShowEggs = !_isShowEggs;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowEggs == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowEggs,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsEggs(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Pasta
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Pasta',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedPasta / ${pasta.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries = false;
-                                                  _isShowNutsSeeds = false;
-                                                  _isShowCheeses = false;
-                                                  _isShowDairy = false;
-                                                  _isShowEggs = false;
-                                                  _isShowPasta = !_isShowPasta;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowPasta == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowPasta,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsPasta(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Pasta',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedPasta / ${pasta.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries = false;
+                            //                       _isShowNutsSeeds = false;
+                            //                       _isShowCheeses = false;
+                            //                       _isShowDairy = false;
+                            //                       _isShowEggs = false;
+                            //                       _isShowPasta = !_isShowPasta;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowPasta == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowPasta,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsPasta(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Meat
                             Padding(
@@ -1964,252 +2004,252 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                             ),
 
                             // Fish
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Fish',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedFish / ${fish.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries = false;
-                                                  _isShowNutsSeeds = false;
-                                                  _isShowCheeses = false;
-                                                  _isShowDairy = false;
-                                                  _isShowEggs = false;
-                                                  _isShowPasta = false;
-                                                  _isShowMeat = false;
-                                                  _isShowPoultry = false;
-                                                  _isShowFish = !_isShowFish;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowFish == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowFish,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsFish(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'Fish',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedFish / ${fish.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries = false;
+                            //                       _isShowNutsSeeds = false;
+                            //                       _isShowCheeses = false;
+                            //                       _isShowDairy = false;
+                            //                       _isShowEggs = false;
+                            //                       _isShowPasta = false;
+                            //                       _isShowMeat = false;
+                            //                       _isShowPoultry = false;
+                            //                       _isShowFish = !_isShowFish;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowFish == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowFish,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsFish(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Shellfish
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 10),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'ShellFish',
-                                            style: TextStyle(
-                                              fontFamily: 'Georgia',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white70,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              '($selectedShellfish / ${shellfish.length})',
-                                              style: const TextStyle(
-                                                fontFamily: 'Georgia',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.amber,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(
-                                                () {
-                                                  _isShowPantryEssentials =
-                                                      false;
-                                                  _isShowVegetables = false;
-                                                  _isShowMushrooms = false;
-                                                  _isShowFruits = false;
-                                                  _isShowBerries = false;
-                                                  _isShowNutsSeeds = false;
-                                                  _isShowCheeses = false;
-                                                  _isShowDairy = false;
-                                                  _isShowEggs = false;
-                                                  _isShowPasta = false;
-                                                  _isShowMeat = false;
-                                                  _isShowPoultry = false;
-                                                  _isShowFish = false;
-                                                  _isShowShellfish =
-                                                      !_isShowShellfish;
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor:
-                                                  Colors.transparent,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                              shadowColor: Colors.transparent,
-                                              minimumSize: Size.zero,
-                                              padding: const EdgeInsets.all(0),
-                                            ),
-                                            child: _isShowShellfish == true
-                                                ? const Icon(
-                                                    Icons.arrow_drop_up_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .arrow_drop_down_rounded,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Visibility(
-                                        visible: _isShowShellfish,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  color: CustomColors.white,
-                                                  thickness: 1,
-                                                ),
-                                                buildButtonsShellfish(),
-                                              ],
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20, right: 20, top: 10, bottom: 10),
+                            //   child: Container(
+                            //     decoration: const BoxDecoration(
+                            //       color: Colors.white24,
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20)),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 10,
+                            //               right: 10,
+                            //               top: 10,
+                            //               bottom: 0),
+                            //           child: Row(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               const Text(
+                            //                 'ShellFish',
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Georgia',
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   color: Colors.white70,
+                            //                 ),
+                            //                 maxLines: 2,
+                            //                 overflow: TextOverflow.ellipsis,
+                            //               ),
+                            //               const SizedBox(
+                            //                 width: 10,
+                            //               ),
+                            //               Expanded(
+                            //                 child: Text(
+                            //                   '($selectedShellfish / ${shellfish.length})',
+                            //                   style: const TextStyle(
+                            //                     fontFamily: 'Georgia',
+                            //                     fontSize: 15,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     color: Colors.amber,
+                            //                   ),
+                            //                   maxLines: 2,
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                 ),
+                            //               ),
+                            //               ElevatedButton(
+                            //                 onPressed: () {
+                            //                   setState(
+                            //                     () {
+                            //                       _isShowPantryEssentials =
+                            //                           false;
+                            //                       _isShowVegetables = false;
+                            //                       _isShowMushrooms = false;
+                            //                       _isShowFruits = false;
+                            //                       _isShowBerries = false;
+                            //                       _isShowNutsSeeds = false;
+                            //                       _isShowCheeses = false;
+                            //                       _isShowDairy = false;
+                            //                       _isShowEggs = false;
+                            //                       _isShowPasta = false;
+                            //                       _isShowMeat = false;
+                            //                       _isShowPoultry = false;
+                            //                       _isShowFish = false;
+                            //                       _isShowShellfish =
+                            //                           !_isShowShellfish;
+                            //                     },
+                            //                   );
+                            //                 },
+                            //                 style: ElevatedButton.styleFrom(
+                            //                   foregroundColor:
+                            //                       Colors.transparent,
+                            //                   backgroundColor:
+                            //                       Colors.transparent,
+                            //                   elevation: 0,
+                            //                   shadowColor: Colors.transparent,
+                            //                   minimumSize: Size.zero,
+                            //                   padding: const EdgeInsets.all(0),
+                            //                 ),
+                            //                 child: _isShowShellfish == true
+                            //                     ? const Icon(
+                            //                         Icons.arrow_drop_up_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       )
+                            //                     : const Icon(
+                            //                         Icons
+                            //                             .arrow_drop_down_rounded,
+                            //                         color: Colors.white,
+                            //                         size: 30,
+                            //                       ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(bottom: 10),
+                            //           child: Visibility(
+                            //             visible: _isShowShellfish,
+                            //             child: Padding(
+                            //                 padding: const EdgeInsets.only(
+                            //                     left: 10, right: 10),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     const Divider(
+                            //                       color: CustomColors.white,
+                            //                       thickness: 1,
+                            //                     ),
+                            //                     buildButtonsShellfish(),
+                            //                   ],
+                            //                 )),
+                            //           ),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Herbs N Spices
                             Padding(
@@ -2855,11 +2895,142 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                               ),
                             ),
 
-                            // Display List
-                            Text(
-                              '${recipeGenerator.selectedIngredients}',
-                              style: const TextStyle(color: Colors.white),
+                            // Sauces and Spreads
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white24,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Sauces and Spreads',
+                                            style: TextStyle(
+                                              fontFamily: 'Georgia',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '($selectedSaucesAndSpreads / ${saucesAndSpreads.length})',
+                                              style: const TextStyle(
+                                                fontFamily: 'Georgia',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.amber,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(
+                                                    () {
+                                                  _isShowPantryEssentials =
+                                                  false;
+                                                  _isShowVegetables = false;
+                                                  _isShowMushrooms = false;
+                                                  _isShowFruits = false;
+                                                  _isShowBerries = false;
+                                                  _isShowNutsSeeds = false;
+                                                  _isShowCheeses = false;
+                                                  _isShowDairy = false;
+                                                  _isShowEggs = false;
+                                                  _isShowPasta = false;
+                                                  _isShowMeat = false;
+                                                  _isShowPoultry = false;
+                                                  _isShowFish = false;
+                                                  _isShowShellfish = false;
+                                                  _isShowHerbsNSpices = false;
+                                                  _isShowSweetsNSweetners =
+                                                  false;
+                                                  _isShowSeasonings = false;
+                                                  _isShowBaking = false;
+                                                  _isShowGrains = false;
+                                                  _isShowSaucesAndSpreads = ! _isShowSaucesAndSpreads;
+                                                },
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor:
+                                              Colors.transparent,
+                                              backgroundColor:
+                                              Colors.transparent,
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.all(0),
+                                            ),
+                                            child: _isShowGrains == true
+                                                ? const Icon(
+                                              Icons.arrow_drop_up_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            )
+                                                : const Icon(
+                                              Icons
+                                                  .arrow_drop_down_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(bottom: 10),
+                                      child: Visibility(
+                                        visible: _isShowSaucesAndSpreads,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              children: [
+                                                const Divider(
+                                                  color: CustomColors.white,
+                                                  thickness: 1,
+                                                ),
+                                                buildButtonsSaucesAndSpreads(),
+                                              ],
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
+
+                            // Display List
+                            // Text(
+                            //   '${recipeGenerator.selectedIngredients}',
+                            //   style: const TextStyle(color: Colors.white),
+                            // ),
                           ],
                         ),
                       ),
@@ -3085,6 +3256,9 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                 if (grains.any((item) => item.name == button.name)) {
                   selectedGrains += 1;
                 }
+                if (saucesAndSpreads.any((item) => item.name == button.name)) {
+                  selectedSaucesAndSpreads += 1;
+                }
               });
             } else {
               selectedIngredientsPantryEssentials.remove(button.name);
@@ -3142,6 +3316,9 @@ class _recipeGeneratorState extends State<recipeGenerator> {
                 }
                 if (grains.any((item) => item.name == button.name)) {
                   selectedGrains -= 1;
+                }
+                if (saucesAndSpreads.any((item) => item.name == button.name)) {
+                  selectedSaucesAndSpreads -= 1;
                 }
               });
             }
@@ -4137,6 +4314,58 @@ class _recipeGeneratorState extends State<recipeGenerator> {
           style: ElevatedButton.styleFrom(
             backgroundColor:
                 button.isSelected ? Colors.lime : Colors.transparent,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(7),
+              side: const BorderSide(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          child: Text(
+            button.name,
+            style: TextStyle(
+              fontFamily: 'Georgia',
+              fontSize: 14,
+              color: button.isSelected ? Colors.black : Colors.white,
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget buildButtonsSaucesAndSpreads() {
+    return Wrap(
+      alignment: WrapAlignment.start,
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: saucesAndSpreads.map((button) {
+        return ElevatedButton(
+          onPressed: () {
+            setState(() {
+              button.isSelected = !button.isSelected;
+              category = "SAUCESNSPREADSNDIPS";
+            });
+            if (button.isSelected) {
+              selectedIngredientsSaucesAndSpreads.add(button.name);
+              recipeGenerator.selectedIngredients.add(button.name);
+              setState(() {
+                recipeGenerator.ingredientsSelected += 1;
+                selectedSaucesAndSpreads += 1;
+              });
+            } else {
+              selectedIngredientsSaucesAndSpreads.remove(button.name);
+              recipeGenerator.selectedIngredients.remove(button.name);
+              setState(() {
+                recipeGenerator.ingredientsSelected -= 1;
+                selectedSaucesAndSpreads -= 1;
+              });
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor:
+            button.isSelected ? Colors.lime : Colors.transparent,
             shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
